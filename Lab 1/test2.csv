@@ -1,0 +1,5 @@
+Name,Salary,Department,Supervisor
+Chong,4000.0,Data Science,Darren
+David,8000.0,,
+Evelyn,,Data Science,Darren
+Ting,5000.0,IT,Richard
