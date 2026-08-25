@@ -1,0 +1,177 @@
+\documentclass[oneside]{prgrado}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Project Information:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% project title
+\title{Title of your degree project}                    
+
+% authors
+\author{Author1 Name, Author2 Name, Author3 Name, and Author4 Name}  
+
+% date
+\date{\today}                                   
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% links with colors 
+\hypersetup{
+  colorlinks   = true,
+  urlcolor     = blue,
+  linkcolor    = blue,
+  citecolor    = red
+}
+
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front Matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter % Roman numerals, unnumbered chapters
+
+% cover page
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% acknowledgments
+\chapter*{Acknowledgments}
+
+Expressing gratitude is always good practice.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% abstract
+\chapter*{Abstract}
+
+The abstract (200-500 words) should provide a comprehensive overview of the entire
+project, clearly stating the formalisms, techniques, tools, and languages
+used. It should not be limited to describing the problem addressed, but must also describe
+the proposed solution alongside its evaluation. It must not include bibliographic
+references or citations to other parts of the report, nor should it use
+acronyms without defining their meaning first.
+
+\hfill \break
+\keywords{Template, Degree Projects, Computer Science}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% table of contents
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main Matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter % Arabic numerals, numbered chapters 
+
+% introduction
+\chapter{Introduction}
+
+This chapter provides the motivation for the work, states and defines the problem, clearly sets the objectives (the general goal of the project, if applicable or if embedded within a larger initiative, and the specific objectives), presents the expected results, summarizes the main conclusions, and outlines the overall organization of the document.
+
+This and the following chapters may include references. Examples of citations include \cite{CitekeyArticle}, \cite{CitekeyBook}, \cite{CitekeyInproceedings}, \cite{CitekeyManual}, and \cite{CitekeyMisc}. Citing using the APA format is recommended.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% background / literature review
+\chapter{Literature Review} 
+
+A review of background work (products, processes, publications, etc., at both academic and commercial levels) related to the topic of this project. It may also include (if necessary) a brief introduction to fundamental concepts required to understand the work.
+
+\section{First Section}
+
+Chapters can include sections such as this one, which can also cross-reference other sections, such as Section~\ref{sec:second}.
+
+\section{Second Section}\label{sec:second}
+
+This section also includes a subsection.
+
+\subsection{The Subsection}
+
+This is the subsection.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% main body
+\chapter{Core Contribution}
+The core chapter covers the original contribution and main engineering output of the degree project, including key decisions made along the way. For example, it may cover requirements, analysis, and solution design. If the project includes an implementation, it should be described in terms of architectural and design decisions. Low-level programming details should be reserved for the appendices.
+
+Figures and tables can be embedded in the document, and both must be referenced directly in the text. For instance, Figure~\ref{fig:logos} shows the logos of the Faculty of Engineering and the University of the Republic, while Table~\ref{table:data} contains sample numbers.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{figs/logo-udelar-fing.png}
+    \caption{Logos of FIng and UdelaR}
+    \label{fig:logos}
+\end{figure}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{| c | c | c | c |} 
+ \hline
+ Col1 & Col2 & Col2 & Col3 \\  
+ \hline
+ 1 & 970 & 67 & 941 \\ 
+ 2 & 668 & 845 & 141 \\
+ 3 & 800 & 383 & 464 \\
+ 4 & 143 & 683 & 502 \\
+ \hline
+\end{tabular}
+\caption{Table with data}
+\label{table:data}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% experimentation / evaluation
+\chapter{Experimental Evaluation}
+It may be necessary to include an Experimental Evaluation chapter, detailing tests performed (test cases), results obtained, and a corresponding discussion, which may include comparative analysis. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% conclusions
+\chapter{Conclusions and Future Work}
+
+This chapter evaluates the achievements and obstacles encountered, comparing what was originally planned against what was actually accomplished. It highlights the main contributions, discusses potential extensions of the work, and presents a self-critique regarding what was done and what remains missing (due to time constraints, resources, future priorities, etc.). Information regarding project management may also be included if applicable.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Back Matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{ % start backmatter
+
+\backmatter % unnumbered chapters 
+
+% references / bibliography
+
+\newpage
+\bibliographystyle{apacite}
+\bibliography{referencias}
+
+} % end backmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% appendices
+
+\begin{appendix}
+
+\chapter{Appendix 1}
+
+Appendices contain supplementary material that is useful but not strictly essential to understanding the core report. For example, detailed technical specifications, background material, or complete source code summaries that were condensed in the main body. For software development projects, a user manual should be included here.
+
+\section{Appendix Section}
+
+Appendices can also be divided into sections.
+
+\end{appendix}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
