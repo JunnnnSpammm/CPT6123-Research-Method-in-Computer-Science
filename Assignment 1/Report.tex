@@ -6,30 +6,47 @@
 \geometry{a4paper, margin=1in}
 
 \usepackage{graphicx}
-\usepackage{tikz} % Used for generating a standalone placeholder figure
+\usepackage{tikz}
 \usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+
+% APA 7 Style Citation Support
+% \usepackage[apaciteclassic]{apacite}
+% \bibliographystyle{apacite}
 
 % Hyperlink configuration
 \hypersetup{
   colorlinks = true,
   urlcolor   = blue,
   linkcolor  = blue,
-  citecolor  = red
+  citecolor  = blue
 }
 
 % Define a custom command for keywords
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
 
-% Project Information
-\title{\textbf{Title of Your Degree Project}}
-\author{Author1 Name, Author2 Name, Author3 Name, and Author4 Name}
+% Project & Group Information
+\title{\textbf{CPT6123 Assignment 1: Reviewed Report on Application and Improvement of Machine Learning in the Real World}}
+\author{
+  \textbf{Group ID:} Group\_06 \\[1em]
+  \begin{tabular}{>{\centering\arraybackslash}p{4cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{4cm} >{\centering\arraybackslash}p{3cm}}
+    \toprule
+    \textbf{Student Name} & \textbf{Student ID} & \textbf{Contribution (\%)} & \textbf{Signature} \\
+    \midrule
+    Student 1 & ID & 33\% & \rule{3cm}{0.4pt} \\
+    Student 2 & ID & 33\% & \rule{3cm}{0.4pt} \\
+    Student 3 & ID & 33\% & \rule{3cm}{0.4pt} \\
+    \bottomrule
+  \end{tabular}
+}
 \date{\today}
 
 \begin{document}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Front Matter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{roman}
 
 % Cover page
@@ -37,23 +54,13 @@
 \thispagestyle{empty}
 \newpage
 
-% Acknowledgments
-\chapter*{Acknowledgments}
-\addcontentsline{toc}{chapter}{Acknowledgments}
-Expressing gratitude is always good practice.
-
 % Abstract
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-The abstract (200--500 words) should provide a comprehensive overview of the entire
-project, clearly stating the formalisms, techniques, tools, and languages
-used. It should not be limited to describing the problem addressed, but must also describe
-the proposed solution alongside its evaluation. It must not include bibliographic
-references or citations to other parts of the report, nor should it use
-acronyms without defining their meaning first.
+The abstract (200--500 words) should provide a comprehensive overview of the entire project, clearly stating the formalisms, techniques, tools, and languages used. It should not be limited to describing the problem addressed, but must also describe the proposed solution alongside its evaluation. It must not include bibliographic references or citations to other parts of the report, nor should it use acronyms without defining their meaning first.
 
 \vspace{1em}
-\noindent\keywords{Template, Degree Projects, Computer Science}
+\noindent\keywords{Machine Learning, Invariant Risk Minimization, Causal Inference, Deep Learning, Spatio-Temporal Modeling, Software Defect Prediction}
 
 \newpage
 
@@ -61,85 +68,128 @@ acronyms without defining their meaning first.
 \tableofcontents
 \newpage
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Main Matter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagenumbering{arabic}
 
-% Introduction
+% 1. Introduction
 \chapter{Introduction}
 
-This chapter provides the motivation for the work, states and defines the problem, clearly sets the objectives (the general goal of the project, if applicable or if embedded within a larger initiative, and the specific objectives), presents the expected results, summarizes the main conclusions, and outlines the overall organization of the document.
+\section{Study Background}
 
-This and the following chapters may include references. Examples of citations include \cite{CitekeyArticle}, \cite{CitekeyBook}, \cite{CitekeyInproceedings}, \cite{CitekeyManual}, and \cite{CitekeyMisc}.
+Introduce the rising importance of machine learning (ML) and deep learning (DL) in complex domain applications. Briefly frame how traditional models struggle with high-dimensional data, non-stationary patterns, and domain shifts.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Scope of the Report}
 
-% Literature Review
-\chapter{Literature Review}
+Outline the thematic domains covered across the reviewed literature. List the specific fields present in your papers (e.g., healthcare, autonomous systems, software engineering, dynamic climate systems). Must frame the real-world operational context across the selected domains.
 
-A review of background work (products, processes, publications, etc., at both academic and commercial levels) related to the topic of this project. It may also include (if necessary) a brief introduction to fundamental concepts required to understand the work.
+\section{Report Structure}
 
-\section{First Section}
-Chapters can include sections such as this one, which can also cross-reference other sections, such as Section~\ref{sec:second}.
+Summarize how the document is organized. Provide a 2–3 sentence roadmap explaining what is covered in Chapters 2 through 6. All 9 chosen papers must be explicitly mapped to their applied domains (Software Engineering, Grocery Retail, Autonomous Systems, Healthcare, Climate Science, and Intelligent Transportation)
 
-\section{Second Section}\label{sec:second}
-This section also includes a subsection.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{The Subsection}
-This is the subsection.
+% 2. Problem Statement and Objectives
+\chapter{Problem Statement and Objectives}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This chapter details the fundamental technical limitations identified across the surveyed literature and outlines the primary objectives of this synthesized review.
 
-% Core Contribution
-\chapter{Core Contribution}
-The core chapter covers the original contribution and main engineering output of the degree project, including key decisions made along the way. For example, it may cover requirements, analysis, and solution design. If the project includes an implementation, it should be described in terms of architectural and design decisions. Low-level programming details should be reserved for the appendices.
+\section{Problem Statement}
 
-Figures and tables can be embedded in the document, and both must be referenced directly in the text. For instance, Figure~\ref{fig:logos} shows a placeholder diagram, while Table~\ref{table:data} contains sample numbers.
+Machine learning models routinely achieve near-perfect scores on test benchmarks. However, they frequently break down when launched into critical real-world fields like healthcare, environmental science, and urban infrastructure. This failure happens because traditional machine learning models are trained to recognise simple patterns in past data rather than understand how things actually work. When real-world conditions change, or when datasets are incomplete and full of hidden factors, these models rely on misleading shortcuts that don't hold up in practice. 
 
-\begin{figure}[htbp]
-  \centering
-  \begin{tikzpicture}
-    \draw[thick, fill=blue!10] (0,0) rectangle (10,3);
-    \node at (5,1.5) {\Large \textbf{Project / Institution Logo Placeholder}};
-  \end{tikzpicture}
-  \caption{Standalone vector placeholder for institutional logos}
-  \label{fig:logos}
-\end{figure}
+Relying on these pattern-matching models in high-stakes environments can lead to incorrect decisions, system failures, and a loss of trust in machine learning technology. To build reliable systems, we must shift away from basic pattern recognition. Instead, we need smarter training techniques that focus on true cause-and-effect relationships, ensuring that these models stay accurate and adaptable no matter how the real world changes.
 
-\begin{table}[htbp]
-\centering
-\begin{tabular}{| c | c | c | c |} 
-  \hline
-  Col1 & Col2 & Col3 & Col4 \\  
-  \hline
-  1 & 970 & 67 & 941 \\ 
-  2 & 668 & 845 & 141 \\
-  3 & 800 & 383 & 464 \\
-  4 & 143 & 683 & 502 \\
-  \hline
-\end{tabular}
-\caption{Table with data}
-\label{table:data}
-\end{table}
+\section{Research Objectives}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{General Objective}
 
-% Experimental Evaluation
-\chapter{Experimental Evaluation}
-It may be necessary to include an Experimental Evaluation chapter, detailing tests performed (test cases), results obtained, and a corresponding discussion, which may include comparative analysis.
+State the overarching goal of your report. Define this as evaluating and synthesizing state-of-the-art ML/DL paradigms across complex predictive domains. 1 General Objective (synthesizing SOTA machine learning approaches across non-stationary real-world domains).
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Specific Objectives}
 
-% Conclusions
-\chapter{Conclusions and Future Work}
-This chapter evaluates the achievements and obstacles encountered, comparing what was originally planned against what was actually accomplished. It highlights the main contributions, discusses potential extensions of the work, and presents a self-critique regarding what was done and what remains missing.
+Detail 4 concrete Specific Objectives directly matching your selected papers (e.g., analyzing invariant risk minimization, causal inference/DML, dynamic spatio-temporal modeling, and data augmentation). Break down the main goal into evaluating specific algorithms, comparing benchmark results, and identifying critical performance limitations.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 3. Related Prior Research Works / Literature Review
+\chapter{Related Prior Research Works / Literature Review}
+
+This chapter categorizes the surveyed publications (2025–2026) across distinct domain taxonomies and summarizes their foundational contributions.
+
+\section{Background and Taxonomy}
+
+Classify the surveyed research papers into logical categories. Guide: Group your papers into coherent sub-themes (e.g., Causal \& Invariant Representation Learning, Data Augmentation \& Imbalance Solutions, Dynamic Spatio-Temporal Networks).
+
+\section{Comparative Review of Selected Papers}
+
+Synthesize the contributions, scope, and methodologies of each paper. Use a structured format (such as a comparative summary table followed by concise narrative synthesis) to compare target applications, core techniques, and main findings. APA 7 comparative summary table (using booktabs) categorizing all 6 target papers by Domain, Core Problem, Proposed ML/DL Method, and Primary Benchmark Result.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 4. Research Methodology / Algorithms Used
+\chapter{Research Methodology / Algorithms Used}
+
+This chapter details the core mathematical formulations, algorithmic workflows, and system pipelines across the surveyed contributions.
+
+\section{Mathematical \& Theoretical Foundations}
+
+Detail the core formulas and governing principles behind key algorithms. Include exact mathematical formulations for methods like Sparsity-Gated IRM ($L_0$ regularization), Targeted Maximum Likelihood Estimation (TMLE), or specialized spatial-temporal networks.
+
+\subsection{Sparsity-Gated Invariant Risk Minimization (SG-IRM)}
+
+Domain shift. Doubly Robust Causal Machine Learning (TMLE vs. AIPW)
+
+\subsection{Double/Debiased Machine Learning (DML)}
+
+Neyman Orthogonality and Cross-Fitting for causal inference.
+
+\subsection{Dynamic Spatio-Temporal/Deep Learning Networks}
+
+ConvLSTM/Spatial-Temporal Graph Neural Networks for traffic/climate
+
+\subsection{Class Imbalance \& Augmentation Algorithms}
+
+SMOTE, GANs, or Autoencoders for maternal health risk
+
+\section{Algorithmic Workflows \& Architecture}
+
+Explain the operational pipelines of the models. Use workflow diagrams, code blocks, or step-by-step pseudo-logic to illustrate cross-fitting, ensembling (Super Learner), or deep network integration.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 5. Performance Evaluation / Discussion on the Results and Contributions
+\chapter{Performance Evaluation / Discussion on the Results and Contributions}
+
+This chapter synthesizes empirical findings, highlighting comparative benchmarks across the surveyed literature.
+
+\section{Experimental Results \& Metrics}
+
+Present quantitative performance metrics across the reviewed methodologies. Tabulate and compare key metrics (e.g., accuracy under domain shift, nominal coverage, relative bias, RMSE, or F1-score) against baseline models like standard Empirical Risk Minimization (ERM). Require a unified quantitative performance comparison table contrasting classical Empirical Risk Minimization (ERM) / Baseline models against the proposed methodologies across all 6 domains using relevant domain metrics (e.g., F1-Score, RMSE, Coverage Probability, ATE Bias).
+
+\section{Critical Analysis, Advantages, and Limitations}
+
+Discuss the strengths and operational weaknesses of the reviewed algorithms. Critically evaluate trade-offs such as hyper-parameter optimization overhead, sample splitting requirements, computational costs, and real-time deployment constraints.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 6. Conclusion & Future Work
+\chapter{Conclusion \& Future Work}
+
+\section{Conclusion}
+
+Recapitulate the main insights derived from the synthesized literature. Restate how advanced algorithmic constraints (e.g., explicit sparsity, cross-fitting) overcome traditional ML pitfalls.
+
+\section{Suggestions for Future Enhancements}
+
+Propose concrete pathways for future theoretical and applied advancements. Suggest hybrid research avenues, such as integrating differentiable sparsity gates into doubly robust causal models or developing real-time adaptive cross-fitting. Provide concrete future directions such as hybridizing differentiable sparsity gates (SG-IRM) with Double Machine Learning (DML) to enable robust causal inference under high-dimensional data shifts.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Back Matter
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Inline Bibliography (replaces external .bib file)
+% References (APA 7 Format)
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliography}
 
@@ -164,11 +214,7 @@ Author, E. (2025). Title of online resource or technical report. Retrieved from 
 
 % Appendices
 \appendix
-
-\chapter{Appendix 1}
-Appendices contain supplementary material that is useful but not strictly essential to understanding the core report. For example, detailed technical specifications, background material, or complete source code summaries that were condensed in the main body. For software development projects, a user manual should be included here.
-
-\section{Appendix Section}
-Appendices can also be divided into sections.
+\chapter{Supplementary Data}
+Additional metric breakdown tables, raw benchmark convergence logs, and parameter configurations for all Super Learner algorithms are maintained in the project repository.
 
 \end{document}
