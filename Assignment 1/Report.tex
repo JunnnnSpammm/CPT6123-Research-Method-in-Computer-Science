@@ -10,10 +10,7 @@
 \usepackage{hyperref}
 \usepackage{booktabs}
 \usepackage{array}
-
-% APA 7 Style Citation Support
-% \usepackage[apaciteclassic]{apacite}
-% \bibliographystyle{apacite}
+\usepackage{amsmath, amssymb}
 
 % Hyperlink configuration
 \hypersetup{
@@ -57,10 +54,18 @@
 % Abstract
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
-The abstract (200--500 words) should provide a comprehensive overview of the entire project, clearly stating the formalisms, techniques, tools, and languages used. It should not be limited to describing the problem addressed, but must also describe the proposed solution alongside its evaluation. It must not include bibliographic references or citations to other parts of the report, nor should it use acronyms without defining their meaning first.
+
+% Summarize the report in 200--500 words. 
+% 1) Highlight the core real-world challenges of standard Generative Adversarial Networks (GANs): data scarcity/overfitting, mode collapse/training instability, and severe class imbalance/complex domain constraints.
+% 2) Introduce the 9 reviewed GAN architectures across three synthesized thematic paradigms:
+%    - Data Scarcity & Virtual Sample Generation (VSG): DCRGAN-VSG, Parallelly Tempered GAN (PTGAN), DCGAN vs. CGAN Baseline.
+%    - Mode Exploration & Topological/Gradient Stabilization: SOMGAN, PTGAN, and RSM-GAN.
+%    - Class Imbalance, Cost-Sensitivity & Label Noise Disambiguation: EID-GAN, CTGAN/Copula GAN, Cost-Sensitive Two-Channel GAN (CS-GAN), and Inaccurate-Supervised Learning GAN (ISL-GAN).
+% 3) Synthesize quantitative highlights: DCRGAN-VSG achieving ~70% benchmark and ~40% industrial soft sensor accuracy improvements; SOMGAN achieving 99.7% category coverage on ImageNet; EID-GAN cutting defect error-escape rates under extreme imbalance; PTGAN drastically reducing gradient variance under multimodality; and CTGAN synthesizing high-fidelity tabular electronic health records.
+% Note: Do NOT include bibliographic citations or unexpanded acronyms in the abstract.
 
 \vspace{1em}
-\noindent\keywords{Machine Learning, Invariant Risk Minimization, Causal Inference, Deep Learning, Spatio-Temporal Modeling, Software Defect Prediction}
+\noindent\keywords{Generative Adversarial Networks, Virtual Sample Generation, Mode Collapse, Class Imbalance, Topological Constraints, Cost-Sensitive Learning, Tabular Synthesis}
 
 \newpage
 
@@ -77,144 +82,192 @@ The abstract (200--500 words) should provide a comprehensive overview of the ent
 \chapter{Introduction}
 
 \section{Study Background}
-
-Introduce the rising importance of machine learning (ML) and deep learning (DL) in complex domain applications. Briefly frame how traditional models struggle with high-dimensional data, non-stationary patterns, and domain shifts.
+% Discuss the background of Generative Adversarial Networks (GANs) as core backbones in generative machine learning and data synthesis.
+% Explain the fundamental two-player zero-sum game between Generator (G) and Discriminator (D).
+% Detail how real-world mission-critical deployments depart from theoretical assumptions due to:
+% - Limited sample sizes and severe overfitting (e.g., industrial soft sensing, tabular electronic health records),
+% - Mode collapse and vanishing/unstable gradient variance over multimodal manifolds,
+% - Extreme class imbalance (e.g., tiny visual defect outliers) and ambiguous/inaccurate supervision.
 
 \section{Scope of the Report}
-
-Outline the thematic domains covered across the reviewed literature. List the specific fields present in your papers (e.g., healthcare, autonomous systems, software engineering, dynamic climate systems). Must frame the real-world operational context across the selected domains.
+% Define the scope across the 9 selected peer-reviewed GAN papers (2021--2026):
+% 1. Industrial Process Virtual Sample Generation: DCRGAN-VSG (Zhu et al., 2025)
+% 2. Topological Multi-Discriminator Mode Capture: SOMGAN (Li et al., 2024)
+% 3. Extremely Imbalanced Tiny-Defect Augmentation: EID-GAN (Li et al., 2023)
+% 4. Mixed-Type Tabular Healthcare Synthesis: CTGAN & Copula GAN (Bietsch et al., 2023)
+% 5. Multi-Class Cost-Sensitive Synthesis: Two-Channel CS-GAN (Chen et al., 2021)
+% 6. Inaccurate-Supervised Weak Label Disambiguation: ISL-GAN (Zhang et al., 2023)
+% 7. Parallel Tempering & Gradient Variance Stabilization: PTGAN (Sohn & Song, 2026)
+% 8. Sketched Geometric & Style-Based Synthesis: RSM-GAN (Zuo et al., 2023)
+% 9. Structural Convolutional vs. Conditional Frameworks: DCGAN vs. CGAN Baseline (Li & Zhang, 2021)
 
 \section{Report Structure}
-
-Summarize how the document is organized. Provide a 2–3 sentence roadmap explaining what is covered in Chapters 2 through 6. All 9 chosen papers must be explicitly mapped to their applied domains (Software Engineering, Grocery Retail, Autonomous Systems, Healthcare, Climate Science, and Intelligent Transportation)
+% Provide a clear roadmap of Chapters 2 to 6.
+% Detail how the 9 papers are grouped across their mathematical mechanisms (regression constraints, topological grids, norm penalties, parallel convex interpolations, and cost matrices) and operational domains.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 2. Problem Statement and Objectives
 \chapter{Problem Statement and Objectives}
 
-This chapter details the fundamental technical limitations identified across the surveyed literature and outlines the primary objectives of this synthesized review.
-
 \section{Problem Statement}
+Generative Adversarial Networks (GANs) are AI models that generate new, realistic data such as images or medical scans by having two networks compete against each other: a Generator that synthesises the data and a Discriminator that catches the synthesised data. While they work well in ideal conditions, standard GANs often fail in real-world applications due to three main problems:
 
-Machine learning models routinely achieve near-perfect scores on test benchmarks. However, they frequently break down when launched into critical real-world fields like healthcare, environmental science, and urban infrastructure. This failure happens because traditional machine learning models are trained to recognise simple patterns in past data rather than understand how things actually work. When real-world conditions change, or when datasets are incomplete and full of hidden factors, these models rely on misleading shortcuts that don't hold up in practice. 
+\begin{enumerate}
+    \item \textbf{Data Scarcity \& Overfitting:} When training on very small datasets, standard models end up memorising the few examples they have rather than learning the broader patterns and subtle relationships within the data.
 
-Relying on these pattern-matching models in high-stakes environments can lead to incorrect decisions, system failures, and a loss of trust in machine learning technology. To build reliable systems, we must shift away from basic pattern recognition. Instead, we need smarter training techniques that focus on true cause-and-effect relationships, ensuring that these models stay accurate and adaptable no matter how the real world changes.
+    \item \textbf{Mode Collapse \& Instability:} When a single creator competes with a single judge, the creator often finds one trick that fools the judge and repeats only that specific pattern, resulting in repetitive outputs and missing out on variety.
+
+    \item \textbf{Class Imbalance \& Complex Constraints:} Traditional tools have trouble learning scenarios where some data types are extremely rare, such as spotting an uncommon disease or where data changes across time and space.
+\end{enumerate}
+    
+\textbf{Objective:} This report tests and compares 9 advanced GAN models to see which designs best solve these issues, ensuring the AI generates diverse, reliable data even when working with small, unbalanced, or complex real-world datasets.
 
 \section{Research Objectives}
 
 \subsection{General Objective}
-
-State the overarching goal of your report. Define this as evaluating and synthesizing state-of-the-art ML/DL paradigms across complex predictive domains. 1 General Objective (synthesizing SOTA machine learning approaches across non-stationary real-world domains).
+% State the general objective: To synthesize, evaluate, and comparatively benchmark 9 advanced Generative Adversarial Network (GAN) architectures across real-world domains to mitigate data scarcity, eliminate mode collapse, and rectify extreme class/label imbalance.
 
 \subsection{Specific Objectives}
-
-Detail 4 concrete Specific Objectives directly matching your selected papers (e.g., analyzing invariant risk minimization, causal inference/DML, dynamic spatio-temporal modeling, and data augmentation). Break down the main goal into evaluating specific algorithms, comparing benchmark results, and identifying critical performance limitations.
+% Detail 4 aligned specific objectives:
+% 1. Evaluate Virtual Sample Generation (VSG) via Dual Correlation GANs (DCRGAN-VSG) and Parallelly Tempered GANs (PTGAN) for small-sample regression and data scarcity.
+% 2. Analyze Topological & Structural Anti-Collapse Mechanisms via Self-Organizing Map GANs (SOMGAN), Parallel Tempering (PTGAN), and Sketched Style GANs (RSM-GAN) to resolve mode collapse.
+% 3. Evaluate Extreme Imbalance and Defect Augmentation using Norm-Penalty GANs (EID-GAN) and Conditional Tabular GANs (CTGAN) on sparse, high-dimensional target spaces.
+% 4. Synthesize Cost-Sensitive and Weakly Supervised Disambiguation Models using Two-Channel CS-GAN and ISL-GAN under unequal misclassification costs and ambiguous multi-label sets.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 3. Related Prior Research Works / Literature Review
 \chapter{Related Prior Research Works / Literature Review}
 
-This chapter categorizes the surveyed publications (2025–2026) across distinct domain taxonomies and summarizes their foundational contributions.
-
 \section{Background and Taxonomy}
-
-Classify the surveyed research papers into logical categories. Guide: Group your papers into coherent sub-themes (e.g., Causal \& Invariant Representation Learning, Data Augmentation \& Imbalance Solutions, Dynamic Spatio-Temporal Networks).
+% Group the 9 GAN papers into 3 core taxonomies:
+% - Taxonomy A: Data Scarcity & Virtual Sample Generation (DCRGAN-VSG [Paper 1], PTGAN [Paper 7], DCGAN vs. CGAN Baseline [Paper 9])
+% - Taxonomy B: Mode Collapse & Discriminator Regularization (SOMGAN [Paper 2], PTGAN [Paper 7], RSM-GAN [Paper 8])
+% - Taxonomy C: Extreme Imbalance, Cost-Sensitivity & Ambiguous Supervision (EID-GAN [Paper 3], CTGAN/Copula GAN [Paper 4], CS-GAN [Paper 5], ISL-GAN [Paper 6])
 
 \section{Comparative Review of Selected Papers}
-
-Synthesize the contributions, scope, and methodologies of each paper. Use a structured format (such as a comparative summary table followed by concise narrative synthesis) to compare target applications, core techniques, and main findings. APA 7 comparative summary table (using booktabs) categorizing all 6 target papers by Domain, Core Problem, Proposed ML/DL Method, and Primary Benchmark Result.
+% Provide an in-depth critical narrative comparing the 9 GAN architectures.
+% Highlight differences in generator conditioning, discriminator dynamics, loss formulations, and domain adaptations.
+% Include a comprehensive comparative summary table using 'booktabs' (Paper, Model, Target Problem, Core Mechanism, Evaluation Dataset, Primary Metrics).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 4. Research Methodology / Algorithms Used
 \chapter{Research Methodology / Algorithms Used}
 
-This chapter details the core mathematical formulations, algorithmic workflows, and system pipelines across the surveyed contributions.
-
 \section{Mathematical \& Theoretical Foundations}
 
-Detail the core formulas and governing principles behind key algorithms. Include exact mathematical formulations for methods like Sparsity-Gated IRM ($L_0$ regularization), Targeted Maximum Likelihood Estimation (TMLE), or specialized spatial-temporal networks.
+\subsection{Virtual Sample Generation \& Tempered Distributions}
+% Mathematical formulation of:
+% - DCRGAN-VSG: WGAN-GP loss L_Dx, Regression-Constrained CGAN (RC-CGAN) loss with MSE term L_Gy, and Pielou Evenness Index (E_j = -\sum P_i \ln P_i / \ln n) for sample space gap filling.
+% - PTGAN: Convex interpolation Q^\alpha = \alpha X_1 + (1-\alpha) X_2, neural distance under scaled 1-Wasserstein metric, and coherency gradient regularization penalty H.
 
-\subsection{Sparsity-Gated Invariant Risk Minimization (SG-IRM)}
+\subsection{Multi-Discriminator \& Topological Constraint Formulations}
+% Mathematical formulation of:
+% - SOMGAN: 2D lattice topology R, Best-Matching Discriminator (BMD) selection D_c = argmax D_i(x), and neighborhood decay weighting h_{ci}(t) = \exp(-DM[c,i] / 2\sigma^2(t)).
+% - RSM-GAN: ResNet encoder, style-based mapping/synthesis network, Markovian patch discriminator, and L1 reconstruction + adversarial loss.
 
-Domain shift. Doubly Robust Causal Machine Learning (TMLE vs. AIPW)
-
-\subsection{Double/Debiased Machine Learning (DML)}
-
-Neyman Orthogonality and Cross-Fitting for causal inference.
-
-\subsection{Dynamic Spatio-Temporal/Deep Learning Networks}
-
-ConvLSTM/Spatial-Temporal Graph Neural Networks for traffic/climate
-
-\subsection{Class Imbalance \& Augmentation Algorithms}
-
-SMOTE, GANs, or Autoencoders for maternal health risk
+\subsection{Norm-Penalty, Tabular \& Cost-Sensitive Imbalance Learning}
+% Mathematical formulation of:
+% - EID-GAN: Outlier-guided cropped norm penalty f_outlier = \lambda |ano_i - G_crop(z)| integrated into minimax objective.
+% - CTGAN & Copula GAN: Mode-specific normalization for continuous variables, conditional generator with PacGAN discriminator, and Gaussian copula transformations.
+% - CS-GAN: Two-channel global/local generator, cost matrix C with false acceptance (\lambda_PN), false rejection (\lambda_NP), and false identification (\lambda_PP) risk minimization.
+% - ISL-GAN: Inaccurate candidate label conditioning, L+1 dimensional discriminator for joint source discrimination and class label disambiguation.
 
 \section{Algorithmic Workflows \& Architecture}
 
-Explain the operational pipelines of the models. Use workflow diagrams, code blocks, or step-by-step pseudo-logic to illustrate cross-fitting, ensembling (Super Learner), or deep network integration.
+\subsection{Virtual Sample Generation Pipeline (DCRGAN \& PTGAN Workflows)}
+% Step-by-step procedural execution: latent sampling, dual generator mapping, Pielou filtering, and parallel temperature scheduling.
+
+\subsection{Topological \& Multi-Discriminator Pipeline (SOMGAN \& RSM-GAN Workflows)}
+% Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
+
+\subsection{Imbalanced, Tabular \& Cost-Sensitive Augmentation Pipeline (EID-GAN, CTGAN, CS-GAN, ISL-GAN)}
+% Step-by-step logic: outlier cropping/norm penalty minimization, tabular column-wise sampling, cost-sensitive posterior optimization, and multi-label disambiguation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 5. Performance Evaluation / Discussion on the Results and Contributions
 \chapter{Performance Evaluation / Discussion on the Results and Contributions}
 
-This chapter synthesizes empirical findings, highlighting comparative benchmarks across the surveyed literature.
-
 \section{Experimental Results \& Metrics}
-
-Present quantitative performance metrics across the reviewed methodologies. Tabulate and compare key metrics (e.g., accuracy under domain shift, nominal coverage, relative bias, RMSE, or F1-score) against baseline models like standard Empirical Risk Minimization (ERM). Require a unified quantitative performance comparison table contrasting classical Empirical Risk Minimization (ERM) / Baseline models against the proposed methodologies across all 6 domains using relevant domain metrics (e.g., F1-Score, RMSE, Coverage Probability, ATE Bias).
+% Present a unified synthesis table summarizing empirical findings across all 9 papers:
+% - Soft sensing accuracy (RMSE, MAE, R^2, EIR_RMSE) for DCRGAN-VSG,
+% - Mode coverage (category count, entropy, FID) on ImageNet/CIFAR-10 for SOMGAN,
+% - Defect detection metrics (Error-Escape, False-Alarm, F1-score) for EID-GAN,
+% - Tabular utility & privacy (macro F1, aggregated score, duplicate count) for CTGAN/Copula GAN,
+% - Cost-sensitive recognition error and total misclassification cost for CS-GAN,
+% - Weak label classification accuracy and ranking loss for ISL-GAN,
+% - Gradient variance and downstream AUC/fairness (Statistical Parity) for PTGAN,
+% - Sketch recognition FID for RSM-GAN,
+% - Convergence stability and loss dynamics for DCGAN vs. CGAN.
 
 \section{Critical Analysis, Advantages, and Limitations}
-
-Discuss the strengths and operational weaknesses of the reviewed algorithms. Critically evaluate trade-offs such as hyper-parameter optimization overhead, sample splitting requirements, computational costs, and real-time deployment constraints.
+% Provide deep qualitative insights:
+% - DCRGAN-VSG: Accurately preserves input-output mappings in small-sample data, but over-generation risks distorting sample space topology.
+% - SOMGAN: Decouples multi-modal features without computational explosion via parameter sharing, but relies heavily on initial grid geometry.
+% - EID-GAN: Successfully synthesizes tiny localized outliers (0.05% pixel ratio), but requires explicit bounding/mask annotations.
+% - CTGAN: Excels at capturing mixed-type tabular distributions, but suffers from extended training times and minority-class underrepresentation in extreme cardinality.
+% - CS-GAN: Drastically lowers high-stakes error costs, but requires pre-specified domain cost matrices.
+% - ISL-GAN: Bridges generative modeling with noisy label disambiguation, but depends on candidate label set assumptions.
+% - PTGAN: Effectively eliminates gradient variance without heuristic annealing schedules, but introduces minor bias in non-target temperatures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 6. Conclusion & Future Work
+% 6. Conclusion \& Future Work
 \chapter{Conclusion \& Future Work}
 
 \section{Conclusion}
-
-Recapitulate the main insights derived from the synthesized literature. Restate how advanced algorithmic constraints (e.g., explicit sparsity, cross-fitting) overcome traditional ML pitfalls.
+% Recapitulate the comparative findings. Summarize how the 9 reviewed GAN paradigms systematically overcome data scarcity, mode collapse, class imbalance, and complex operational constraints across diverse industrial, medical, and visual domains.
 
 \section{Suggestions for Future Enhancements}
-
-Propose concrete pathways for future theoretical and applied advancements. Suggest hybrid research avenues, such as integrating differentiable sparsity gates into doubly robust causal models or developing real-time adaptive cross-fitting. Provide concrete future directions such as hybridizing differentiable sparsity gates (SG-IRM) with Double Machine Learning (DML) to enable robust causal inference under high-dimensional data shifts.
+% Propose 3 concrete research frontiers:
+% 1. Unified Hybridization: Combining SOMGAN topological discriminators with PTGAN parallel convex tempering to eliminate mode collapse across arbitrary non-convex manifolds.
+% 2. Tabular VSG Integration: Merging DCRGAN regression constraints with CTGAN conditional generators for small-sample, mixed-type tabular datasets in healthcare and industrial IoT.
+% 3. Automated Cost-Sensitive and Outlier Regularization: Developing end-to-end adaptive loss weighting that dynamically optimizes EID-GAN norm penalties and CS-GAN cost matrices directly from streaming data distributions.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Back Matter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% References (APA 7 Format)
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliography}
 
-\bibitem{CitekeyArticle}
-Author, A. (2024). Title of the journal article. \emph{Journal Name}, 10(2), 123--130.
+\bibitem{Zhu2025DCRGAN}
+Zhu, Q.-X., Zhang, J.-L., Song, X.-L., He, Y.-L., \& Xu, Y. (2025). A novel virtual sample generation method based on dual correlation generative adversarial nets for soft sensing application. \emph{Information Sciences}, 717, 122334. \url{https://doi.org/10.1016/j.ins.2025.122334}
 
-\bibitem{CitekeyBook}
-Author, B., \& Coauthor, C. (2023). \emph{Title of the Book}. Publisher Name.
+\bibitem{Li2024SOMGAN}
+Li, W., He, Y., \& Tang, Y. (2024). Improving mode exploring capability of generative adversarial nets by self-organizing map. \emph{Neurocomputing}, 576, 127244. \url{https://doi.org/10.1016/j.neucom.2024.127244}
 
-\bibitem{CitekeyInproceedings}
-Author, D. (2022). Title of the conference paper. In \emph{Proceedings of the International Conference} (pp. 45--52).
+\bibitem{Li2023EIDGAN}
+Li, W., Chen, J., Cao, J., Ma, C., Wang, J., Cui, X., \& Chen, P. (2023). EID-GAN: Generative adversarial nets for extremely imbalanced data augmentation. \emph{IEEE Transactions on Industrial Informatics}, 19(3), 3208--3218. \url{https://doi.org/10.1109/TII.2022.3182781}
 
-\bibitem{CitekeyManual}
-Organization. (2021). \emph{Software Reference Manual} (v2.0).
+\bibitem{Bietsch2023CTGAN}
+Bietsch, D., Stahlbock, R., \& Voß, S. (2023). Electronic health data in the context of patient length-of-stay prediction: Using generative adversarial nets for synthetic data creation. In \emph{2023 Congress in Computer Science, Computer Engineering, \& Applied Computing (CSCE)} (pp. 1597--1604). IEEE. \url{https://doi.org/10.1109/CSCE60160.2023.00262}
 
-\bibitem{CitekeyMisc}
-Author, E. (2025). Title of online resource or technical report. Retrieved from \url{https://example.com}
+\bibitem{Chen2021CSGAN}
+Chen, Z., Li, H., Zhou, Y., \& Wu, J. (2021). Generative adversarial nets for cost-sensitive face recognition. In \emph{2021 IEEE Conference on Big Data and Artificial Intelligence} (pp. 1--6). IEEE.
+
+\bibitem{Zhang2023ISLGAN}
+Zhang, Y., Lian, H., Yang, G., Zhao, S., Ni, P., Chen, H., \& Li, C. (2023). Inaccurate-supervised learning with generative adversarial nets. \emph{IEEE Transactions on Cybernetics}, 53(3), 1522--1536. \url{https://doi.org/10.1109/TCYB.2021.3104848}
+
+\bibitem{Sohn2026PTGAN}
+Sohn, J., \& Song, Q. (2026). Parallelly tempered generative adversarial nets: Toward stabilized gradients. \emph{Journal of the American Statistical Association}, 1--13. \url{https://doi.org/10.1080/01621459.2026.2688612}
+
+\bibitem{Zuo2023RSMGAN}
+Zuo, H., Zhou, Y., \& Chen, S. (2023). Sketched irregular military symbols recognition via generative adversarial nets. In \emph{2023 9th International Conference on Big Data and Information Analytics (BigDIA)} (pp. 279--285). IEEE. \url{https://doi.org/10.1109/BigDIA60676.2023.10429224}
+
+\bibitem{Li2021DCGAN}
+Li, X., \& Zhang, Z. (2021). The comparison between conditional generative adversarial nets and deep convolutional generative adversarial network, and its GUI-related application. In \emph{2021 2nd International Conference on Big Data \& Artificial Intelligence \& Software Engineering (ICBASE)} (pp. 601--609). IEEE. \url{https://doi.org/10.1109/ICBASE53849.2021.00119}
 
 \end{thebibliography}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Appendices
 \appendix
 \chapter{Supplementary Data}
-Additional metric breakdown tables, raw benchmark convergence logs, and parameter configurations for all Super Learner algorithms are maintained in the project repository.
+Additional metric breakdown tables, raw benchmark convergence logs, and algorithmic hyperparameter configurations for DCRGAN-VSG, SOMGAN, EID-GAN, and PTGAN are maintained in the project repository.
 
 \end{document}
