@@ -1,0 +1,67 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage{amsmath}
+\usepackage{IEEEtrantools}
+
+\begin{document}
+
+$c$ equals $a$ plus $b$. Mathematically,
+it is presented as
+$c$ = $a$ + $b$.
+
+% Simple Equation
+\begin{equation}
+a^2+b^2=c^2
+\end{equation}
+
+\begin{equation}
+x^3+y^3=z^3
+\end{equation}
+
+% IEEEeqnarray
+\begin{IEEEeqnarray}{rCl}
+a & = & b+c \\
+& = & d+e+f+g+h+i+j+k \nonumber \\
+&& +\: l+m+n \\
+& = & p+q+r+s
+\end{IEEEeqnarray}
+
+% Arrays and matrices
+\begin{equation*}
+\mathbf{X}= \left(
+\begin{array}{ccc}
+x_1 & x_2 & \ldots \\
+x_3 & x_4 & \ldots \\
+\vdots & \vdots & \ddots \\
+\end{array} \right)
+\end{equation*}
+
+% Piecewise functions
+\begin{equation*}
+x = \left\{
+\begin{array}{rl}
+-x & \text{if } x<0,\\
+0 & \text{if } x=0,\\
+x & \text{if } x>0.
+\end{array} \right.
+\end{equation*}
+
+% Fraction
+\begin{equation*}
+P = \frac{1}{3} \times \frac{x}{y^2}
+\end{equation*}
+
+% Sums and Product
+\begin{equation*}
+X = \sum_{i=1}^n (x^2-x)
+\end{equation*}
+\begin{equation*}
+Y = \left[\prod_{i=1}^n (X|x_n) \right]^{\frac{1}{2}}
+\end{equation*}
+
+% Math Fonts
+$\mathrm{ABCDE \qquad abcde \qquad 12345}$ \\
+$\mathit{ABCDE \qquad abcde \qquad 12345}$ \\
+$\mathnormal{ABCDE \qquad abcde \qquad 12345}$ \\
+$\mathcal{ABCDE \qquad abcde \qquad 12345}$
+
+\end{document}

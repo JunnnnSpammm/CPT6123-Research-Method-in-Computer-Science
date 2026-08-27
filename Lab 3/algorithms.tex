@@ -1,0 +1,41 @@
+\documentclass{article}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+
+\begin{algorithm}
+\caption{MyTestingProcedure}
+
+\begin{algorithmic}[1]
+\Procedure {MyTestingProcedure}{$G$,$p$}
+\If {$p\geq G$}
+\State $p\gets G$
+\Else
+\If {$p+k\leq G$}
+\State $G\gets p+k$
+\EndIf
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{FindPathBK}
+
+\begin{algorithmic}[1]
+\Procedure {FindPathBK}{$v$, $u$, $p$}
+\If {$v = u$}
+\State \textbf{Write} $v$
+\Else
+\State $w \leftarrow v$
+\While {$w \not= u$}
+\State \textbf{Write} $w$
+\State $w \leftarrow p(w)$
+\EndWhile
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\end{document}
