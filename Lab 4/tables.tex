@@ -1,0 +1,90 @@
+\documentclass{article}
+\usepackage{multirow}
+
+\begin{document}
+
+\begin{tabular}{|c|}
+\hline
+row 1 \\
+\hline
+This is row 2 \\
+\hline
+Hi, this is another row, row 3 \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|l|}
+\hline
+left item & right side of row 1, name it item 2\\
+\hline
+row 2 and this is for item 1 & row 2.item2\\
+\hline
+row 3.item1 & row 3.item2\\
+\hline
+\end{tabular}
+
+\begin{tabular}{l c r}
+\hline
+left aligned & align text in center & make it on right side\\
+\hline
+row 2 and left for item 1 & center & something\\
+\hline
+row 3.item1 & center & yet another-right\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|c|r|}
+\hline
+left aligned & align text in center & make it on right side\\
+\cline{1-1}
+row 2 and left for item 1 & center & something\\
+\cline{2-3}
+row 3.item1 & center & yet another-right\\ 
+\hline
+\end{tabular}
+
+\begin{tabular}{|c|r|}
+\hline
+10 & ten\\
+\hline
+20 & tan \& goh\\
+\hline
+30 & thirty\\
+\hline
+\hline
+40 & my age\\
+\hline
+\end{tabular}
+
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{Testing}\\
+\hline
+data 1(left column) & data 2 on the second column\\
+\hline
+\end{tabular}
+
+\begin{tabular}{c c c}
+\hline
+\hline
+\multicolumn{3}{c}{Accuracy (\%)}\\
+\hline
+& Model 1 & Model 2\\
+Dataset 1 & 80 & 90\\
+Dataset 2 & 90 & 70\\
+\hline
+Average & ? & ?\\
+\hline
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|c|c|}
+\hline
+\multirow{2}{*}{Already Merged} &
+\multicolumn{2}{|l|}{Two columns} \\
+\cline{2-3}
+& 2 & 3 \\
+\hline
+\end{tabular}
+
+\end{document}
