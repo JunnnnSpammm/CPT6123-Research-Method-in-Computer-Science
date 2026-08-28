@@ -114,26 +114,39 @@
 Generative Adversarial Networks (GANs) are AI models that generate new, realistic data such as images or medical scans by having two networks compete against each other: a Generator that synthesises the data and a Discriminator that catches the synthesised data. While they work well in ideal conditions, standard GANs often fail in real-world applications due to three main problems:
 
 \begin{enumerate}
-    \item \textbf{Data Scarcity \& Overfitting:} When training on very small datasets, standard models end up memorising the few examples they have rather than learning the broader patterns and subtle relationships within the data.
+    \item \textbf{Data Scarcity \& Overfitting:} 
+    When training on very small datasets, standard models end up memorising the few examples they have rather than learning the broader patterns and subtle relationships within the data.
 
-    \item \textbf{Mode Collapse \& Instability:} When a single creator competes with a single judge, the creator often finds one trick that fools the judge and repeats only that specific pattern, resulting in repetitive outputs and missing out on variety.
+    \item \textbf{Mode Collapse \& Instability:} 
+    When a single creator competes with a single judge, the creator often finds one trick that fools the judge and repeats only that specific pattern, resulting in repetitive outputs and missing out on variety.
 
-    \item \textbf{Class Imbalance \& Complex Constraints:} Traditional tools have trouble learning scenarios where some data types are extremely rare, such as spotting an uncommon disease or where data changes across time and space.
+    \item \textbf{Class Imbalance \& Complex Constraints:} 
+    Traditional tools have trouble learning scenarios where some data types are extremely rare, such as spotting an uncommon disease or where data changes across time and space.
 \end{enumerate}
     
-\textbf{Objective:} This report tests and compares 9 advanced GAN models to see which designs best solve these issues, ensuring the AI generates diverse, reliable data even when working with small, unbalanced, or complex real-world datasets.
+\noindent\textbf{Aim:} This report tests and compares 9 advanced GAN models to see which designs best solve these issues, ensuring the AI generates diverse, reliable data even when working with small, unbalanced, or complex real-world datasets.
 
 \section{Research Objectives}
 
 \subsection{General Objective}
-% State the general objective: To synthesize, evaluate, and comparatively benchmark 9 advanced Generative Adversarial Network (GAN) architectures across real-world domains to mitigate data scarcity, eliminate mode collapse, and rectify extreme class/label imbalance.
+To evaluate, compare, and measure 9 advanced Generative Adversarial Network (GAN) models across real-world data challenges, identifying the most effective methods to handle limited data, eliminate repetitive outputs, prevent mode collapse, and fix severe data imbalances. 
 
 \subsection{Specific Objectives}
-% Detail 4 aligned specific objectives:
-% 1. Evaluate Virtual Sample Generation (VSG) via Dual Correlation GANs (DCRGAN-VSG) and Parallelly Tempered GANs (PTGAN) for small-sample regression and data scarcity.
-% 2. Analyze Topological & Structural Anti-Collapse Mechanisms via Self-Organizing Map GANs (SOMGAN), Parallel Tempering (PTGAN), and Sketched Style GANs (RSM-GAN) to resolve mode collapse.
-% 3. Evaluate Extreme Imbalance and Defect Augmentation using Norm-Penalty GANs (EID-GAN) and Conditional Tabular GANs (CTGAN) on sparse, high-dimensional target spaces.
-% 4. Synthesize Cost-Sensitive and Weakly Supervised Disambiguation Models using Two-Channel CS-GAN and ISL-GAN under unequal misclassification costs and ambiguous multi-label sets.
+To achieve the general objective, the report addresses the following four specific research objectives:
+
+\begin{enumerate}
+    \item \textbf{Evaluate Models for Small Datasets (Data Scarcity):} 
+    To evaluate how Dual Correlation GAN (DCRGAN-VSG) and Parallelly Tempered GAN (PTGAN) generate accurate synthetic data while preventing memorisation when training on very small datasets. 
+
+    \item \textbf{Examine Methods to Prevent Repetitive Outputs (Mode Collapse):}
+    To investigate how Self-Organizing Map GANs (SOMGAN), Sketched Style GANs (RSM-GAN), and Deep Convolutional GANs (DCGAN) maintain structural variety and prevent models from generating only one type of data.
+
+    \item \textbf{Investigate Solutions for Rare Data and Defect Detection (Class Imbalance):} 
+    To evaluate Norm-Penalty GANs (EID-GAN), Conditional Tabular GANs (CTGAN), and Copula GANs in supplementing data for rare events, missing records, and complex tabular data.
+
+    \item \textbf{Evaluate Cost-Sensitive and Weakly Supervised Models (Ambiguous Data):} 
+    To analyse how Two-Channel CS-GAN and Inaccurate-Supervised Learning GAN (ISL-GAN) prioritise preventing expensive real-world mistakes and learn from imprecise, noisy, or multi-label datasets.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
