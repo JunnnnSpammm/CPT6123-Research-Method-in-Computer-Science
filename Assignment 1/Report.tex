@@ -192,6 +192,46 @@ To achieve the general objective, the report addresses the following four specif
 
 \subsection{Virtual Sample Generation Pipeline (DCRGAN \& PTGAN Workflows)}
 % Step-by-step procedural execution: latent sampling, dual generator mapping, Pielou filtering, and parallel temperature scheduling.
+\subsubsection{Dual Correlation Generative Adversarial Nets Based Virtual Sample Generation Method (DCRGAN-VSG)}
+There are several GANs, components and methods working under DCRGAN to synthesize virtual data:
+\begin{enumerate}
+    \item \textbf{Wasserstein GAN (WGAN)} \\
+    While a normal GAN has a discriminator that provides binary outputs by classifying data as either real or fake, a WGAN uses a critic that provides continuous scores related to the difference between the generated and real data distributions. The example below illustrates the difference between how normal GANs and WGANs evaluate generated data: \
+
+    \textbf{Normal GANs:}
+    "This generated data is \textbf{fake}."
+
+    \textbf{WGANs:}
+    "This generated data is fake, but it is relatively decent, with a score of \textbf{+5}." \
+    
+    This is useful because the generator receives a more informative learning signal about the quality of its output. 
+
+    \item \textbf{Conditional GAN (CGAN)} \\
+    A CGAN is a type of GAN that generates data based on a specific condition or input. Unlike a normal GAN, a CGAN allows the user to control what type of data is generated. \
+    
+    For example, when generating images, a CGAN can be given the condition “7” so that the generator produces an image resembling the number 7.
+    
+    \item \textbf{Pielou Index} \\
+    The Pielou Index measures how evenly entities are distributed across different categories within any system.
+\end{enumerate}
+In industrial production, data-driven soft sensors often suffer from poor prediction performance due to the "big data, small sample" problem, which causes the struggle to produce quality variables (variables that are difficult to measure) alongside their related process variables (variables that can be directly measured). While methods like WGAN and CGAN exist to expand datasets, them alone do not completely eliminate the convergence difficulties that can occur during GAN training. Additionally, they may not be sufficient for soft sensing applications, as it primarily focuses on generating realistic process variables without explicitly considering the process outputs and the important mapping relationship between the inputs and outputs. Hence, DCRGAN is introduced that combines their uses effectively to resolve the issue.
+
+\subsubsection{The DCRGAN-VSG Methodology}
+\textbf{Data Preparation} \\
+The original dataset, containing both process variables and quality variables, is divided into a training set and a testing set.\\
+\\\textbf{Training the DCRGAN Networks} \\
+The training data is used to train the four core networks of the DCRGAN architecture, which include two discriminators ($D_x$, $D_y$) and two generators ($G_x$, $G_y$). \\
+\\ The dual networks share a latent space so that a set of inputs and outputs can be correctly mapped through hidden variables. \\
+\\ A Wasserstein GAN with gradient penalty (WGAN-GP) acts as the first generative stage to synthesize process variable inputs that align with the original data distribution. \\
+\\ These generated inputs, alongside the original inputs, serve as conditions for an improved Conditional GAN (RC-CGAN) to generate the corresponding quality variable outputs. \\
+\\ To prevent sample and label mismatches, Mean Square Error (MSE) is added to the RC-CGAN generator's loss function. \\
+\\ This MSE constraint forces the generator to maintain the original input-output mapping relationship while generating data. \\
+\\\textbf{Generating and Selecting Virtual Samples} \\
+Once trained, the DCRGAN continuously generates new, paired batches of virtual sample inputs and outputs. \\
+\\ The algorithm uses the Pielou index to evaluate the relative density and spatial distribution of these generated samples. \\
+\\ A generated batch is retained only if its addition increases the mean Pielou index of the dataset, ensuring the new data actively fills sparse, low-density gaps in the original sample space. \\
+\\ If adding a batch decreases the Pielou index, the batch is discarded. \\
+\\ This generation and selection loop repeats until the desired target number of virtual samples is collected. \\
 
 \subsection{Topological \& Multi-Discriminator Pipeline (SOMGAN \& RSM-GAN Workflows)}
 % Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
