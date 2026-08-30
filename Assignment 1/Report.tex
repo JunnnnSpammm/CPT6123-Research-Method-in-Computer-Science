@@ -89,28 +89,46 @@
 \chapter{Introduction}
 
 \section{Study Background}
-% Discuss the background of Generative Adversarial Networks (GANs) as core backbones in generative machine learning and data synthesis.
-% Explain the fundamental two-player zero-sum game between Generator (G) and Discriminator (D).
-% Detail how real-world mission-critical deployments depart from theoretical assumptions due to:
-% - Limited sample sizes and severe overfitting (e.g., industrial soft sensing, tabular electronic health records),
-% - Mode collapse and vanishing/unstable gradient variance over multimodal manifolds,
-% - Extreme class imbalance (e.g., tiny visual defect outliers) and ambiguous/inaccurate supervision.
+
+Generative Adversarial Networks (GANs) are an important class of generative machine learning models that can learn the underlying distribution of existing data and generate new synthetic samples. A conventional GAN consists of two neural networks, namely a Generator and a Discriminator, which compete against each other during training. The Generator attempts to produce realistic synthetic data, while the Discriminator evaluates whether the data are real or generated. Through this adversarial learning process, GANs can progressively improve the quality of generated samples.
+
+Due to their ability to generate realistic and diverse data, GANs have been applied in various real-world domains, including industrial process monitoring, healthcare, image generation, defect detection, and data augmentation. In particular, synthetic data generation can provide an alternative when collecting sufficient real-world data is difficult, expensive, or time-consuming. However, the performance of conventional GANs can be limited when they are applied to complex real-world datasets rather than idealised training environments.
+
+One major challenge is \textbf{data scarcity and overfitting}. When only a small number of training samples are available, a GAN may fail to learn the general characteristics of the data and instead memorise the limited examples. This can reduce the usefulness and reliability of the generated samples. Another major issue is \textbf{mode collapse and training instability}, where the Generator produces similar outputs repeatedly and fails to capture different modes of the underlying data distribution. This problem can reduce data diversity and prevent the model from representing less common patterns.
+
+GANs also face difficulties when dealing with \textbf{extreme class imbalance and complex data constraints}. In real-world applications such as defect detection, rare abnormalities may represent only a very small proportion of the available data. Conventional GANs may therefore struggle to learn and reproduce these minority patterns effectively. Similarly, applications involving tabular healthcare records, noisy labels, or asymmetric classification costs require models to consider additional structural and operational constraints beyond simply generating realistic data.
+
+These limitations have motivated researchers to develop advanced GAN architectures with specialised mechanisms for different real-world challenges. Therefore, examining how different GAN architectures address these limitations is important for understanding their practical effectiveness and identifying suitable approaches for different application scenarios.
+
 
 \section{Scope of the Report}
-% Define the scope across the 9 selected peer-reviewed GAN papers (2021--2026):
-% 1. Industrial Process Virtual Sample Generation: DCRGAN-VSG (Zhu et al., 2025)
-% 2. Topological Multi-Discriminator Mode Capture: SOMGAN (Li et al., 2024)
-% 3. Extremely Imbalanced Tiny-Defect Augmentation: EID-GAN (Li et al., 2023)
-% 4. Mixed-Type Tabular Healthcare Synthesis: CTGAN & Copula GAN (Bietsch et al., 2023)
-% 5. Multi-Class Cost-Sensitive Synthesis: Two-Channel CS-GAN (Chen et al., 2021)
-% 6. Inaccurate-Supervised Weak Label Disambiguation: ISL-GAN (Zhang et al., 2023)
-% 7. Parallel Tempering & Gradient Variance Stabilization: PTGAN (Sohn & Song, 2026)
-% 8. Sketched Geometric & Style-Based Synthesis: RSM-GAN (Zuo et al., 2023)
-% 9. Structural Convolutional vs. Conditional Frameworks: DCGAN vs. CGAN Baseline (Li & Zhang, 2021)
+
+This report reviews and compares nine GAN-based architectures proposed to address different real-world challenges in generative machine learning. The selected studies cover applications involving industrial virtual sample generation, mode collapse prevention, extremely imbalanced data augmentation, mixed-type tabular healthcare data, cost-sensitive face recognition, inaccurate or ambiguous supervision, gradient stabilisation, and small-sample image transformation.
+
+To provide a systematic comparison, the reviewed studies are organised into three major themes. The first theme focuses on \textbf{data scarcity and virtual sample generation}, including DCRGAN-VSG, PTGAN, and related baseline approaches. The second theme examines \textbf{mode exploration, diversity, and training stability}, including SOMGAN, PTGAN, RSM-GAN, and DCGAN-based approaches. The third theme addresses \textbf{class imbalance, cost-sensitive learning, and ambiguous supervision}, covering EID-GAN, CTGAN/Copula GAN, Two-Channel CS-GAN, and ISL-GAN.
+
+The purpose of this review is not only to describe the individual models, but also to compare their underlying mechanisms, target problems, evaluation methods, and reported performance. Through this comparison, the report aims to identify how different architectural and learning strategies improve the ability of GANs to generate reliable and useful synthetic data under challenging real-world conditions.
+
 
 \section{Report Structure}
-% Provide a clear roadmap of Chapters 2 to 6.
-% Detail how the 9 papers are grouped across their mathematical mechanisms (regression constraints, topological grids, norm penalties, parallel convex interpolations, and cost matrices) and operational domains.
+
+The remainder of this report is organised into six chapters. 
+\textbf{Chapter 2: Problem Statement and Objectives} identifies the key 
+challenges associated with applying GANs to real-world datasets and 
+defines the research objectives of this review. 
+\textbf{Chapter 3: Related Prior Research Works / Literature Review} 
+reviews and compares the nine selected GAN architectures based on their 
+target problems, core mechanisms, and application domains. 
+\textbf{Chapter 4: Research Methodology / Algorithms Used} presents the 
+mathematical and theoretical foundations as well as the algorithmic 
+workflows of the reviewed approaches. 
+\textbf{Chapter 5: Performance Evaluation / Discussion on the Results 
+and Contributions} evaluates the reported performance of the reviewed 
+models using relevant metrics and discusses their advantages, limitations, 
+and contributions. Finally, 
+\textbf{Chapter 6: Conclusion \& Future Work} summarises the key findings 
+of the comparative review and proposes potential directions for future 
+research.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -161,15 +179,68 @@ To achieve the general objective, the report addresses the following four specif
 \chapter{Related Prior Research Works / Literature Review}
 
 \section{Background and Taxonomy}
-% Group the 9 GAN papers into 3 core taxonomies:
-% - Taxonomy A: Data Scarcity & Virtual Sample Generation (DCRGAN-VSG [Paper 1], PTGAN [Paper 7], DCGAN vs. CGAN Baseline [Paper 9])
-% - Taxonomy B: Mode Collapse & Discriminator Regularization (SOMGAN [Paper 2], PTGAN [Paper 7], RSM-GAN [Paper 8])
-% - Taxonomy C: Extreme Imbalance, Cost-Sensitivity & Ambiguous Supervision (EID-GAN [Paper 3], CTGAN/Copula GAN [Paper 4], CS-GAN [Paper 5], ISL-GAN [Paper 6])
+
+Generative Adversarial Networks (GANs) have been widely investigated as a method for generating synthetic data and addressing limitations associated with insufficient, imbalanced, or complex datasets. However, the challenges encountered in real-world applications vary substantially across different domains. As a result, recent research has introduced specialised GAN architectures that modify the generator, discriminator, training objective, or data generation process to address specific limitations of conventional GANs.
+
+This review considers nine GAN-based approaches and organises them into three major research themes which \textbf{data scarcity and virtual sample generation}, \textbf{mode exploration and training stability}, and \textbf{class imbalance, cost-sensitive learning, and ambiguous supervision}. The classification is based on the primary problem addressed by each study rather than treating the models as completely independent categories. In particular, PTGAN contributes to both data scarcity and training stability, demonstrating that a single GAN architecture may address multiple real-world challenges.
+
+The first theme, \textbf{Data Scarcity and Virtual Sample Generation}, focuses on situations where the available training data are insufficient for developing reliable predictive or generative models. DCRGAN-VSG was developed for virtual sample generation in industrial soft sensing, where the ``big data, small sample'' problem limits the availability of quality-related measurements \cite{Zhu2025DCRGAN}. PTGAN also addresses the difficulty of learning complex distributions from limited data by introducing intermediate tempered distributions during training \cite{Sohn2026PTGAN}. RSM-GAN further demonstrates the importance of specialised architectures in small-sample image transformation, particularly for converting rough sketches into structured military symbols \cite{Zuo2023RSMGAN}. The DCGAN and CGAN comparison provides an additional baseline for understanding the effects of convolutional and conditional architectures on GAN training and generation quality \cite{Li2021DCGAN}.
+
+The second theme, \textbf{Mode Exploration and Training Stability}, considers the tendency of GANs to suffer from mode collapse or unstable optimisation. SOMGAN addresses this problem by introducing multiple discriminators organised according to a self-organising map, allowing different discriminators to focus on different regions of the data distribution \cite{Li2024SOMGAN}. PTGAN approaches the problem from a different perspective by constructing intermediate distributions between different modes and training across multiple temperature levels \cite{Sohn2026PTGAN}. RSM-GAN also contributes to this theme by combining a ResNet-based encoder, style-based synthesis, and a patch discriminator to improve image transformation under limited data conditions \cite{Zuo2023RSMGAN}. Meanwhile, the DCGAN--CGAN comparison highlights the role of convolutional architecture in improving training behaviour and reducing early instability \cite{Li2021DCGAN}.
+
+The third theme, \textbf{Class Imbalance, Cost-Sensitivity, and Ambiguous Supervision}, focuses on situations where conventional GANs may fail to represent rare observations or adequately consider the consequences of different prediction errors. EID-GAN was designed for extremely imbalanced data augmentation, particularly where defects occupy only a very small region of an image \cite{Li2023EIDGAN}. CTGAN and Copula GAN were investigated for generating mixed-type electronic health records, where both statistical fidelity and privacy are important considerations \cite{Bietsch2023CTGAN}. Two-Channel CS-GAN introduces cost-sensitive learning into GAN-based face recognition to account for different consequences associated with classification errors \cite{Chen2021CSGAN}. Finally, ISL-GAN addresses inaccurate or ambiguous supervision by using candidate label information to improve label disambiguation in multi-label learning tasks \cite{Zhang2023ISLGAN}.
+
+Overall, the taxonomy demonstrates that recent GAN research has moved beyond improving general image realism alone. Instead, researchers increasingly design GAN architectures around specific characteristics of real-world data, including limited sample sizes, multimodal distributions, extreme minority classes, mixed data types, asymmetric error costs, and inaccurate labels.
 
 \section{Comparative Review of Selected Papers}
-% Provide an in-depth critical narrative comparing the 9 GAN architectures.
-% Highlight differences in generator conditioning, discriminator dynamics, loss formulations, and domain adaptations.
-% Include a comprehensive comparative summary table using 'booktabs' (Paper, Model, Target Problem, Core Mechanism, Evaluation Dataset, Primary Metrics).
+
+\subsection{Data Scarcity and Virtual Sample Generation}
+
+Data scarcity is a major limitation in applications where collecting real observations is expensive, time-consuming, or technically difficult. DCRGAN-VSG directly addresses this problem in industrial soft sensing by combining multiple generative components with a mechanism for preserving the relationship between process variables and quality variables \cite{Zhu2025DCRGAN}. Unlike approaches that focus only on generating realistic process variables, DCRGAN-VSG introduces a regression constraint to maintain the input--output mapping during virtual sample generation. It further applies the Pielou index to evaluate the distribution of generated samples and retain samples that improve the coverage of sparse regions.
+
+The reported results indicate that this approach can provide substantial improvements for downstream soft-sensor prediction. On the PTA chemical dataset, DCRGAN-VSG achieved an error improvement rate of 39.33\%, with an $R^2$ value of approximately 0.883. On the three-dimensional benchmark, the reported improvement reached 70.43\% \cite{Zhu2025DCRGAN}. These results suggest that synthetic data quality should not be evaluated solely by how realistic individual generated samples appear. The usefulness of generated data also depends on whether the synthetic samples preserve relationships that are important for downstream prediction.
+
+PTGAN addresses data scarcity and distribution learning from a different perspective. Instead of directly generating additional samples from the original distribution, PTGAN constructs a series of tempered distributions through interpolation between real samples \cite{Sohn2026PTGAN}. The generator is conditioned on both random noise and a temperature parameter, allowing it to learn several related distributions during training. This provides smoother transitions between different modes and aims to produce more stable gradients.
+
+The difference between DCRGAN-VSG and PTGAN is therefore important. DCRGAN-VSG focuses on \textbf{preserving domain-specific input--output relationships and improving sample-space coverage}, whereas PTGAN focuses on \textbf{stabilising the learning process across complex distributions}. This illustrates that data scarcity can be addressed either by improving the quality and selection of generated samples or by improving the underlying training process.
+
+RSM-GAN provides another perspective on small-sample learning. Its style-based architecture combines a ResNet encoder with a style-based mapping and synthesis network, together with a Markovian patch discriminator \cite{Zuo2023RSMGAN}. Under a small-sample setting of 50 samples, RSM-GAN reported an FID of 251.10 compared with 289.14 for CycleGAN. This indicates that specialised architectural design can be beneficial when the available training data are highly limited.
+
+\subsection{Mode Exploration and Training Stability}
+
+Mode collapse occurs when a GAN generator produces only a limited range of outputs despite the real dataset containing multiple patterns or categories. SOMGAN addresses this problem by organising multiple discriminators on a two-dimensional self-organising map \cite{Li2024SOMGAN}. Rather than relying on a single discriminator to represent the complete data distribution, the model uses a best-matching discriminator and neighbourhood relationships to encourage different discriminators to learn complementary regions of the data space.
+
+The empirical results provide evidence that this design improves mode coverage. SOMGAN covered 99.7\% of ImageNet classes and achieved an entropy value of 6.65, compared with 6.17 for StyleGAN2 \cite{Li2024SOMGAN}. The architecture also uses layer sharing to reduce the number of parameters while maintaining strong generation performance. Therefore, SOMGAN primarily addresses mode collapse through \textbf{topological organisation and multiple discriminator specialisation}.
+
+PTGAN adopts a different mechanism. Its central idea is to introduce intermediate distributions between different modes rather than directly forcing the generator to learn the complete multimodal distribution at once \cite{Sohn2026PTGAN}. The parallel training of different temperature levels provides additional learning paths and reduces instability in gradient updates. This approach demonstrates that mode collapse can also be viewed as an optimisation and distribution-learning problem rather than only a discriminator architecture problem.
+
+The comparison between SOMGAN and PTGAN therefore reveals two complementary strategies. SOMGAN increases the model's ability to explore different regions of the data distribution through discriminator specialisation, while PTGAN attempts to make the learning process smoother through distributional interpolation. These approaches address related problems but operate at different levels of the GAN training process.
+
+RSM-GAN and DCGAN provide further evidence that architectural choices can influence GAN stability and generation quality. RSM-GAN uses a single-step style transformation architecture rather than the dual cyclic structure used by CycleGAN, which is particularly useful in small-sample settings \cite{Zuo2023RSMGAN}. Similarly, the comparison between DCGAN and CGAN indicates that convolutional architectural components can produce more stable generation behaviour than the examined conditional framework \cite{Li2021DCGAN}. These findings collectively suggest that preventing mode collapse and unstable training requires consideration of both network architecture and the learning objective.
+
+\subsection{Class Imbalance, Cost-Sensitivity, and Ambiguous Supervision}
+
+Extreme class imbalance presents a different challenge because the minority patterns that are most important for detection may represent only a very small proportion of the training data. EID-GAN specifically targets extremely imbalanced visual defect data by incorporating an outlier-guided norm penalty into the GAN objective \cite{Li2023EIDGAN}. The approach encourages the generator to reproduce localised defect regions instead of generating predominantly normal samples.
+
+The reported results demonstrate the effectiveness of this targeted strategy. For fabric inspection, EID-GAN reduced the error-escape rate from 8.33\% to 0.00\% and achieved an F1-score of 98.9\% \cite{Li2023EIDGAN}. Conventional augmentation methods such as SMOTE, DCGAN, and BAGAN were unable to generate visible flaws effectively in the examined setting. This indicates that general-purpose data augmentation may be insufficient when minority information is highly localised and extremely rare.
+
+CTGAN and Copula GAN address imbalance and complexity in a different data modality. Instead of image defects, these approaches focus on mixed-type tabular healthcare records, where numerical and categorical variables must be represented together \cite{Bietsch2023CTGAN}. CTGAN achieved a similarity score of 0.73 and produced fewer duplicate records than TVAE in the reported experiments. However, the study also showed that rare long-stay patient records remained difficult to synthesise accurately. This highlights an important limitation: improving overall statistical similarity does not necessarily guarantee effective representation of rare subgroups.
+
+Two-Channel CS-GAN extends GAN-based augmentation by explicitly considering the cost of different classification errors \cite{Chen2021CSGAN}. In face recognition, the approach combines frontalisation with cost-sensitive classification. The reported recognition accuracy increased from 35.16\% to 73.21\%, while the cost-sensitive classifier reduced the associated misclassification penalty. Unlike conventional approaches that mainly optimise accuracy, CS-GAN recognises that different errors can have different practical consequences.
+
+ISL-GAN addresses another form of data imperfection: inaccurate or ambiguous labels. Instead of assuming that every training label is completely reliable, the model incorporates candidate label information into the learning process \cite{Zhang2023ISLGAN}. It achieved the best accuracy in 101 out of 112 noisy test cases and improved multi-label performance on the evaluated benchmarks. This demonstrates that GAN-based approaches can also be adapted to handle uncertainty in supervision rather than only limitations in the data distribution itself.
+
+\section{Comparative Synthesis}
+
+The reviewed studies demonstrate that no single GAN architecture provides a universal solution to all real-world data-generation challenges. Instead, the effectiveness of a model depends strongly on the characteristics of the target dataset and the practical objective of the application.
+
+For \textbf{small-sample and data-scarce applications}, DCRGAN-VSG is particularly focused on preserving domain relationships and selecting useful virtual samples, while PTGAN improves the stability of learning across complex distributions. RSM-GAN further demonstrates the value of specialised architectures when only a small number of image samples are available.
+
+For \textbf{mode collapse and training instability}, SOMGAN and PTGAN provide complementary solutions. SOMGAN emphasises topological diversity through multiple discriminators, whereas PTGAN focuses on smoother distribution transitions and gradient stabilisation. DCGAN and RSM-GAN further demonstrate that architectural design can influence training behaviour and generation quality.
+
+For \textbf{imbalanced and imperfect data}, the reviewed approaches become increasingly application-specific. EID-GAN focuses on extremely rare visual defects, CTGAN addresses mixed-type tabular data, CS-GAN incorporates asymmetric classification costs, and ISL-GAN handles inaccurate or ambiguous supervision. Their differences demonstrate that real-world GAN development increasingly requires the generation process to account for domain-specific constraints rather than optimising realism alone.
+
+Therefore, the overall literature suggests a shift from general-purpose GAN generation towards \textbf{constraint-aware and application-specific generative modelling}. Future GAN research can build upon these complementary mechanisms by integrating multiple strategies, such as combining diversity-oriented architectures with gradient stabilisation, or integrating domain-specific constraints with tabular and minority-class generation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -412,13 +483,22 @@ Targeted GAN formulations effectively tackle label noise, localized defects, and
 \chapter{Conclusion \& Future Work}
 
 \section{Conclusion}
-% Recapitulate the comparative findings. Summarize how the 9 reviewed GAN paradigms systematically overcome data scarcity, mode collapse, class imbalance, and complex operational constraints across diverse industrial, medical, and visual domains.
 
-\section{Suggestions for Future Enhancements}
-% Propose 3 concrete research frontiers:
-% 1. Unified Hybridization: Combining SOMGAN topological discriminators with PTGAN parallel convex tempering to eliminate mode collapse across arbitrary non-convex manifolds.
-% 2. Tabular VSG Integration: Merging DCRGAN regression constraints with CTGAN conditional generators for small-sample, mixed-type tabular datasets in healthcare and industrial IoT.
-% 3. Automated Cost-Sensitive and Outlier Regularization: Developing end-to-end adaptive loss weighting that dynamically optimizes EID-GAN norm penalties and CS-GAN cost matrices directly from streaming data distributions.
+This review examined nine GAN-based approaches developed to address the limitations of conventional Generative Adversarial Networks in real-world applications. The reviewed studies demonstrate that although GANs provide an effective framework for synthetic data generation, their performance can be affected by challenges such as data scarcity, mode collapse, training instability, class imbalance, and other application-specific constraints.
+
+The comparative review identified three main research directions. First, approaches such as DCRGAN-VSG, PTGAN, and RSM-GAN demonstrate how GAN architectures can be adapted to generate useful synthetic data under limited-data conditions. These studies highlight the importance of not only increasing the number of samples, but also maintaining meaningful characteristics and relationships within the original data. Second, SOMGAN and PTGAN demonstrate different strategies for improving diversity and training stability. While SOMGAN focuses on encouraging exploration through multiple discriminators, PTGAN improves the learning process through tempered distributions. Third, EID-GAN, CTGAN, Two-Channel CS-GAN, and ISL-GAN address more specific challenges involving rare samples, mixed-type data, classification costs, and inaccurate supervision.
+
+Overall, the findings indicate that there is no single GAN architecture that can provide the best solution for every real-world application. Instead, the effectiveness of a GAN depends on the characteristics of the dataset and the requirements of the specific application. More specialised approaches generally introduce additional mechanisms to address domain-specific limitations, moving GAN research beyond general-purpose synthetic data generation towards more \textbf{application-specific and constraint-aware generative modelling}.
+
+The review also highlights that the quality of generated data should not be evaluated solely based on generation realism. Factors such as diversity, minority-class representation, downstream prediction performance, data relationships, and application-specific requirements are also important when determining the practical usefulness of synthetic data. Therefore, selecting an appropriate GAN architecture should consider both the characteristics of the dataset and the intended purpose of the generated samples.
+
+\section{Future Work}
+
+Based on the comparative findings, future research could explore hybrid GAN architectures that combine the strengths of different approaches. For example, the diversity mechanism of SOMGAN could potentially be combined with the training stabilisation strategy of PTGAN to improve both mode coverage and optimisation stability. Similarly, combining DCRGAN-VSG with CTGAN could provide a potential direction for generating domain-aware synthetic tabular data while preserving relationships between different variables.
+
+Another potential direction is to integrate minority-focused generation with cost-sensitive learning. Combining the rare-pattern generation capability of EID-GAN with the cost-sensitive strategy of CS-GAN may improve performance in applications where minority errors have significant practical consequences. These hybrid approaches could provide more flexible solutions for complex real-world datasets.
+
+Future studies should also evaluate these approaches across larger and more diverse datasets to determine whether their reported improvements generalise to other application domains. In addition, more comprehensive evaluation frameworks could consider not only generation quality, but also diversity, privacy, downstream task performance, and computational efficiency. Such research could further improve the practical reliability and applicability of GAN-based synthetic data generation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Back Matter
