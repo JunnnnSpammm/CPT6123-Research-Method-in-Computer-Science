@@ -9,8 +9,11 @@
 \usepackage{tikz}
 \usepackage{hyperref}
 \usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{array}
 \usepackage{amsmath, amssymb}
+\usepackage{tabularx, ragged2e}
+\usepackage{placeins}
 
 % Hyperlink configuration
 \hypersetup{
@@ -22,6 +25,10 @@
 
 % Define a custom command for keywords
 \newcommand{\keywords}[1]{\textbf{Keywords:} #1}
+
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\sloppy
 
 % Project & Group Information
 \title{\textbf{CPT6123 Assignment 1: Reviewed Report on Application and Improvement of Machine Learning in the Real World}}
@@ -245,16 +252,116 @@ Once trained, the DCRGAN continuously generates new, paired batches of virtual s
 \chapter{Performance Evaluation / Discussion on the Results and Contributions}
 
 \section{Experimental Results \& Metrics}
-% Present a unified synthesis table summarizing empirical findings across all 9 papers:
-% - Soft sensing accuracy (RMSE, MAE, R^2, EIR_RMSE) for DCRGAN-VSG,
-% - Mode coverage (category count, entropy, FID) on ImageNet/CIFAR-10 for SOMGAN,
-% - Defect detection metrics (Error-Escape, False-Alarm, F1-score) for EID-GAN,
-% - Tabular utility & privacy (macro F1, aggregated score, duplicate count) for CTGAN/Copula GAN,
-% - Cost-sensitive recognition error and total misclassification cost for CS-GAN,
-% - Weak label classification accuracy and ranking loss for ISL-GAN,
-% - Gradient variance and downstream AUC/fairness (Statistical Parity) for PTGAN,
-% - Sketch recognition FID for RSM-GAN,
-% - Convergence stability and loss dynamics for DCGAN vs. CGAN.
+Generative Adversarial Networks (GANs) are evaluated across realism, diversity, edge-case generation, and performance accuracy. The nine reviewed architectures are assessed using domain-specific metrics across five core evaluation areas:
+
+\begin{itemize}
+    \item \textbf{Industrial Estimation Accuracy:} Evaluated via Root Mean Square Error (RMSE), Mean Absolute Error (MAE), Coefficient of Determination ($R^2$), and Error Improvement Rate ($EIR_{\text{RMSE}}$) to measure regression fit on sparse operational data.
+    \item \textbf{Visual Realism \& Coverage:} Assessed using Fr'echet Inception Distance (FID), Inception Score (IS), and Information Entropy ($H$) alongside class coverage counts to quantify fidelity and mode diversity.
+    \item \textbf{Defect Detection \& Quality Control:} Measured by Error-Escape Rate (%), False-Alarm Rate (%), and Macro F1-Scores to evaluate flaw detection in imbalanced settings.
+    \item \textbf{Tabular Fidelity \& Privacy:} Quantified by Aggregated Similarity (0--1), Duplicate Record Counts (memorization risk), and Misclassification Cost under asymmetric error penalties.
+    \item \textbf{Fairness \& Stability:} Evaluated via Statistical Parity (SP), Downstream Convergence Gap ($S_T$), and gradient update variance.
+\end{itemize}
+
+\begin{longtable}{@{} 
+    >{\raggedright\arraybackslash}p{0.20\textwidth} 
+    >{\raggedright\arraybackslash}p{0.24\textwidth} 
+    >{\raggedright\arraybackslash}p{0.20\textwidth} 
+    >{\raggedright\arraybackslash}p{0.34\textwidth} 
+@{}}
+    \caption{Synthesis of Key Empirical Findings Across All 9 Reviewed GAN Architectures}
+    \label{tab:unified_empirical_results} \\
+    \toprule
+    \textbf{Model \& Paper} & \textbf{Application Target} & \textbf{Primary Metrics} & \textbf{Key Empirical Results \& Baselines} \\
+    \midrule
+    \endfirsthead
+
+    \multicolumn{4}{c}{{\tablename\ \thetable\ -- \textit{Continued from previous page}}} \\[0.5em]
+    \toprule
+    \textbf{Model \& Paper} & \textbf{Application Target} & \textbf{Primary Metrics} & \textbf{Key Empirical Results \& Baselines} \\
+    \midrule
+    \endhead
+
+    \midrule
+    \multicolumn{4}{r}{{\textit{Continued on next page}}} \\
+    \bottomrule
+    \endfoot
+
+    \bottomrule
+    \endlastfoot
+
+    \textbf{DCRGAN-VSG} \newline \cite{Zhu2025DCRGAN} 
+    & Virtual sample generation (VSG) for sparse industrial data 
+    & RMSE, MAE, $R^2$, $\text{EIR}_{\text{RMSE}}$ 
+    & Reduced sensor estimation error by 70.43\% on 3D benchmark and 39.33\% on PTA chemical data ($R^2 = 0.883$); outperformed VAE, WGAN-GP, and DDPM. \\
+    \midrule
+    \textbf{SOMGAN} \newline \cite{Li2024SOMGAN} 
+    & Multi-mode capture; mode collapse prevention 
+    & Category coverage, Entropy ($H$), FID 
+    & Covered 99.7\% of ImageNet classes ($H = 6.65$ vs. 6.17 for StyleGAN2); achieved CIFAR-10 FID of 3.05 while cutting parameters by 34.2\% via layer sharing. \\
+    \midrule
+    \textbf{EID-GAN} \newline \cite{Li2023EIDGAN} 
+    & Extremely imbalanced tiny flaw augmentation (0.05\% area) 
+    & Error-Escape (\%), False-Alarm (\%), F1 
+    & Dropped fabric Error-Escape from 8.33\% to 0.00\% (F1: 98.9\%); conventional augmentation baselines (SMOTE, DCGAN, BAGAN) failed to synthesize visible flaws. \\
+    \midrule
+    \textbf{CTGAN / Copula} \newline \cite{Bietsch2023CTGAN} 
+    & Mixed tabular health records \& LOS prediction 
+    & Similarity score, Duplicate rows, Macro F1 
+    & CTGAN achieved 0.73 similarity with strict privacy (272 duplicates vs. 935 for TVAE); all models struggled with rare long-stay patient records (F1: 0.32--0.43 vs. 0.48--0.60 real). \\
+    \midrule
+    \textbf{Two-Channel CS-GAN} \newline \cite{Chen2021CSGAN} 
+    & Side-profile face recognition 
+    & Accuracy (\%), Misclassification Cost 
+    & Frontalizing $\pm 75^\circ$ profile faces improved accuracy from 35.16\% to 73.21\%; cost-sensitive mckNN lowered penalty costs from 672 to 515 by penalizing false acceptances. \\
+    \midrule
+    \textbf{ISL-GAN} \newline \cite{Zhang2023ISLGAN} 
+    & Disambiguation of noisy/partial candidate labels 
+    & Accuracy, Ranking loss, Macro/Micro-F1 
+    & Achieved best accuracy in 101/112 noisy test cases; raised Mirflickr multi-label precision to 0.922 and lowered Pascal ranking loss to 0.099. \\
+    \midrule
+    \textbf{PTGAN} \newline \cite{Sohn2026PTGAN} 
+    & Gradient stabilization \& fair tabular synthesis 
+    & FID, Inception Score, $S_T$ gap, Statistical Parity 
+    & Lowered BloodMNIST FID to 41.99; stabilized gradient variance via parallel tempering; reduced demographic bias to $\text{SP} = 0.054$ on Law School tabular records. \\
+    \midrule
+    \textbf{RSM-GAN} \newline \cite{Zuo2023RSMGAN} 
+    & Rough hand-drawn sketch to military symbol conversion 
+    & FID score, Convergence speed 
+    & Outperformed CycleGAN on small sample regimes (FID 251.10 on 50 samples) with direct, single-step style transformation. \\
+    \midrule
+    \textbf{DCGAN vs. CGAN} \newline \cite{Li2021DCGAN} 
+    & Convolutional vs. conditional baseline dynamics 
+    & Loss stability, Artifact presence 
+    & DCGAN eliminated early generator loss oscillations observed in CGAN, yielding coherent avatar generation within 200 iterations. \\
+\end{longtable}
+
+\subsection{Virtual Sample Generation and Small-Sample Utility}
+Virtual Sample Generation (VSG) mitigates small-sample overfitting in industrial and real-world data problems:
+
+\begin{itemize}
+    \item \textbf{Industrial PTA Estimation (DCRGAN-VSG):} Integrating regression loss constraints and Pielou index filtering allowed DCRGAN-VSG to generate optimal predictive quality at $\sim$420 synthetic samples ($EIR_{\text{RMSE}} = 39.33\%$, MAE $= 0.1336$, $R^2 = 0.8825$), significantly outperforming unconstrained diffusion (DDPM, $EIR = 18.12\%$) and VAE baselines ($EIR = 25.45\%$).
+    \item \textbf{Downstream Predictive Convergence (PTGAN):} Across Adult, Law School, and Credit Card benchmarks, parallel tempering significantly reduced downstream error gaps ($S_T$) across Random Forest, SVM, and Logistic Regression models compared to standard Maximum Penalty (MP) baselines (e.g., Law School SVM gap reduced from $0.099$ to $0.024$).
+    \item \textbf{Constrained Symbol Synthesis (RSM-GAN):} Under severe data scarcity (50 samples), RSM-GAN's style-based architecture achieved lower FID (251.10) than CycleGAN (289.14) without requiring dual cyclic networks.
+\end{itemize}
+
+\subsection{Mode Diversity, Fairness, and Training Stability}
+Architectural and objective improvements resolve gradient vanishing and mode collapse:
+
+\begin{itemize}
+    \item \textbf{Topological Discriminator Ensembles (SOMGAN):} Structuring discriminators in a 2D topological grid achieved 99.7\% class coverage and $H = 6.65$ entropy on ImageNet-1k (StyleGAN2 missed 42 classes; $H = 6.17$). Sharing shallow layers lowered total parameters by 34.2% while retaining strong fidelity (CIFAR-10 FID $= 3.96$).
+    \item \textbf{Gradient Smoothing and Algorithmic Fairness (PTGAN):} Parallel convex interpolation reduced gradient update variance across multiple divergence metrics (BloodMNIST FID dropped from 176.04 under spectral norm to 41.99). When applied to fairness-constrained tasks, FairPTGAN achieved superior Pareto frontiers for demographic parity (SP $= 0.064$ on Adult, $\text{AUC} \ge 0.85$) over FairWGAN-GP and GeoRepair.
+    \item \textbf{Convolutional Stabilization (DCGAN vs. CGAN):} DCGAN's strided convolutions and LeakyReLU activations prevented severe early loss divergence observed in vanilla CGAN within the first 25,000 steps.
+\end{itemize}
+
+\subsection{Imbalance, Disambiguation, and Asymmetric Costs}
+Targeted GAN formulations effectively tackle label noise, localized defects, and cost-weighted trade-offs:
+
+\begin{itemize}
+    \item \textbf{Tiny Flaw Augmentation (EID-GAN):} Localized crop norm penalties forced the generator to model tiny defects (0.05\% surface area), reducing fabric inspection Error-Escape to 0.00\% (F1: 98.9\%) where standard oversampling (SMOTE, WGAN-GP) generated defect-free samples.
+    \item \textbf{Tabular Fidelity vs. Privacy (CTGAN):} On hospital discharge data (NUMC/SUNY/NYU), CTGAN yielded higher statistical similarity (0.73) and lower duplicate memorization (272 rows) than TVAE (935 rows), although rare long-stay diagnostic records remain challenging across all generative models.
+    \item \textbf{Cost-Sensitive Facial Recognition (Two-Channel CS-GAN):} Frontalization combined with cost-sensitive mckNN classification reduced high-cost false acceptance errors ($err_{PN}$ dropped from 4.55\% to 2.76\%), reducing aggregate misclassification penalties by 23.4\%.
+    \item \textbf{Weakly Supervised Disambiguation (ISL-GAN):} Treating candidate label sets as conditional inputs resolved ambiguous annotations across 8 multi-label benchmarks, lowering Mirflickr Hamming Loss to 0.113 and ranking loss to 0.046.
+\end{itemize}
 
 \section{Critical Analysis, Advantages, and Limitations}
 % Provide deep qualitative insights:
