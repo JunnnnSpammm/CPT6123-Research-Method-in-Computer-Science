@@ -240,6 +240,39 @@ Once trained, the DCRGAN continuously generates new, paired batches of virtual s
 \\ If adding a batch decreases the Pielou index, the batch is discarded. \\
 \\ This generation and selection loop repeats until the desired target number of virtual samples is collected. \\
 
+\subsubsection{Parallelly Tempered Generative Adversarial Networks (PTGAN)}
+In GANs, multimodality of a data set is one of the primary cause of mode collapse, where the generator learns only some modes of the real data distribution while ignoring others. PTGAN addresses this by creating intermediate tempered distributions that connect different modes, providing more stable gradients during training. This helps the generator learn a wider range of modes and reduces the likelihood of mode collapse.
+
+\subsubsection{The PTGAN Methodology}
+
+\textbf{Constructing the Tempered Distributions} \\
+PTGAN starts with the real data distribution \(p_X\), which may contain multiple modes. To make this complex distribution easier to learn, PTGAN selects two real samples, \(X_1\) and \(X_2\), and interpolates between them using a temperature parameter \(\alpha\):
+
+$$
+Q^\alpha = \alpha X_1 + (1-\alpha)X_2.
+$$
+Here, \(\alpha\) acts like a slider between the two samples. When \(\alpha=0\), the result is \(X_2\), while \(\alpha=1\) gives \(X_1\). Intermediate values create smoother distributions between them. \\
+\\ \textbf{Modifying the Generator} \\
+Unlike a standard GAN, PTGAN gives the generator both a random noise vector \(Z\) and the temperature \(\alpha\):
+
+$$
+G(Z,\alpha).
+$$
+This allows one generator to learn different tempered distributions at the same time. \\
+\\ \textbf{Adversarial Training}
+PTGAN trains the generator and critic across different temperature levels in parallel. The generator tries to make \(G(Z,\alpha)\) match the corresponding tempered distribution \(Q^\alpha\), while the critic distinguishes between real and generated samples. The smoother intermediate distributions provide more stable gradients and help reduce training instability. \\
+\\ \textbf{Applying the Coherency Penalty} \\
+PTGAN applies a coherency penalty to the critic to encourage consistent learning across different temperature levels. This allows information learned from the intermediate distributions to be shared, rather than treating each temperature as a separate learning problem. \\
+\\ \textbf{Generating the Final Data} \\
+At \(\alpha=1\), the tempered distribution corresponds to the original real data distribution \(p_X\). After training, the generator is therefore used as:
+
+$$
+G(Z,1),
+$$
+to generate synthetic data that approximates the original distribution while reducing the effects of mode collapse.
+
+
+
 \subsection{Topological \& Multi-Discriminator Pipeline (SOMGAN \& RSM-GAN Workflows)}
 % Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
 
