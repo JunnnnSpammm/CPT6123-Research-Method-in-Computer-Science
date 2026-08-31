@@ -434,6 +434,60 @@ After training, the Generator can be used independently to create large numbers 
 \\\textbf{ Evaluation for LOS Prediction} \\
 The synthetic EHR data can then be used to train a machine-learning model for patient Length-of-Stay prediction. Its performance can be compared with models trained on real data to determine whether the synthetic data is sufficiently useful for the intended healthcare application.
 
+\subsubsection{Two-channel Cost-sensitive GAN (CSGAN)}
+Traditional face recognition technologies frequently rely on standard frontal face databases, but real-world scenarios typically capture profile images at various angles. Furthermore, conventional systems try to find an accurate classifier by minimizing the error rate, which implicitly and incorrectly assumes that all misclassification costs are equal. To address these issues, the authors propose combining a two-channel GAN for image synthesis with cost-sensitive learning for the recognition phase.
+
+\subsubsection{Two-channel CSGAN Methodology}
+
+\textbf{Input Extraction and Dual-Channel Decomposition} \\
+The generation process begins by taking an input profile image and splitting feature extraction across a two-channel encoder-decoder architecture designed to mirror human visual perception. The global channel extracts a global feature vector to capture overall facial contour and structure. Simultaneously, the local channel isolates four specific facial patches corresponding to key local details: the left eye, right eye, nose, and mouth. \\
+\\ \textbf{Feature Transformation and Channel Fusion} \\
+The extracted global feature passes through the global generator encoder-decoder to synthesize a global frontal feature. Concurrently, the four local patch features are processed through the local generator channel to synthesize corresponding partial frontal features, which are merged into a single local feature vector. The local vector is transformed to match the dimensions of the global vector, combined directly with the frontal feature, and passed through convolutional layers to produce the synthesized image. At the network bottleneck, Gaussian random noise is appended to the latent vector to simulate variations unrelated to pose or identity, while skip layers facilitate multi-scale feature fusion. \\
+\\ \textbf{Discriminator Assessment and Adversarial Gaming} \\
+The combined global and local representations are decoded into a final synthetic frontal face image. This generated image, alongside a real frontal ground-truth image, is fed into a deep convolutional discriminator network. The generator and discriminator optimize a minimax game where the discriminator learns to distinguish synthetic outputs from real target distributions, forcing the generator to produce increasingly realistic, high-resolution frontal images. \\
+\\ \textbf{Multi-Objective Loss Minimization} \\
+Network parameters are optimized end-to-end by minimizing a weighted composite loss function defined as \\
+
+$L = L_{pix} + \alpha_1 L_{sym} + \alpha_2 L_{adv} + \alpha_3 L_{per} + \alpha_4 L_{tvr}$. \\
+\\ The pixel-wise loss $L_{pix}$ accelerates training convergence through direct pixel matching. The symmetry loss $L_{sym}$ leverages intrinsic facial symmetry priors to eliminate self-occlusion artifacts caused by extreme profile angles. Adversarial loss $L_{adv}$ pushes generated images toward high-frequency realism. Perceptual loss $L_{per}$, computed using high-level feature maps extracted from a pre-trained Light CNN network, enforces identity preservation. Finally, total variation regularization $L_{tvr}$ acts to suppress spike artifacts and prevent model overfitting.  
+
+\subsubsection{Inaccurate-Supervised Learning GAN}
+While deep learning and traditional machine learning models exist for various weak-supervision tasks, there was previously no unified GAN framework to handle these problems:
+
+\begin{itemize}
+    \item \textbf{Partial Label Learning (PLL):} Each instance has a single feature view and a set of candidate labels, where only one is the ground truth.
+    \item \textbf{Partial Multilabel Learning (PML):} Each instance has a single feature view but multiple ground-truth labels hidden within a noisy candidate set.
+    \item \textbf{Multiview PML (MVPML):} An extension of PML where each instance is represented by multiple feature views (e.g., an article with both text and video features).
+\end{itemize}
+Hence, a unified model called ISL-GAN to counter these challenges.
+
+\subsubsection{ISL-GAN Methodology}
+
+\textbf{Input Data} \\
+Each training example consists of its feature representations and an inaccurate label vector. The vector indicates which labels are candidates, but it does not reveal which candidates are actually correct. For multiview data, there exists several feature representations of the same example. \\
+\\ \textbf{Prepare the Inaccurate Labels} \\
+The candidate label vector is regularized before entering the network. For example, if four candidate labels are present, their values may be converted from binary {1,1,0,0} into a normalized representation such as {0.5,0.5,0,0}. This provides the network with candidate-label information without claiming that every candidate is correct. \\
+\\ \textbf{Generator} \\
+The Generator follows the idea of a CGAN. It takes two things as input: a random noise vector and the inaccurate label vector. Its purpose is to generate a fake feature sample that resembles real samples associated with that candidate-label information. For multiview data, multiple Generators produce the fake representation for each view, and these outputs are concatenated. \\
+\\ \textbf{Discriminator} \\
+The Discriminator follows the idea of a Semi-Supervised GAN. It receives samples and produces two kinds of information. The first part predicts the class-label distribution, while the additional output dimension determines whether the sample is real or fake. \\
+\\ \textbf{Reconstruct the Labels} \\
+To train the Discriminator, the paper constructs an \(L+1\)-dimensional target vector. For a real sample, the candidate-label vector occupies the first \(L\) dimensions and the final dimension is 0. For a generated sample, the first \(L\) dimensions are zero and the final dimension is 1. \\
+\\ This lets the Discriminator learn both which labels are associated with the sample and whether the sample came from the real or generated distribution. \\
+\\ \textbf{Train the Discriminator} \\
+With the Generator fixed, the Discriminator is trained to minimize its prediction error against the reconstructed labels. In other words, it learns to make its output consistent with the real candidate-label information while distinguishing real samples from generated ones. \\
+\\ \textbf{Train the Generator} \\
+With the Discriminator fixed, the Generator is trained adversarially. It tries to produce samples that cause the Discriminator to make the desired label predictions while becoming difficult to distinguish from real data. \\
+\\ The important idea is that the Generator is not merely trying to create realistic features. Its generated samples help force the Discriminator to learn the underlying label structure hidden inside the inaccurate annotations. \\
+\\ \textbf{Alternate the Training} \\
+The Generator and Discriminator are trained repeatedly in alternating steps. The Generator improves its fake samples, while the Discriminator improves its label prediction and real/fake discrimination. \\
+\\ As training progresses, the generated distribution becomes increasingly similar to the real distribution conditioned on the candidate labels. The authors theoretically connect this process to minimizing the Jensen–Shannon divergence between the two distributions. \\
+\\ \textbf{Label Disambiguation} \\
+This is the key purpose of the whole framework. Because the Discriminator repeatedly sees real and generated samples associated with the same candidate-label information, it learns a label distribution that becomes closer to the underlying label distribution. The paper describes this as using the adversarial process to disambiguate the noisy candidate labels. \\
+\\ \textbf{Prediction} \\
+After training, only the Discriminator is needed for prediction. The real/fake output dimension is discarded, leaving the predicted label scores. \\
+\\ For PLL, the label with the highest predicted score is selected as the final label. For PML, the top predicted labels are selected using a threshold based on the estimated number of ground-truth labels.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 5. Performance Evaluation / Discussion on the Results and Contributions
