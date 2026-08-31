@@ -409,6 +409,31 @@ $\nabla_{\theta_{G}} \frac{1}{m} \sum_{1}^{m} \{ \log(1 - D(G(z^{(i)}))) + \vert
 \\ Concurrently, the Discriminator $D$ evaluates whether samples are real or generated. This joint optimization ensures that while the adversarial loss aligns broad background image distributions, the norm penalty continuously forces the generator to synthesize fine defect details.
 % Step-by-step logic: outlier cropping/norm penalty minimization, tabular column-wise sampling, cost-sensitive posterior optimization, and multi-label disambiguation.
 
+\subsubsection{Conditional Tabular GAN (CTGAN)}
+Electronic Health Records (EHRs) contain valuable information for predicting patient Length of Stay (LOS), but real healthcare data can be difficult to access because of privacy concerns, limited availability, and class imbalance. In particular, minority patient groups, such as patients with long hospital stays, may be underrepresented. Generative Adversarial Networks, specifically CTGAN, can be used to generate synthetic EHR data that preserves important statistical relationships while reducing the need to use sensitive real patient records.
+
+\subsubsection{CTGAN Methodology}
+\textbf{Data Preparation} \\
+CTGAN first separates the dataset into continuous and categorical variables. Categorical variables, such as gender or diagnosis, are encoded into numerical representations. Continuous variables are processed using mode-specific normalization so that CTGAN can better represent complex or multimodal distributions. \\
+\\ \textbf{Learning Data Distributions} \\
+CTGAN analyzes the relationships and distributions within the real tabular data. For continuous variables, it identifies different modes of the distribution, while for categorical variables it learns the frequency and relationships between different categories. \\
+\\ \textbf{Conditional Sampling} \\
+CTGAN selects a condition based on a categorical variable, such as a particular diagnosis or a long Length-of-Stay category. This allows the model to deliberately focus on specific categories, including those that are rare in the original dataset. \\
+\\ \textbf{Generation of Synthetic Data} \\
+The Generator receives random noise together with the selected condition. It uses these inputs to produce a synthetic patient record containing both continuous and categorical values. \\
+\\ \textbf{Discriminator Evaluation} \\
+The generated record is passed to the Discriminator, which compares it with real patient records and attempts to determine whether the record is real or synthetic. \\
+\\ \textbf{Conditional and Adversarial Learning} \\
+The Generator is trained to produce records that both appear realistic and satisfy the selected condition. At the same time, the Discriminator is trained to become better at distinguishing real records from generated records. This adversarial process causes both networks to improve through repeated training. \\
+\\ \textbf{Handling Imbalanced Categories} \\
+CTGAN uses training-by-sampling to give greater attention to underrepresented categorical values. This is particularly useful for healthcare datasets where certain patient groups, such as long-stay patients, may occur much less frequently than others. \\
+\\ \textbf{Reducing Mode Collapse} \\
+CTGAN incorporates PacGAN-based training to reduce mode collapse, where the Generator repeatedly produces very similar records instead of representing the diversity of the original dataset. \\
+\\ \textbf{Synthetic Data Generation} \\
+After training, the Generator can be used independently to create large numbers of synthetic EHR records. These records are intended to resemble the statistical characteristics and relationships of the original healthcare data without directly reproducing individual patient records. \\
+\\\textbf{ Evaluation for LOS Prediction} \\
+The synthetic EHR data can then be used to train a machine-learning model for patient Length-of-Stay prediction. Its performance can be compared with models trained on real data to determine whether the synthetic data is sufficiently useful for the intended healthcare application.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % 5. Performance Evaluation / Discussion on the Results and Contributions
