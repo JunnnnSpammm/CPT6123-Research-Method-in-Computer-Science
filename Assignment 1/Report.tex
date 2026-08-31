@@ -389,6 +389,24 @@ The authors developed the "MMS-Sketch" dataset for training and evaluation. It c
 % Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
 
 \subsection{Imbalanced, Tabular \& Cost-Sensitive Augmentation Pipeline (EID-GAN, CTGAN, CS-GAN, ISL-GAN)}
+
+\subsubsection{Extremely Imbalanced Data Augmentation Generative Adversarial Nets (EID-GAN)}
+Industrial defect detection suffers from extremely imbalanced data where non-defective (positive) samples dominate, and defective (negative) samples contain tiny outliers covering roughly 0.5\% of the image area (e.g., Fabric and Piston datasets). Existing augmentation models fail because background features dominate generator training. Hence, EID-GAN is introduced to modify GAN training process so that the generator is explicitly encouraged to preserve these tiny defect features.
+\subsubsection{EID-GAN Methodology}
+\textbf{Data Preparation and Outlier Isolation} \\
+The EID-GAN framework begins by extracting tiny defect regions directly from original negative training samples to construct a dedicated outlier dataset. To maintain precise spatial boundaries during training, each original negative sample undergoes a pixel-level masking procedure where defect pixels are assigned a value of 1 and non-outlier background pixels are labeled as 0. \\
+\\ \textbf{Base Image Generation} \\
+Following generative adversarial network principles derived from Deep Convolutional GAN (DCGAN), the Generator component handles the initial visual synthesis. It takes a vector sampled from a predefined noise distribution and processes it to generate a synthetic image designed to match the general visual distribution of the target data. \\
+\\ \textbf{Targeted Cropping and Feature Comparison} \\
+At each iteration within a training epoch, the network randomly selects a real defect from the pre-built outlier dataset. EID-GAN then identifies and crops a corresponding region from the synthesized image. The dimensions of this cropped section are explicitly matched to the size of the selected real outlier. \\
+\\ \textbf{Loss Integration and Dual Parameter Updating} \\
+To force the generator towards learning subtle anomalies, EID-GAN computes a specialized norm penalty function given by: \\
+
+$f_{outlier} = \lambda \times \vert{}ano_{i} - G_{crop}(z)\vert{}$ \\
+\\ where $\lambda$ serves as a weighting coefficient. This non-negative penalty measures the difference between real and generated defect features and is directly integrated into the main generator loss. During backpropagation, the generator parameters are updated via the combined gradient \\
+
+$\nabla_{\theta_{G}} \frac{1}{m} \sum_{1}^{m} \{ \log(1 - D(G(z^{(i)}))) + \vert{}ano_{i} - G_{crop}(z)\vert{} \}$. \\
+\\ Concurrently, the Discriminator $D$ evaluates whether samples are real or generated. This joint optimization ensures that while the adversarial loss aligns broad background image distributions, the norm penalty continuously forces the generator to synthesize fine defect details.
 % Step-by-step logic: outlier cropping/norm penalty minimization, tabular column-wise sampling, cost-sensitive posterior optimization, and multi-label disambiguation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
