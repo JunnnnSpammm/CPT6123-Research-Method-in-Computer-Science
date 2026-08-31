@@ -402,7 +402,7 @@ Generative Adversarial Networks (GANs) are evaluated across realism, diversity, 
 \begin{itemize}
     \item \textbf{Industrial Estimation Accuracy:} Evaluated via Root Mean Square Error (RMSE), Mean Absolute Error (MAE), Coefficient of Determination ($R^2$), and Error Improvement Rate ($EIR_{\text{RMSE}}$) to measure regression fit on sparse operational data.
     \item \textbf{Visual Realism \& Coverage:} Assessed using Fr'echet Inception Distance (FID), Inception Score (IS), and Information Entropy ($H$) alongside class coverage counts to quantify fidelity and mode diversity.
-    \item \textbf{Defect Detection \& Quality Control:} Measured by Error-Escape Rate (%), False-Alarm Rate (%), and Macro F1-Scores to evaluate flaw detection in imbalanced settings.
+    \item \textbf{Defect Detection \& Quality Control:} Measured by Error-Escape Rate (\%), False-Alarm Rate (\%), and Macro F1-Scores to evaluate flaw detection in imbalanced settings.
     \item \textbf{Tabular Fidelity \& Privacy:} Quantified by Aggregated Similarity (0--1), Duplicate Record Counts (memorization risk), and Misclassification Cost under asymmetric error penalties.
     \item \textbf{Fairness \& Stability:} Evaluated via Statistical Parity (SP), Downstream Convergence Gap ($S_T$), and gradient update variance.
 \end{itemize}
@@ -493,7 +493,7 @@ Virtual Sample Generation (VSG) mitigates small-sample overfitting in industrial
 Architectural and objective improvements resolve gradient vanishing and mode collapse:
 
 \begin{itemize}
-    \item \textbf{Topological Discriminator Ensembles (SOMGAN):} Structuring discriminators in a 2D topological grid achieved 99.7\% class coverage and $H = 6.65$ entropy on ImageNet-1k (StyleGAN2 missed 42 classes; $H = 6.17$). Sharing shallow layers lowered total parameters by 34.2% while retaining strong fidelity (CIFAR-10 FID $= 3.96$).
+    \item \textbf{Topological Discriminator Ensembles (SOMGAN):} Structuring discriminators in a 2D topological grid achieved 99.7\% class coverage and $H = 6.65$ entropy on ImageNet-1k (StyleGAN2 missed 42 classes; $H = 6.17$). Sharing shallow layers lowered total parameters by 34.2\% while retaining strong fidelity (CIFAR-10 FID $= 3.96$).
     \item \textbf{Gradient Smoothing and Algorithmic Fairness (PTGAN):} Parallel convex interpolation reduced gradient update variance across multiple divergence metrics (BloodMNIST FID dropped from 176.04 under spectral norm to 41.99). When applied to fairness-constrained tasks, FairPTGAN achieved superior Pareto frontiers for demographic parity (SP $= 0.064$ on Adult, $\text{AUC} \ge 0.85$) over FairWGAN-GP and GeoRepair.
     \item \textbf{Convolutional Stabilization (DCGAN vs. CGAN):} DCGAN's strided convolutions and LeakyReLU activations prevented severe early loss divergence observed in vanilla CGAN within the first 25,000 steps.
 \end{itemize}
@@ -509,14 +509,64 @@ Targeted GAN formulations effectively tackle label noise, localized defects, and
 \end{itemize}
 
 \section{Critical Analysis, Advantages, and Limitations}
-% Provide deep qualitative insights:
-% - DCRGAN-VSG: Accurately preserves input-output mappings in small-sample data, but over-generation risks distorting sample space topology.
-% - SOMGAN: Decouples multi-modal features without computational explosion via parameter sharing, but relies heavily on initial grid geometry.
-% - EID-GAN: Successfully synthesizes tiny localized outliers (0.05% pixel ratio), but requires explicit bounding/mask annotations.
-% - CTGAN: Excels at capturing mixed-type tabular distributions, but suffers from extended training times and minority-class underrepresentation in extreme cardinality.
-% - CS-GAN: Drastically lowers high-stakes error costs, but requires pre-specified domain cost matrices.
-% - ISL-GAN: Bridges generative modeling with noisy label disambiguation, but depends on candidate label set assumptions.
-% - PTGAN: Effectively eliminates gradient variance without heuristic annealing schedules, but introduces minor bias in non-target temperatures.
+
+Each of the nine reviewed models offers unique strengths for specific real-world problems, but they also come with distinct trade-offs and practical limitations.
+
+\begin{itemize}
+    \item \textbf{DCRGAN-VSG (Virtual Sample Generation for Industrial Sensors):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Accurately learns the connection between measured inputs (process variables) and difficult-to-measure outputs (product quality) even when training on very small datasets \cite{Zhu2025DCRGAN}. Its filtering step (Pielou index) ensures newly generated data actively fills empty gaps in the dataset instead of repeating what is already there \cite{Zhu2025DCRGAN}.
+        \item \textbf{Limitations:} Creating too many fake samples can backfire; generating more than roughly 420 samples distorts the original dataset's shape and degrades overall model accuracy \cite{Zhu2025DCRGAN}.
+    \end{itemize}
+
+    \item \textbf{SOMGAN (Multi-Mode Capture \& Diversity):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Uses a team of specialized discriminators arranged on a 2D grid so that each judge focuses on a different style or category of data \cite{Li2024SOMGAN}. This successfully prevents repetitive outputs without massive computing costs because the discriminators share parts of their internal networks \cite{Li2024SOMGAN}.
+        \item \textbf{Limitations:} The model's success depends heavily on manually picking the right layout and grid size for the judges to match the expected number of categories in the data \cite{Li2024SOMGAN}.
+    \end{itemize}
+
+    \item \textbf{EID-GAN (Tiny Defect Augmentation):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Successfully learns to generate tiny, localized flaws (as small as 0.05\% of an image) by forcing the creator to zoom in on defect regions, lowering industrial inspection misses down to 0\% \cite{Li2023EIDGAN}.
+        \item \textbf{Limitations:} Requires detailed manual outlines around every flaw during training, so it cannot be used if data lacks precise defect labels \cite{Li2023EIDGAN}.
+    \end{itemize}
+
+    \item \textbf{CTGAN and Copula GAN (Tabular Healthcare Data):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Tailored for spreadsheet-style tables with mixed numbers and text categories, creating realistic health records while protecting patient privacy by avoiding exact duplicate copies \cite{Bietsch2023CTGAN}.
+        \item \textbf{Limitations:} Takes a very long time to train on large datasets and struggles to accurately generate rare events, such as unusual diagnoses or long hospital stays \cite{Bietsch2023CTGAN}.
+    \end{itemize}
+
+    \item \textbf{Two-Channel CS-GAN (Cost-Sensitive Face Recognition):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Generates clear front-facing face images from side-angle photos and prioritizes avoiding expensive mistakes, such as letting an unauthorized person pass through security \cite{Chen2021CSGAN}.
+        \item \textbf{Limitations:} Requires human experts to assign fixed cost values to every type of error ahead of time, making it hard to adapt if risk levels change dynamically \cite{Chen2021CSGAN}.
+    \end{itemize}
+
+    \item \textbf{ISL-GAN (Learning from Noisy and Ambiguous Labels):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Cleans up noisy and uncertain tags where an image has multiple possible candidate labels by generating clean, typical examples to figure out the true label \cite{Zhang2023ISLGAN}.
+        \item \textbf{Limitations:} Assumes the correct answer is always somewhere inside the provided candidate list; if the true label was completely missed during manual tagging, the model fails to learn it \cite{Zhang2023ISLGAN}.
+    \end{itemize}
+
+    \item \textbf{PTGAN (Stabilizing Training with Smoothed Data):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Solves unstable training and wild updates by training across blended, smoothed versions of the dataset simultaneously, which also allows it to generate fair and unbiased data across demographic groups \cite{Sohn2026PTGAN}.
+        \item \textbf{Limitations:} Blending samples introduces slight approximation errors, meaning the model can lose sharp details if the balance between smoothed data and real data is not tuned carefully \cite{Sohn2026PTGAN}.
+    \end{itemize}
+
+    \item \textbf{RSM-GAN (Rough Sketch to Military Symbol Conversion):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Directly turns messy, hand-drawn sketches into clean military symbols in a single step, performing well even with very few training drawings \cite{Zuo2023RSMGAN}.
+        \item \textbf{Limitations:} The raw outputs often contain visual noise and blurry edges, requiring extra clean-up and sharpening steps to produce crisp symbols \cite{Zuo2023RSMGAN}.
+    \end{itemize}
+
+    \item \textbf{DCGAN vs.\ CGAN (Standard Image Baselines):}
+    \begin{itemize}
+        \item \textbf{Advantages:} Using specialized image layers (convolutions) provides smooth, steady training and prevents the severe early instability common in older basic models \cite{Li2021DCGAN}.
+        \item \textbf{Limitations:} Basic DCGAN cannot be controlled to produce a specific target category, while standard conditional versions suffer from erratic training without advanced stabilization rules \cite{Li2021DCGAN}.
+    \end{itemize}
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
