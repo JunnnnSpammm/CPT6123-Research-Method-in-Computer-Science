@@ -345,6 +345,23 @@ to generate synthetic data that approximates the original distribution while red
 
 
 \subsection{Topological \& Multi-Discriminator Pipeline (SOMGAN \& RSM-GAN Workflows)}
+
+\subsubsection{Self-Organizing Map Generative Adversarial Nets (SOMGAN)}
+Typical GANs also tend to produce a very limited variety of samples, mapping large probabilities to small regions of data and failing to capture the full diversity of the original dataset, which in turn causes mode collapse.
+
+\subsubsection{The SOMGAN Methodology}
+\textbf{Architecture Setup} \\
+Instead of the standard GAN setup (one generator and one discriminator), SOMGAN pairs a single generator with a mixture of multiple discriminators. These multiple discriminators are mathematically mapped onto a predefined two-dimensional topological structure, essentially organizing them into a grid similar to a Self-Organizing Map (SOM). \\
+\\ \textbf{Parameter Sharing} \\
+To keep the model highly efficient, the multiple discriminators do not all have completely independent, separate weights. They utilize a parameter-sharing trick. This ensures that having multiple discriminators requires only a trivial amount of extra computation compared to a traditional GAN. \\
+\\ \textbf{Evaluating Real Data (Competition)} \\
+When a batch of real data is fed into the system, the discriminators enter a competitive phase. They each evaluate the data, and the system identifies the "best-matching" discriminator, which is the one that most accurately recognizes the specific features of that particular data sample. \\
+\\ \textbf{Updating Discriminators (Topological Specialization)} \\
+Once the winning discriminator is identified, the SOM topology comes into play. The system updates the weights of the winning discriminator, but it also updates the weights of its neighboring discriminators on the 2D grid. Over time, this forces different local neighborhoods of discriminators to specialize in identifying different "modes" (distinct categories or variations) of the real data. \\
+\\ \textbf{Evaluating Fake Data (Cooperation)} \\
+When the generator produces fake data, the competitive dynamic flips to a cooperative one. All the specialized discriminators work together as a committee to judge the fake samples. \\
+\\ \textbf{Generator Optimization} \\
+Because the discriminators have each become experts in different modes of the data, the generator can no longer get away with producing just one type of convincing image (which is what causes mode collapse). To successfully fool the entire cooperative committee of experts, the generator is forced to produce a highly diverse range of outputs that covers all the different modes of the original dataset.
 % Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
 
 \subsection{Imbalanced, Tabular \& Cost-Sensitive Augmentation Pipeline (EID-GAN, CTGAN, CS-GAN, ISL-GAN)}
