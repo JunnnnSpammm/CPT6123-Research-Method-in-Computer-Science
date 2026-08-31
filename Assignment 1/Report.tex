@@ -362,6 +362,30 @@ Once the winning discriminator is identified, the SOM topology comes into play. 
 When the generator produces fake data, the competitive dynamic flips to a cooperative one. All the specialized discriminators work together as a committee to judge the fake samples. \\
 \\ \textbf{Generator Optimization} \\
 Because the discriminators have each become experts in different modes of the data, the generator can no longer get away with producing just one type of convincing image (which is what causes mode collapse). To successfully fool the entire cooperative committee of experts, the generator is forced to produce a highly diverse range of outputs that covers all the different modes of the original dataset.
+
+\subsubsection{ResNet-based encoder, Style-based generator and Markovianity-based discriminator GAN (RSM-GAN)}
+Traditional military situation mapping relies on human-computer interaction (WIMP interfaces) which is time-consuming and inadequate for modern information warfare. While sketch-based mapping systems offer a faster alternative, irregular military symbols are difficult to accurately recognize using standard database correlation and computer graphics. Hence, RSM-GAN is implemented to solve this issue, which consists of three main components:
+\begin{itemize}
+    \item ResNet-based encoder
+    \item Style-based Generator
+    \item Markovian Discriminator
+\end{itemize}
+
+\subsubsection{RSM-GAN Methodology}
+
+\textbf{Encoder Network} \\
+A ResNet-based encoder is used to extract features from the input hand-drawn military symbol. The encoder consists of 17 convolutional layers and one fully connected layer, which maps the input image into a feature representation for subsequent generation. \\
+\\ \textbf{Style-Based Generator} \\
+The generator converts the encoded features into a standardized military symbol. It contains a mapping network and a synthesis network. The mapping network produces an intermediate latent variable, which controls the style of the generated image, while random noise is introduced to control image details and maintain diversity. \\
+\\ \textbf{Markovian Discriminator} \\
+A Markovian discriminator is used to distinguish between real standard military symbols and generated symbols. Instead of evaluating the entire image as a single unit, the discriminator evaluates fixed-size image regions independently and averages their scores to determine the final result. \\
+\\ \textbf{Model Training} \\
+RSM-GAN is trained through an adversarial process in which the generator and discriminator are updated alternately. The discriminator learns to distinguish real symbols from generated symbols, while the generator is trained to produce outputs that can be accepted as real by the discriminator. \\
+\\ \textbf{Loss Functions} \\
+The model uses two main loss functions: "reconstruction loss" and "adversarial loss". The reconstruction loss reduces the difference between the generated symbol and its corresponding standard symbol. The adversarial loss encourages the generator to produce realistic standardized symbols that are difficult for the discriminator to distinguish from real data. \\
+\\ \textbf{Dataset Preparation} \\
+The authors developed the "MMS-Sketch" dataset for training and evaluation. It contains 226 standard military symbols, which were augmented through rotation to produce 678 standard images. In addition, 226 hand-drawn versions were created using a tablet and stylus. The images were converted to 64 × 64 grayscale format and divided into training and testing sets using a 7:3 ratio. 
+
 % Step-by-step logic: competitive BMD selection, topological weight spread backpropagation, and style modulation loops.
 
 \subsection{Imbalanced, Tabular \& Cost-Sensitive Augmentation Pipeline (EID-GAN, CTGAN, CS-GAN, ISL-GAN)}
