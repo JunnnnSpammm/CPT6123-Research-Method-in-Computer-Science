@@ -250,16 +250,121 @@ Therefore, the overall literature suggests a shift from general-purpose GAN gene
 \section{Mathematical \& Theoretical Foundations}
 
 \subsection{Virtual Sample Generation \& Tempered Distributions}
+\subsubsection{Dual Correlation Generative Adversarial Nets Based Virtual Sample Generation Method (DCRGAN-VSG)}
+
+The DCRGAN methodology pairs two generative networks sharing a latent space $z \sim p_z(z)$, combined with a spatial filtering mechanism. \\
+\\ \textbf{Process Variable Generation ($G_x, D_x$):} Utilizes WGAN-GP to stably generate process inputs $x$. The discriminator $D_x$ uses a Wasserstein loss with a gradient penalty to prevent mode collapse, while the generator $G_x$ minimizes:
+$$L_{G_x} = -\mathbb{E}_{z \sim p_z(z)}[D_x(G_x(z))]$$
+\textbf{Quality Variable Generation ($G_y, D_y$):} Employs an RC-CGAN (Conditional GAN with Regression Constraints) to generate outputs $y$. To strictly enforce the mapping relationship between inputs and outputs, it adds a Mean Squared Error (MSE) term to the generator's loss function:
+{\footnotesize $$L_{G_y} = \mathbb{E}_{z \sim P_z(z)}[\log(1 - D_y(G_y(z\vert{}x)\vert{}x))] + \mathbb{E}_{z \sim P_z(z)}[\log(1 - D_y(G_y(z\vert{}\hat{x})\vert{}\hat{x}))] + \text{MSE}_{x,y \sim P_{data}}\left(G_y(z\vert{}x), y\right)$$}
+\\\textbf{Spatial Density Filtering (Pielou Index):} Ensures virtual samples populate sparse data gaps rather than dense regions. For a dimension divided into $n$ intervals with relative density $P_i$, the evenness is calculated as:
+$$E_j = \frac{-\sum_{i=1}^n P_i \ln P_i}{\ln n}$$
+The algorithm only retains batches of generated samples if they increase the dataset's overall average spatial evenness ($\bar{E}$).
+
+\subsubsection{Parallelly Tempered Generative Adversarial Networks (PTGAN)}
+Parallel Tempered GAN (PTGAN) leverages continuous convex interpolation to smooth multimodal target distributions and tightly bound critic gradient variance. \\
+\textbf{Scaled 1-Wasserstein Neural Distance} \\
+Evaluates distance between target $p_X$ and generated $p_{G(Z)}$ via dual representation:
+$$d_{\mathcal{D}}(p_X, p_{G(Z)}) = \sup_{D \in \mathcal{D}} \left( \mathbb{E}_{X \sim p_X}[D(X)] - \mathbb{E}_{Z \sim p_Z}[D(G(Z))] \right)$$
+\textbf{Gradient Variance Inflation} \\
+Mode collapse leaves uncaptured target support $\mathcal{S}_t^c = \mathcal{S} \setminus \mathcal{S}_t$. Critic gradient variance $\text{Var}\left(\frac{\partial \hat{L}_b}{\partial w}\right)$ scales directly with remaining distance $d_{\mathcal{D}}(p_{\mathcal{S}_t^c}, p_{G^{(t)}(Z)})$, meaning target multimodality inflates variance and causes severe training instability. \\
+\\ \textbf{Convex Interpolation Tempering} \\
+Constructs auxiliary variables via pairwise data interpolation:
+$$Q^\alpha = \alpha X_1 + (1 - \alpha) X_2 \quad \text{where } X_1, X_2 \sim p_X, \; \alpha \sim p_\alpha$$
+This constructs bridges across modes, directly shrinking between-mode variance $\vert{}\mu_1^* - \mu_2^*\vert{}$ and smoothing overall multimodality. \\
+\\ \textbf{Joint Optimization \& Coherency Regularization} \\
+Optimizes joint continuous-temperature distance $\min_{G \in \mathcal{G}} d_{\mathcal{D}}(p_{Q^\alpha, \alpha}, p_{G(Z, \alpha), \alpha})$ using mixture temperature $p_\alpha = r \delta_1 + (1 - r) p_{\alpha^*}$. To prevent independent convergence rates across temperatures, it adds penalty $H$ to synchronize learning dynamics:
+$$H = \lambda \mathbb{E}_{\alpha_1, \alpha_2, \nu, Q} \left[ \left( \nabla_{Q^{\tilde{\alpha}}} D(Q^{\tilde{\alpha}}, \tilde{\alpha}) \cdot (Q^{\alpha_1} - Q^{\alpha_2}) \right)^2 \right]$$
 % Mathematical formulation of:
 % - DCRGAN-VSG: WGAN-GP loss L_Dx, Regression-Constrained CGAN (RC-CGAN) loss with MSE term L_Gy, and Pielou Evenness Index (E_j = -\sum P_i \ln P_i / \ln n) for sample space gap filling.
 % - PTGAN: Convex interpolation Q^\alpha = \alpha X_1 + (1-\alpha) X_2, neural distance under scaled 1-Wasserstein metric, and coherency gradient regularization penalty H.
 
 \subsection{Multi-Discriminator \& Topological Constraint Formulations}
+
+\subsubsection{Self-Organizing Map Generative Adversarial Nets (SOMGAN)}
+Self-Organizing Map Generative Adversarial Networks (SOMGAN) maps multiple discriminators onto a predefined 2D topological grid to divide and specialize mode exploration across the data space. \\
+\\ \textbf{Topological Mapping:} \\
+$K$ discriminators $D = [D_1, D_2, \dots, D_K]$ are mapped onto 2D lattice coordinates $R = [r_1, r_2, \dots, r_K]$. Spatial distances between discriminators are computed via Euclidean distance:
+$$DM_{ij} = \Vert{}r_i - r_j\Vert{}_2$$ 
+\textbf{Winner-Takes-All Competition (Real Data):} \\
+For a real sample $x$, the Best-Matching Discriminator (BMD), denoted as $D_c$, is identified as the one yielding the maximum discriminative value:
+$$D_c = \arg\max_i D_i(x)$$
+\textbf{Neighborhood Function:} \\
+The influence of activated BMD $D_c$ on neighboring discriminators $D_i$ decays according to a Gaussian neighborhood function:
+$$h_{ci}(t) = \exp\left(-\frac{DM[c,i]^2}{2\sigma^2(t)}\right)$$
+where the neighborhood radius $\sigma(t)$ decreases monotonically over training iteration $t$:$$\sigma(t) = \frac{\sigma(t-1)}{1 + (t/T)^2}$$
+\textbf{Adversarial Objective Functions (Hinge Loss Version):} \\
+\textbf{Discriminator Objective:}
+$$L_D^{\text{SOMGAN}} = \sum_{i=1}^K \left[ -\mathbb{E}_{x \sim P_d} h_{ci}(t) [\min(0, -1 + D_i(x))] - \mathbb{E}_{z \sim P_z} [\min(0, -1 - D_i(G(z)))] \right]$$
+The discriminator loss uses hinge loss to update each discriminator, applying the neighborhood weight $h_{ci}(t)$ to real samples based on proximity to the best-matching discriminator while penalizing generated samples across the entire ensemble equally. \\ 
+\\ \textbf{Generator Objective:}
+$$L_G^{\text{SOMGAN}} = -\sum_{i=1}^K \mathbb{E}_{z \sim P_z} [D_i(G(z))]$$
+The generator loss sums the unweighted scores across all $K$ discriminators for fake samples, compelling the generator to produce diverse images capable of fooling every specialized discriminator in the map simultaneously.
+
+\subsubsection{ResNet-based encoder, Style-based generator and Markovianity-based discriminator GAN (RSM-GAN)}
+The RSM-GAN framework converts hand-drawn, irregular military sketches into standardized military symbols using an end-to-end generative adversarial network. \\
+\\ \textbf{Minimax Game Formulation} \\
+Formulates training as a two-player zero-sum game where the optimal discriminator state $D^*_G(x) = \frac{p_{\text{data}}(x)}{p_{\text{data}}(x) + p_g(x)}$ optimizes the objective function \\
+
+$V(G, D) = \int_x p_{\text{data}}(x) \log D(x) + p_g(x) \log (1 - D(x)) dx$ \\
+\\ \textbf{Dual Loss Function} \\
+Combines an $L_1$ reconstruction loss $\mathcal{L}_{L1}(G) = \mathbb{E}_{w,z,y}[\vert{}\vert{}y - G(w, z)\vert{}\vert{}_1]$ to measure spatial distance to the real symbol with an adversarial loss \\
+
+$\mathcal{L}(G,D,X,Y) = \mathbb{E}_{y \sim p_{\text{data}}(y)}[\log D(y)] + \mathbb{E}_{x \sim p_{\text{data}}(x)}[\log (1 - D(G(E(x))))]$ \\
+\\ \textbf{Markovian Patch Evaluation} \\
+Applies Markovian process theory to split images into fixed-size local region blocks, evaluating local authenticity independently to make the discriminator agnostic to input image sizes.
+
 % Mathematical formulation of:
 % - SOMGAN: 2D lattice topology R, Best-Matching Discriminator (BMD) selection D_c = argmax D_i(x), and neighborhood decay weighting h_{ci}(t) = \exp(-DM[c,i] / 2\sigma^2(t)).
 % - RSM-GAN: ResNet encoder, style-based mapping/synthesis network, Markovian patch discriminator, and L1 reconstruction + adversarial loss.
 
 \subsection{Norm-Penalty, Tabular \& Cost-Sensitive Imbalance Learning}
+
+\subsubsection{Extremely Imbalanced Data Augmentation Generative Adversarial Nets (EID-GAN)}
+The EID-GAN framework addresses the challenge of extremely imbalanced data augmentation by forcing the generative adversarial network to explicitly learn and synthesize tiny, pixel-level defect features (outliers). \\
+\\ \textbf{Baseline GAN Limit} \\
+Standard GANs use the minimax objective, \\
+
+$\min_G \max_D V(G,D) = \mathbb{E}_{x\sim p_r(x)}[\log D(x)] + \mathbb{E}_{z\sim p_z(z)}[\log(1 - D(G(z)))]$ \\
+\\ which prioritizes global distribution matching ($p_r \approx p_G$) but overlooks tiny pixel-level details like minor defects. \\
+\\ \textbf{Outlier Penalty Function ($f_{outlier}$)} \\
+To force model attention onto tiny outliers, a structural penalty is introduced as \\
+
+$f_{outlier} = \lambda \times \vert{}ano_i - G_{crop}(z)\vert{}$ \\
+\\ where $ano_i$ is an outlier extracted from a masked real negative sample ($x_i \times mask_i$), $G_{crop}(z)$ is a cropped region of the generated image matching $ano_i$'s size, and $\lambda$ is a weighting coefficient. \\
+\\ \textbf{Joint Objective Function} \\
+Combining $f_{outlier}$ with the standard generator loss forms the complete objective \\
+
+{\small $\min_G \max_D V(G, D) = \mathbb{E}_{x\sim p_r(x)}[\log D(x)] + \mathbb{E}_{z\sim p_z(z)}[\log(1 - D(G(z)))] + \mathbb{E}_{x\sim p_r(x)} f_{outlier}(x)$. \\}
+\\ \textbf{Discriminator Optimality (Theorem 1)}
+For any fixed generator $G$, the optimal discriminator remains $D^*(x) = \frac{p_r(x)}{p_r(x) + p_G(x)}$, achieving its global maximum at $D^*(x) = 0.5$ when $p_r(x) = p_G(x)$. \\
+\\ \textbf{Vanishing Gradient Mitigation (Theorem 2)}\\
+When real ($p_r$) and generated ($p_G$) distributions have non-overlapping areas, traditional Jensen-Shannon divergence gradients vanish ($JSD \approx 0$). In EID-GAN, $C(G) \approx f_{outlier} > 0$, ensuring $G$ continuously receives backpropagation gradients to update its parameters. \\
+\\ \textbf{Convergence Bounds (Theorem 3)} \\
+The virtual training criterion $C(G)$ reaches its global minimum within the bounded range $[\delta - 2\log 2, d - 2\log 2]$ (where $\delta < d$) if and only if $p_r(x) \approx p_G(x)$. 
+
+\subsubsection{Two-channel Cost-sensitive GAN (CSGAN)}
+This GAN addresses the synthesis of photorealistic, identity-preserving frontal face images from profile inputs by employing a dual-channel architecture and a multi-component loss function. \\
+\\ The GAN model optimizes a mini-maximum problem by alternately training the generator ($G_{\sigma_{G}}$) and discriminator ($D_{\sigma_{D}}$) via the equation: \\
+
+$\min_{\sigma_{G}}\max_{\sigma_{D}}(\mathbb{E}_{I^{F}\sim P(I^{F})}\log D_{\sigma_{D}}(I^{F}) + \mathbb{E}_{I^{P}\sim P(I^{P})}\log(1-D_{\sigma_{D}}(G_{\sigma_{G}}(I^{P}))))$. \\
+\\The total synthesis loss function ($L$) is defined as a linear combination of five distinct constraints:  \\
+
+$L = L_{pix} + \alpha_1 L_{sym} + \alpha_2 L_{adv} + \alpha_3 L_{per} + \alpha_4 L_{tvr}$. \\
+\\ \textbf{The Pixel-wise Loss ($L_{pix}$)} speeds up network training by minimizing the squared differences between corresponding pixels in the real and generated images. \\
+\\\textbf{ The Symmetry Loss ($L_{sym}$)} eliminates self-occlusion by leveraging prior knowledge of human facial symmetry to constrain the network. \\
+\\ \textbf{The Adversarial Loss ($L_{adv}$)} allows the counter-network to effectively distinguish between authentic frontal face images and those synthesized by the generator. \\
+\\\textbf{ The Perceptual Loss ($L_{per}$)} utilizes a pre-trained Light CNN to extract features, ensuring the synthesized output shares similar high-level features with the target image rather than strictly matching pixels. \\
+\\ \textbf{The Total Variation Regularization ($L_{tvr}$)} is applied to prevent overfitting and suppress spike artifacts in the final generated image.
+
+\subsubsection{Inaccurate-Supervised Learning GAN (ISL-GAN)} 
+ISL-GAN merges principles from Conditional GANs (CGAN) and Semi-Supervised GANs (SSGAN) to resolve imprecise annotations. \\
+\\ \textbf{Min-Max Optimization}
+The framework relies on a unified loss function formulated as $\min_{G}\max_{D}V(D,G)$, balancing the adversarial competition between the Generator ($G$) and Discriminator ($D$). \\
+\\ \textbf{Optimal Discriminator} \\
+For any fixed $G$, the theoretical optimal discriminator $D_G^*(x^{(i)}\vert{}y_p^{(i)})$ is derived mathematically by evaluating the ratio of the real data distribution $p_{data}$ to the combined real and generated distributions ($p_{data} + p_g$). \\
+\\ \textbf{Jensen-Shannon Divergence} \\
+Minimizing the generator's cost function analytically equates to minimizing the divergence between $p_{data}(x^{(i)}\vert{}y_p^{(i)})$ and $p_g(x^{(i)}\vert{}y_p^{(i)})$. The global optimum is achieved when the Jensen-Shannon divergence satisfies $JSD(p_{data}\vert{}\vert{}p_g) = \log 2$, theoretically guaranteeing the fake distribution converges to the real data distribution conditioned on the inaccurate labels.
 % Mathematical formulation of:
 % - EID-GAN: Outlier-guided cropped norm penalty f_outlier = \lambda |ano_i - G_crop(z)| integrated into minimax objective.
 % - CTGAN & Copula GAN: Mode-specific normalization for continuous variables, conditional generator with PacGAN discriminator, and Gaussian copula transformations.
@@ -451,7 +556,7 @@ Network parameters are optimized end-to-end by minimizing a weighted composite l
 $L = L_{pix} + \alpha_1 L_{sym} + \alpha_2 L_{adv} + \alpha_3 L_{per} + \alpha_4 L_{tvr}$. \\
 \\ The pixel-wise loss $L_{pix}$ accelerates training convergence through direct pixel matching. The symmetry loss $L_{sym}$ leverages intrinsic facial symmetry priors to eliminate self-occlusion artifacts caused by extreme profile angles. Adversarial loss $L_{adv}$ pushes generated images toward high-frequency realism. Perceptual loss $L_{per}$, computed using high-level feature maps extracted from a pre-trained Light CNN network, enforces identity preservation. Finally, total variation regularization $L_{tvr}$ acts to suppress spike artifacts and prevent model overfitting.  
 
-\subsubsection{Inaccurate-Supervised Learning GAN}
+\subsubsection{Inaccurate-Supervised Learning GAN (ISL-GAN)}
 While deep learning and traditional machine learning models exist for various weak-supervision tasks, there was previously no unified GAN framework to handle these problems:
 
 \begin{itemize}
