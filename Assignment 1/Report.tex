@@ -31,7 +31,7 @@
 \sloppy
 
 % Project & Group Information
-\title{\textbf{CPT6123 Assignment 1: Reviewed Report on Application and Improvement of Machine Learning in the Real World}}
+\title{\textbf{CPT6123 Assignment 1: A Comparative Review of Advanced Generative Adversarial Networks (GAN) Architectures}}
 \author{
   \textbf{Group ID:} Group\_06 \\[1em]
   \begin{tabular}{>{\centering\arraybackslash}p{4cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{4cm} >{\centering\arraybackslash}p{3cm}}
@@ -247,6 +247,28 @@ Therefore, the overall literature suggests a shift from general-purpose GAN gene
 % 4. Research Methodology / Algorithms Used
 \chapter{Research Methodology / Algorithms Used}
 
+\section{Foundational GAN Components and Variants}
+This section first introduces the recurring GAN variants and components such as WGAN, CGAN, and other foundational mechanisms before discussing the mathematical foundations and workflows of the advanced GAN architectures.
+
+\begin{enumerate}
+    \item \textbf{Wasserstein GAN (WGAN)} \\
+    While a normal GAN has a discriminator that provides binary outputs by classifying data as either real or fake, a WGAN uses a critic that provides continuous scores related to the difference between the generated and real data distributions. The example below illustrates the difference between how normal GANs and WGANs evaluate generated data: \
+
+    \textbf{Normal GANs:}
+    "This generated data is \textbf{fake}."
+
+    \textbf{WGANs:}
+    "This generated data is fake, but it is relatively decent, with a score of \textbf{+5}." \
+    
+    This is useful because the generator receives a more informative learning signal about the quality of its output. 
+
+    \item \textbf{Conditional GAN (CGAN)} \\
+    A CGAN is a type of GAN that generates data based on a specific condition or input. Unlike a normal GAN, a CGAN allows the user to control what type of data is generated. \
+    
+    For example, when generating images, a CGAN can be given the condition “7” so that the generator produces an image resembling the number 7.
+\end{enumerate}
+
+
 \section{Mathematical \& Theoretical Foundations}
 
 \subsection{Virtual Sample Generation \& Tempered Distributions}
@@ -257,23 +279,23 @@ The DCRGAN methodology pairs two generative networks sharing a latent space $z \
 $$L_{G_x} = -\mathbb{E}_{z \sim p_z(z)}[D_x(G_x(z))]$$
 \textbf{Quality Variable Generation ($G_y, D_y$):} Employs an RC-CGAN (Conditional GAN with Regression Constraints) to generate outputs $y$. To strictly enforce the mapping relationship between inputs and outputs, it adds a Mean Squared Error (MSE) term to the generator's loss function:
 {\footnotesize $$L_{G_y} = \mathbb{E}_{z \sim P_z(z)}[\log(1 - D_y(G_y(z\vert{}x)\vert{}x))] + \mathbb{E}_{z \sim P_z(z)}[\log(1 - D_y(G_y(z\vert{}\hat{x})\vert{}\hat{x}))] + \text{MSE}_{x,y \sim P_{data}}\left(G_y(z\vert{}x), y\right)$$}
-\\\textbf{Spatial Density Filtering (Pielou Index):} Ensures virtual samples populate sparse data gaps rather than dense regions. For a dimension divided into $n$ intervals with relative density $P_i$, the evenness is calculated as:
+\\\textbf{Pielou Index:} Ensures virtual samples populate sparse data gaps rather than dense regions. For a dimension divided into $n$ intervals with relative density $P_i$, the evenness is calculated as:
 $$E_j = \frac{-\sum_{i=1}^n P_i \ln P_i}{\ln n}$$
 The algorithm only retains batches of generated samples if they increase the dataset's overall average spatial evenness ($\bar{E}$).
 
 \subsubsection{Parallelly Tempered Generative Adversarial Networks (PTGAN)}
 Parallel Tempered GAN (PTGAN) leverages continuous convex interpolation to smooth multimodal target distributions and tightly bound critic gradient variance. \\
-\textbf{Scaled 1-Wasserstein Neural Distance} \\
-Evaluates distance between target $p_X$ and generated $p_{G(Z)}$ via dual representation:
+\\ \textbf{Scaled 1-Wasserstein Neural Distance} \\
+Measures how different the real data distribution $p_X$ is from the generator's distribution $p_{G(Z)}$ using the critic $D$:
 $$d_{\mathcal{D}}(p_X, p_{G(Z)}) = \sup_{D \in \mathcal{D}} \left( \mathbb{E}_{X \sim p_X}[D(X)] - \mathbb{E}_{Z \sim p_Z}[D(G(Z))] \right)$$
 \textbf{Gradient Variance Inflation} \\
-Mode collapse leaves uncaptured target support $\mathcal{S}_t^c = \mathcal{S} \setminus \mathcal{S}_t$. Critic gradient variance $\text{Var}\left(\frac{\partial \hat{L}_b}{\partial w}\right)$ scales directly with remaining distance $d_{\mathcal{D}}(p_{\mathcal{S}_t^c}, p_{G^{(t)}(Z)})$, meaning target multimodality inflates variance and causes severe training instability. \\
-\\ \textbf{Convex Interpolation Tempering} \\
-Constructs auxiliary variables via pairwise data interpolation:
+Mode collapse causes the generator to miss some parts of the real data distribution: $\mathcal{S}_t^c = \mathcal{S} \setminus \mathcal{S}_t$. The farther the generator is from these missing parts, measured by the Wasserstein distance, $d_{\mathcal{D}}(p_{\mathcal{S}_t^c}, p_{G^{(t)}(Z)})$,the more the critic's gradients vary between training batches: $\text{Var}\left(\frac{\partial \hat{L}_b}{\partial w}\right)$.Therefore, when the target data contains many different modes and the generator fails to capture some of them, gradient variance increases and training becomes more unstable. \\
+\\ \textbf{Convex Interpolation} \\
+Creates intermediate samples by mixing two real data samples:
 $$Q^\alpha = \alpha X_1 + (1 - \alpha) X_2 \quad \text{where } X_1, X_2 \sim p_X, \; \alpha \sim p_\alpha$$
 This constructs bridges across modes, directly shrinking between-mode variance $\vert{}\mu_1^* - \mu_2^*\vert{}$ and smoothing overall multimodality. \\
 \\ \textbf{Joint Optimization \& Coherency Regularization} \\
-Optimizes joint continuous-temperature distance $\min_{G \in \mathcal{G}} d_{\mathcal{D}}(p_{Q^\alpha, \alpha}, p_{G(Z, \alpha), \alpha})$ using mixture temperature $p_\alpha = r \delta_1 + (1 - r) p_{\alpha^*}$. To prevent independent convergence rates across temperatures, it adds penalty $H$ to synchronize learning dynamics:
+Trains the generator and critic together across different temperature levels: $\min_{G \in \mathcal{G}} d_{\mathcal{D}}(p_{Q^\alpha, \alpha}, p_{G(Z, \alpha), \alpha})$ using mixture temperature $p_\alpha = r \delta_1 + (1 - r) p_{\alpha^*}$. A coherency penalty (H) is added to prevent the critic from behaving too differently across temperatures:
 $$H = \lambda \mathbb{E}_{\alpha_1, \alpha_2, \nu, Q} \left[ \left( \nabla_{Q^{\tilde{\alpha}}} D(Q^{\tilde{\alpha}}, \tilde{\alpha}) \cdot (Q^{\alpha_1} - Q^{\alpha_2}) \right)^2 \right]$$
 % Mathematical formulation of:
 % - DCRGAN-VSG: WGAN-GP loss L_Dx, Regression-Constrained CGAN (RC-CGAN) loss with MSE term L_Gy, and Pielou Evenness Index (E_j = -\sum P_i \ln P_i / \ln n) for sample space gap filling.
@@ -286,14 +308,13 @@ Self-Organizing Map Generative Adversarial Networks (SOMGAN) maps multiple discr
 \\ \textbf{Topological Mapping:} \\
 $K$ discriminators $D = [D_1, D_2, \dots, D_K]$ are mapped onto 2D lattice coordinates $R = [r_1, r_2, \dots, r_K]$. Spatial distances between discriminators are computed via Euclidean distance:
 $$DM_{ij} = \Vert{}r_i - r_j\Vert{}_2$$ 
-\textbf{Winner-Takes-All Competition (Real Data):} \\
+\textbf{Competition to Find the BMD} \\
 For a real sample $x$, the Best-Matching Discriminator (BMD), denoted as $D_c$, is identified as the one yielding the maximum discriminative value:
 $$D_c = \arg\max_i D_i(x)$$
 \textbf{Neighborhood Function:} \\
 The influence of activated BMD $D_c$ on neighboring discriminators $D_i$ decays according to a Gaussian neighborhood function:
 $$h_{ci}(t) = \exp\left(-\frac{DM[c,i]^2}{2\sigma^2(t)}\right)$$
 where the neighborhood radius $\sigma(t)$ decreases monotonically over training iteration $t$:$$\sigma(t) = \frac{\sigma(t-1)}{1 + (t/T)^2}$$
-\textbf{Adversarial Objective Functions (Hinge Loss Version):} \\
 \textbf{Discriminator Objective:}
 $$L_D^{\text{SOMGAN}} = \sum_{i=1}^K \left[ -\mathbb{E}_{x \sim P_d} h_{ci}(t) [\min(0, -1 + D_i(x))] - \mathbb{E}_{z \sim P_z} [\min(0, -1 - D_i(G(z)))] \right]$$
 The discriminator loss uses hinge loss to update each discriminator, applying the neighborhood weight $h_{ci}(t)$ to real samples based on proximity to the best-matching discriminator while penalizing generated samples across the entire ensemble equally. \\ 
@@ -375,29 +396,8 @@ Minimizing the generator's cost function analytically equates to minimizing the 
 
 \subsection{Virtual Sample Generation Pipeline (DCRGAN \& PTGAN Workflows)}
 % Step-by-step procedural execution: latent sampling, dual generator mapping, Pielou filtering, and parallel temperature scheduling.
-\subsubsection{Dual Correlation Generative Adversarial Nets Based Virtual Sample Generation Method (DCRGAN-VSG)}
-There are several GANs, components and methods working under DCRGAN to synthesize virtual data:
-\begin{enumerate}
-    \item \textbf{Wasserstein GAN (WGAN)} \\
-    While a normal GAN has a discriminator that provides binary outputs by classifying data as either real or fake, a WGAN uses a critic that provides continuous scores related to the difference between the generated and real data distributions. The example below illustrates the difference between how normal GANs and WGANs evaluate generated data: \
-
-    \textbf{Normal GANs:}
-    "This generated data is \textbf{fake}."
-
-    \textbf{WGANs:}
-    "This generated data is fake, but it is relatively decent, with a score of \textbf{+5}." \
-    
-    This is useful because the generator receives a more informative learning signal about the quality of its output. 
-
-    \item \textbf{Conditional GAN (CGAN)} \\
-    A CGAN is a type of GAN that generates data based on a specific condition or input. Unlike a normal GAN, a CGAN allows the user to control what type of data is generated. \
-    
-    For example, when generating images, a CGAN can be given the condition “7” so that the generator produces an image resembling the number 7.
-    
-    \item \textbf{Pielou Index} \\
-    The Pielou Index measures how evenly entities are distributed across different categories within any system.
-\end{enumerate}
-In industrial production, data-driven soft sensors often suffer from poor prediction performance due to the "big data, small sample" problem, which causes the struggle to produce quality variables (variables that are difficult to measure) alongside their related process variables (variables that can be directly measured). While methods like WGAN and CGAN exist to expand datasets, them alone do not completely eliminate the convergence difficulties that can occur during GAN training. Additionally, they may not be sufficient for soft sensing applications, as it primarily focuses on generating realistic process variables without explicitly considering the process outputs and the important mapping relationship between the inputs and outputs. Hence, DCRGAN is introduced that combines their uses effectively to resolve the issue.
+\subsubsection{Dual Correlation Generative Adversarial Nets Based Virtual (DCRGAN)} 
+In industrial production, soft sensors often face a "big data, small sample" problem when predicting hard-to-measure quality variables. To resolve this issue, DCRGAN is introduced as an effective solution combined with WGAN and CGAN.
 
 \subsubsection{The DCRGAN-VSG Methodology}
 \textbf{Data Preparation} \\
@@ -435,7 +435,7 @@ $$
 G(Z,\alpha).
 $$
 This allows one generator to learn different tempered distributions at the same time. \\
-\\ \textbf{Adversarial Training}
+\\ \textbf{Adversarial Training} \\
 PTGAN trains the generator and critic across different temperature levels in parallel. The generator tries to make \(G(Z,\alpha)\) match the corresponding tempered distribution \(Q^\alpha\), while the critic distinguishes between real and generated samples. The smoother intermediate distributions provide more stable gradients and help reduce training instability. \\
 \\ \textbf{Applying the Coherency Penalty} \\
 PTGAN applies a coherency penalty to the critic to encourage consistent learning across different temperature levels. This allows information learned from the intermediate distributions to be shared, rather than treating each temperature as a separate learning problem. \\
