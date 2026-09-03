@@ -1,0 +1,874 @@
+\documentclass[12pt,a4paper]{article}
+
+% =========================================
+% PAGE SETUP
+% =========================================
+\usepackage[
+    a4paper,
+    margin=25.4mm
+]{geometry}
+
+
+% =========================================
+% BASIC PACKAGES
+% =========================================
+\usepackage{graphicx}       % Images
+\usepackage{amsmath}        % Mathematics
+\usepackage{amssymb}        % Mathematical symbols
+\usepackage{booktabs}       % Professional tables
+\usepackage{float}          % [H] figure/table positioning
+\usepackage{caption}        % Caption customization
+\usepackage{hyperref}       % Hyperlinks and references
+\usepackage{ragged2e}       % Text alignment
+\usepackage{setspace}       % Line spacing
+\usepackage{hyperref}       % Clickable links and references
+% =========================================
+% APA REFERENCING
+% =========================================
+
+\usepackage[
+    style=apa,
+    backend=biber
+]{biblatex}
+
+\addbibresource{references.bib}
+
+
+% =========================================
+% HYPERLINK SETTINGS
+% =========================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    pdftitle={Critical Research Review Article}
+}
+
+% Table and figure caption formatting
+\DeclareCaptionFont{captionnine}{\fontsize{9pt}{11pt}\selectfont}
+
+\captionsetup[table]{
+    font=captionnine,
+    justification=raggedright,
+    singlelinecheck=false,
+    labelsep=colon
+}
+
+\captionsetup[figure]{
+    font=captionnine,
+    justification=centering,
+    singlelinecheck=false,
+    labelsep=colon
+}
+
+
+% =========================================
+% DOCUMENT
+% =========================================
+\begin{document}
+
+\begin{center}
+
+{\fontsize{18}{22}\selectfont\textbf{CRITICAL RESEARCH REVIEW ARTICLE}}
+
+\vspace{0.5cm}
+
+{\fontsize{18}{22}\selectfont\textbf{[INSERT RESEARCH TOPIC]}}
+
+\vspace{1cm}
+
+{\fontsize{12}{14}\selectfont\textbf{Group Members}}
+
+\vspace{0.3cm}
+
+{\fontsize{12}{14}\selectfont
+1. Student Name -- Student ID\\
+2. Student Name -- Student ID\\
+3. Student Name -- Student ID\\
+4. Student Name -- Student ID
+}
+
+\vspace{0.8cm}
+
+{\fontsize{12}{14}\selectfont
+\textbf{Programme:} [Programme Name]\\
+\textbf{Course:} [Course Code and Course Name]\\
+\textbf{Lecturer:} [Lecturer Name]\\
+\textbf{Semester:} [Semester]\\
+\textbf{Submission Date:} [Date]
+}
+
+\end{center}
+
+
+% =========================================
+% ABSTRACT
+% =========================================
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{Abstract}
+
+\vspace{0.2cm}
+
+\begin{justify}
+
+Write a concise summary of the entire review article. Write a concise summary of the entire review article. Write a concise summary of the entire review article. Write a concise summary of the entire review article.
+
+Write a concise summary of the entire review article.Write a concise summary of the entire review article.Write a concise summary of the entire review article.
+
+
+
+
+
+
+The abstract should include:
+
+\begin{itemize}
+    \item Background/context of the selected research topic
+    \item Purpose of the review
+    \item General approach used to select and analyse the research articles
+    \item Major findings from the reviewed literature
+    \item Key research gaps identified
+    \item Overall conclusion
+\end{itemize}
+
+\textbf{Recommended length: 150--250 words.}
+
+\vspace{0.3cm}
+
+\textbf{Keywords:} Keyword 1; Keyword 2; Keyword 3; Keyword 4; Keyword 5
+
+\end{justify}
+
+
+
+
+% =========================================
+% TABLE OF CONTENTS
+% =========================================
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+
+% =========================================
+% MAIN CONTENT
+% =========================================
+
+\begin{justify}
+
+% =========================================
+% 1. INTRODUCTION
+% =========================================
+
+\section{Introduction}
+
+\subsection{Background}
+
+Introduce the selected research topic and explain why it is important.
+
+This is how you add inline references in the document given that all your references have been copied in the references.bib.
+Recent studies have demonstrated the effectiveness of artificial
+intelligence techniques \parencite{smith2024}.
+
+Follow this example to include more than one references.Several studies have investigated these approaches
+\parencite{smith2024,lee2023,ahmad2022}.
+
+\vspace{0.5cm}
+Discuss:
+
+\begin{itemize}
+    \item What is the research topic?
+    \item What problem does it address?
+    \item Why is the problem important?
+    \item Where is the topic currently being applied?
+    \item Why is there a need to study/review this topic?
+\end{itemize}
+
+Students should support important statements with appropriate research references.
+
+
+\subsection{Problem Statement}
+
+Clearly describe the problem or issue that motivates this literature review.
+
+\vspace{0.5cm}
+Explain:
+
+\begin{itemize}
+    \item What is currently known?
+    \item What problems exist?
+    \item What limitations exist in current approaches?
+    \item Why is a review of existing research necessary?
+\end{itemize}
+
+
+\subsection{Objectives of the Review}
+
+State the objectives of the review article.
+
+\vspace{0.5cm}
+For example:
+
+\begin{enumerate}
+    \item To review existing research related to [topic].
+    \item To compare the approaches used by different researchers.
+    \item To analyse the findings and limitations of existing studies.
+    \item To identify research gaps and potential future research directions.
+\end{enumerate}
+
+
+\subsection{Research Questions}
+
+Develop 2--4 research questions that guide the review.
+
+\vspace{0.2cm}
+
+For Example:
+
+
+\textbf{RQ1:} What approaches have been used to address [research problem]?
+
+\vspace{0.2cm}
+
+\textbf{RQ2:} What are the major findings reported in existing studies?
+
+\vspace{0.2cm}
+
+\textbf{RQ3:} What are the limitations of the existing approaches?
+
+\vspace{0.2cm}
+
+\textbf{RQ4:} What research gaps and future opportunities can be identified?
+
+
+% =========================================
+% 2. REVIEW METHODOLOGY
+% =========================================
+
+\section{Review Methodology}
+
+Explain how the group conducted the literature review.
+
+
+\subsection{Literature Search Strategy}
+
+Describe:
+
+\begin{itemize}
+    \item Databases/search engines used
+    \item Search keywords
+    \item Search strings
+    \item Publication period
+    \item Type of publications considered\newline
+\end{itemize}
+
+
+Example databases:
+
+\begin{itemize}
+    \item Scopus
+    \item Web of Science
+    \item IEEE Xplore
+    \item ScienceDirect
+    \item SpringerLink
+    \item ACM Digital Library
+    \item Google Scholar
+\end{itemize}
+
+
+\subsection{Inclusion and Exclusion Criteria}
+
+Describe the criteria used to determine which research articles were included in or excluded from the review.
+
+\textbf{Inclusion criteria may include:}
+
+\begin{itemize}
+    \item Articles directly related to the selected research topic
+    \item Peer-reviewed research articles
+    \item Articles published within the selected publication period
+    \item Articles indexed in the selected academic databases
+    \item Articles available in full text
+\end{itemize}
+
+\textbf{Exclusion criteria may include:}
+
+\begin{itemize}
+    \item Articles outside the scope of the research topic
+    \item Duplicate publications
+    \item Non-peer-reviewed publications
+    \item Articles outside the selected publication period
+    \item Articles without sufficient methodological or research information
+\end{itemize}
+
+\end{justify}
+
+% =========================================
+% SAMPLE TABLE
+% =========================================
+
+\begin{table}[H]
+\caption{Inclusion and exclusion criteria used for the literature review}
+\label{tab:inclusion-exclusion}
+
+\fontsize{10pt}{12pt}\selectfont
+
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+\hline
+\centering\textbf{Criteria} &
+\centering\textbf{Inclusion} &
+\centering\textbf{Exclusion}
+\tabularnewline
+\hline
+
+\centering Publication type &
+\centering Peer-reviewed research articles &
+\centering Non-peer-reviewed articles
+\tabularnewline
+\hline
+
+\centering Publication period &
+\centering [e.g., 2021--2026] &
+\centering Articles outside selected period
+\tabularnewline
+\hline
+
+\centering Language &
+\centering English &
+\centering Other languages
+\tabularnewline
+\hline
+
+\centering Topic &
+\centering Directly related to selected topic &
+\centering Not directly related
+\tabularnewline
+\hline
+
+\centering Full text &
+\centering Full-text available &
+\centering Full text unavailable
+\tabularnewline
+\hline
+
+\end{tabular}
+
+\end{table}
+
+This is a sample table. Tables should be placed in the main text near to the first time they are cited, with the caption on top and left aligned. The font of the table caption is size 9 and the content in the table is size 10.
+
+
+
+% =========================================
+% SAMPLE FIGURE
+% =========================================
+
+\begin{figure}[H]
+    \centering
+
+    \fbox{%
+        \includegraphics[width=0.80\textwidth]{figures/Prisma.jpg}%
+    }
+
+    \caption{PRISMA flow diagram of the study selection process.}
+    \label{fig:prisma}
+\end{figure}
+
+
+This is a figure. All figures should be centred with figure caption following the sequence Figure 1, Figure 2, and so on. The caption should also be centred. The caption for figures should be size 9.
+
+
+
+\subsection{Article Selection}
+
+Each student must review \textbf{at least 3 research articles}.
+
+Therefore:
+
+\begin{itemize}
+    \item \textbf{Minimum articles per student = 3}
+    \item \textbf{Minimum articles per group = 12}
+\end{itemize}
+
+The group may use more than 12 articles if necessary.
+
+Explain how the final articles were selected for the review.
+
+
+
+
+% =========================================
+% 3. LITERATURE REVIEW
+% =========================================
+
+\section{Literature Review}
+
+This is the \textbf{main section of the review article}.
+
+Do \textbf{NOT} simply write:
+
+\begin{itemize}
+    \item Article 1 says \ldots
+    \item Article 2 says \ldots
+    \item Article 3 says \ldots
+\end{itemize}
+
+Instead, organise the literature according to \textbf{themes, methods, technologies, problems, findings, or research approaches}.
+
+
+\subsection{Theme / Area 1: [Insert Theme]}
+
+Discuss research articles related to the first major theme.
+
+Compare the studies in terms of:
+
+\begin{itemize}
+    \item Research objectives
+    \item Methodology
+    \item Dataset/sample
+    \item Tools/technologies
+    \item Experimental setup
+    \item Results
+    \item Advantages
+    \item Limitations
+\end{itemize}
+
+The discussion should compare multiple studies rather than describe each article independently.
+
+
+\subsection{Theme / Area 2: [Insert Theme]}
+
+Discuss the second major theme.
+
+Compare and synthesise findings from different researchers.
+
+Identify:
+
+\begin{itemize}
+    \item Similarities
+    \item Differences
+    \item Strengths
+    \item Weaknesses
+    \item Contradictory findings
+    \item Trends
+\end{itemize}
+
+
+\subsection{Theme / Area 3: [Insert Theme]}
+
+Discuss the third major theme.
+
+Use evidence from multiple research articles.
+
+
+\subsection{Theme / Area 4: [Insert Theme, if applicable]}
+
+Add additional themes where appropriate.
+
+\textbf{Note:} The number of themes should depend on the selected research topic. Do not create unnecessary sections simply to increase the number of pages.
+
+
+% =========================================
+% 4. COMPARATIVE ANALYSIS
+% =========================================
+
+\section{Comparative Analysis of Existing Studies}
+
+Provide a systematic comparison of the reviewed research articles.
+
+A table such as the following is recommended.
+
+
+% =========================================
+% COMPARATIVE ANALYSIS TABLE
+% =========================================
+
+\begin{table}[H]
+
+\caption{Comparative analysis of the reviewed research studies}
+\label{tab:comparative-analysis}
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+
+\textbf{No.} &
+\textbf{Author \& Year} &
+\textbf{Research Objective} &
+\textbf{Method/Technique} &
+\textbf{Dataset/Sample} &
+\textbf{Key Findings} &
+\textbf{Limitations}
+\\
+\hline
+
+1 &
+[Author, Year] &
+[Research objective] &
+[Method/Technique] &
+[Dataset/Sample] &
+[Key findings] &
+[Limitations]
+\\
+\hline
+
+2 &
+[Author, Year] &
+[Research objective] &
+[Method/Technique] &
+[Dataset/Sample] &
+[Key findings] &
+[Limitations]
+\\
+\hline
+
+3 &
+[Author, Year] &
+[Research objective] &
+[Method/Technique] &
+[Dataset/Sample] &
+[Key findings] &
+[Limitations]
+\\
+\hline
+
+4 &
+[Author, Year] &
+[Research objective] &
+[Method/Technique] &
+[Dataset/Sample] &
+[Key findings] &
+[Limitations]
+\\
+\hline
+
+\end{tabular}%
+}
+
+\end{table}
+
+% =========================================
+% 5. SYNTHESIS OF FINDINGS
+% =========================================
+
+\section{Synthesis of Findings}
+
+This section is particularly important.
+
+The group should answer:
+
+
+\subsection{What Do the Studies Agree On?}
+
+Identify findings or conclusions that are consistently reported across multiple studies.
+
+
+\subsection{What Do the Studies Disagree On?}
+
+Identify conflicting findings, different results, or different conclusions.
+
+
+\subsection{Which Approaches Appear to Be Most Effective?}
+
+Compare the approaches and explain why certain methods appear to perform better.
+
+
+\subsection{What Trends Can Be Observed?}
+
+Identify emerging trends in:
+
+\begin{itemize}
+    \item Technologies
+    \item Methodologies
+    \item Datasets
+    \item Algorithms
+    \item Applications
+    \item Research directions
+\end{itemize}
+
+The discussion should be based on evidence from the reviewed articles.
+
+
+% =========================================
+% 6. RESEARCH GAPS
+% =========================================
+
+\section{Research Gaps}
+
+Identify gaps that remain in the existing literature.
+
+Possible research gaps include:
+
+\begin{itemize}
+    \item Lack of suitable datasets
+    \item Small sample sizes
+    \item Limited geographical coverage
+    \item Poor generalisation
+    \item Limited experimental validation
+    \item Lack of comparison between methods
+    \item High computational requirements
+    \item Lack of real-world testing
+    \item Security/privacy concerns
+    \item Lack of explainability
+    \item Outdated technologies
+    \item Limited integration with other technologies
+\end{itemize}
+
+For each identified gap, provide evidence from the reviewed literature.
+
+
+% =========================================
+% 7. FUTURE RESEARCH DIRECTIONS
+% =========================================
+
+\section{Future Research Directions}
+
+Based on the identified research gaps, propose potential directions for future research.
+
+For example:
+
+\begin{enumerate}
+    \item Development of improved algorithms
+    \item Use of larger datasets
+    \item Integration of emerging technologies
+    \item Development of real-time systems
+    \item Improved accuracy/performance
+    \item Cross-domain applications
+    \item Improved security and privacy
+    \item Explainable AI approaches
+    \item Real-world deployment and validation
+\end{enumerate}
+
+The proposed directions should logically follow from the research gaps identified in Section~\ref{sec:research-gaps}.
+
+
+% =========================================
+% 8. DISCUSSION
+% =========================================
+
+\section{Discussion}
+
+Provide an overall critical discussion of the literature.
+
+The discussion should answer:
+
+\begin{itemize}
+    \item What has the research community achieved so far?
+    \item Which approaches are most promising?
+    \item What are the major challenges?
+    \item Are the current approaches sufficient?
+    \item What limitations remain?
+    \item How has the research area evolved?
+    \item What important issues remain unresolved?
+\end{itemize}
+
+This section should demonstrate \textbf{critical thinking}, not merely summarisation.
+
+
+% =========================================
+% 9. CONCLUSION
+% =========================================
+
+\section{Conclusion}
+
+Summarise the major findings of the review.
+
+The conclusion should:
+
+\begin{itemize}
+    \item Restate the purpose of the review
+    \item Summarise the major findings
+    \item Highlight important research gaps
+    \item State the overall conclusion
+    \item Briefly indicate future research opportunities
+\end{itemize}
+
+Do not introduce completely new information or references in the conclusion.
+
+
+
+
+
+
+% =========================================
+% REFERENCES
+% =========================================
+
+\newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{References}
+
+\printbibliography[
+    title={References}
+]
+
+
+
+
+
+% =========================================
+% APPENDIX A - INDIVIDUAL ARTICLE REVIEW
+% =========================================
+
+\newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{Appendix A -- Individual Article Review}
+
+\begin{flushleft}
+    {\fontsize{14pt}{17pt}\selectfont
+    \textbf{APPENDIX A -- INDIVIDUAL ARTICLE REVIEW}}
+\end{flushleft}
+
+\vspace{0.5cm}
+
+Each student should complete the following table for their
+\textbf{minimum 3 research articles} before the group combines the findings.
+
+\vspace{0.5cm}
+
+\textbf{Student:} [Name / Student ID]
+
+
+\begin{table}[H]
+
+\caption{Individual article review}
+\label{tab:individual-article-review}
+
+\fontsize{10pt}{12pt}\selectfont
+
+\begin{tabular}{|p{1.5cm}|p{2.1cm}|p{1.8cm}|p{2.2cm}|p{2.1cm}|p{2.2cm}|p{2.0cm}|p{2.0cm}|}
+\hline
+
+\centering\textbf{Article} &
+\centering\textbf{Research Problem} &
+\centering\textbf{Objective} &
+\centering\textbf{Methodology} &
+\centering\textbf{Dataset/Sample} &
+\centering\textbf{Key Findings} &
+\centering\textbf{Limitations} &
+\centering\textbf{Research Gap}
+\tabularnewline
+\hline
+
+&  &  &  &  &  &  & 
+\tabularnewline
+\hline
+
+&  &  &  &  &  &  & 
+\tabularnewline
+\hline
+
+&  &  &  &  &  &  & 
+\tabularnewline
+\hline
+
+&  &  &  &  &  &  & 
+\tabularnewline
+\hline
+
+\end{tabular}
+
+\end{table}
+
+
+This appendix provides evidence of each student's individual contribution to the group review.
+
+
+
+% =========================================
+% APPENDIX B - ARTICLE MATRIX
+% =========================================
+
+\newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{Appendix B -- Article Matrix}
+
+\begin{flushleft}
+    {\fontsize{14pt}{17pt}\selectfont
+    \textbf{APPENDIX B -- ARTICLE MATRIX}}
+\end{flushleft}
+
+\vspace{0.5cm}
+
+The group should combine all individual article reviews into one matrix.
+
+
+\vspace{0.5cm}
+
+
+
+
+
+
+
+
+\begin{table}[H]
+
+\caption{Group article matrix of reviewed research studies}
+\label{tab:article-matrix}
+
+\fontsize{10pt}{12pt}\selectfont
+
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+
+\textbf{Article} &
+\textbf{Student} &
+\textbf{Year} &
+\textbf{Method} &
+\textbf{Dataset} &
+\textbf{Key Results} &
+\textbf{Strength} &
+\textbf{Limitation} &
+\textbf{Research Gap}
+\\
+\hline
+
+1 & Student 1 & & & & & & & 
+\\
+\hline
+
+2 & Student 1 & & & & & & & 
+\\
+\hline
+
+3 & Student 1 & & & & & & & 
+\\
+\hline
+
+4 & Student 2 & & & & & & & 
+\\
+\hline
+
+5 & Student 2 & & & & & & & 
+\\
+\hline
+
+6 & Student 2 & & & & & & & 
+\\
+\hline
+
+... & ... & & & & & & & 
+\\
+\hline
+
+\end{tabular}%
+}
+
+\end{table}
+
+
+
+
+\end{document}
