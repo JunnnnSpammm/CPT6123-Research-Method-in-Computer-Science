@@ -74,7 +74,7 @@
 
 \vspace{0.5cm}
 
-{\fontsize{18}{22}\selectfont\textbf{[INSERT RESEARCH TOPIC]}}
+{\fontsize{18}{22}\selectfont\textbf{A Comparative Review of Advanced Generative Adversarial Networks (GAN) Architectures}}
 
 \vspace{1cm}
 
@@ -423,24 +423,109 @@ Do \textbf{NOT} simply write:
 Instead, organise the literature according to \textbf{themes, methods, technologies, problems, findings, or research approaches}.
 
 
-\subsection{Theme / Area 1: [Insert Theme]}
+\subsection{Theme 1: High Quality Synthetic Data Generation}
 
-Discuss research articles related to the first major theme.
+% Discuss research articles related to the first major theme.
 
-Compare the studies in terms of:
+% Compare the studies in terms of:
 
+% \begin{itemize}
+%     \item Research objectives
+%     \item Methodology
+%     \item Dataset/sample
+%     \item Tools/technologies
+%     \item Experimental setup
+%     \item Results
+%     \item Advantages
+%     \item Limitations
+% \end{itemize}
+
+% The discussion should compare multiple studies rather than describe each article independently.
+
+Below are the proposed advanced GAN architectures that are aimed to produce better synthetic data:
 \begin{itemize}
-    \item Research objectives
-    \item Methodology
-    \item Dataset/sample
-    \item Tools/technologies
-    \item Experimental setup
-    \item Results
-    \item Advantages
-    \item Limitations
+    \item Dual Correlation Generative Adversarial Nets Based Virtual Sample Generation Method (DCRGAN-VSG)
+    \item Parallelly Tempered Generative Adversarial Networks (PTGAN)
 \end{itemize}
 
-The discussion should compare multiple studies rather than describe each article independently.
+\subsubsection{Research Objectives}
+\textbf{DCRGAN:} To address the small-sample problem in industrial soft sensing by generating additional virtual samples. The authors aim to improve conventional GAN-based sample generation by preserving the relationship between process variables and quality variables, while also selecting generated samples that fill sparse regions of the original dataset. \textbf{The overall goal is to create a more representative and balanced training dataset and thereby improve soft-sensor prediction accuracy.} \\
+\\ \textbf{PTGAN:} To address the training instability of GANs, particularly when learning highly multimodal data distributions where problems such as mode collapse can occur. The authors propose a parallel tempering framework that uses multiple tempered distributions to reduce gradient variance and stabilize GAN training. \textbf{The overall goal is to enable GANs to learn complex target distributions more reliably and generate higher-quality synthetic data.}
+
+\subsubsection{Methodology}
+\textbf{DCRGAN}
+\begin{enumerate}
+    \item \textbf{Data Preparation:} The dataset is divided into training and testing sets.
+
+    \item \textbf{DCRGAN Training:} Two generators and two discriminators are trained using a shared latent space. WGAN-GP generates process variables, while an improved Conditional GAN generates the corresponding quality variables. MSE loss is added to preserve the input-output relationship.
+
+    \item \textbf{Virtual Sample Generation and Selection:} The trained DCRGAN generates paired virtual samples. The Pielou index evaluates their distribution, and only samples that improve dataset diversity and fill sparse regions are retained. This process continues until the required number of virtual samples is obtained.
+\end{enumerate}
+\textbf{PTGAN}
+\begin{enumerate}
+    \item \textbf{Constructing Intermediate Distributions:} PTGAN creates smoother intermediate distributions by interpolating between real samples using a temperature parameter.
+    
+    \item \textbf{Modifying the Generator:} The generator receives both the random noise and the temperature, allowing it to learn multiple distributions with a single model.
+    
+    \item \textbf{Parallel Adversarial Training:} The generator and critic are trained simultaneously across different temperature levels. The smoother distributions provide more stable gradients and reduce training instability.
+    
+    \item \textbf{Coherency Penalty:} A coherency penalty encourages the critic to learn consistently across temperature levels, allowing knowledge to be shared between them.
+    
+    \item \textbf{Final Data Generation:} After training, the generator is used to produce synthetic data that approximates the original data distribution while reducing mode collapse.
+\end{enumerate}
+
+\subsubsection{Dataset/Sample used}
+\textbf{DCRGAN:} The DCRGAN-VSG method was evaluated using two types of datasets. 
+\begin{itemize}
+    \item First, a three-dimensional benchmark function was used as a simulation dataset to test whether the method could generate virtual samples with an appropriate distribution.
+    \item Second, the method was tested on an industrial purified terephthalic acid (PTA) production dataset, where process variables and quality variables were used for soft-sensor modeling.
+\end{itemize}
+\textbf{PTGAN:} PTGAN was evaluated on both image and tabular datasets.
+\begin{itemize}
+    \item For image generation, it used CIFAR-10, BloodMNIST, and CelebA-HQ, which provide complex and multimodal data distributions.
+    \item For tabular-data generation, it used the Adult, Credit Card Default, and Law School Admission datasets for supervised-learning tasks.
+\end{itemize}
+
+\subsubsection{Tools/Technologies used}
+\textbf{DCRGAN:} DCRGAN combines several GAN-based techniques and mathematical methods to generate and select useful virtual samples:
+\begin{itemize}
+    \item WGAN-GP is used to generate process-variable samples.
+    \item Conditional GAN (RC-CGAN) generates the corresponding quality variables.
+    \item MSE loss is incorporated to preserve the relationship between process and quality variables.
+    \item Pielou index is used to assess sample distribution and select samples that fill sparse regions.
+\end{itemize}
+\textbf{PTGAN:} PTGAN combines GAN-based generation, parallel tempering, and additional training techniques to improve gradient stability and synthetic data quality:
+\begin{itemize}
+    \item Parallel Tempering – creates smoother intermediate distributions to improve training stability.
+    \item Temperature Parameter – allows the generator to learn across different distribution levels.
+    \item Coherency Penalty – encourages consistent learning across different temperature levels.
+\end{itemize}
+
+\subsubsection{Experimental Setup}
+\textbf{DCRGAN:} The DCRGAN was tested using a three-dimensional benchmark function and a real purified terephthalic acid (PTA) industrial dataset. They compared DCRGAN-VSG with several existing generative methods, including WGAN-GP, VAE, VAE-GAN, DDPM, and TTD. The generated virtual samples were then used to train soft-sensor models, and the prediction performance was compared to evaluate whether the proposed method improved soft sensing. \\
+\\ \textbf{PTGAN:} PTGAN was evaluated on image and tabular datasets. For image generation, the experiments used CIFAR-10, BloodMNIST, and CelebA-HQ, with Inception Score (IS) and Fréchet Inception Distance (FID) used to measure generation quality. For tabular data, the researchers used the Adult, Credit Card Default, and Law School Admission datasets and evaluated the generated data using downstream random forest, SVM, and logistic regression models. The results were averaged over 10 independent runs to compare PTGAN with existing GAN training approaches.
+
+\subsubsection{Results}
+\textbf{DCRGAN:}
+\begin{itemize}
+    \item 70.43\% reduction in sensor estimation error on the 3D benchmark dataset.
+    \item 39.33\% reduction in estimation error on the PTA industrial dataset.
+    \item Achieved R² = 0.883 on the PTA dataset.
+    \item Outperformed VAE, WGAN-GP, and DDPM in soft-sensing prediction performance.
+\end{itemize}
+\textbf{PTGAN:}
+\begin{itemize}
+    \item Achieved an FID of 41.99 on the BloodMNIST dataset, indicating improved image-generation quality.
+    \item Reduced gradient variance, resulting in more stable GAN training through parallel tempering.
+    \item Reduced demographic bias on the Law School dataset, achieving a statistical parity (SP) of 0.054.
+    \item Demonstrated improved sample diversity and training stability compared with conventional GAN approaches.
+\end{itemize}
+\subsubsection{Advantages}
+\textbf{DCRGAN:} Accurately learns the connection between measured inputs (process variables) and difficult-to-measure outputs (product quality) even when training on very small datasets. Its filtering step (Pielou index) ensures newly generated data actively fills empty gaps in the dataset instead of repeating what is already there. \\
+\\ \textbf{PTGAN:} Solves unstable training and wild updates by training across blended, smoothed versions of the dataset simultaneously, which also allows it to generate fair and unbiased data across demographic groups.
+\subsubsection{Limitations}
+\textbf{DCRGAN:} Creating too many fake samples can backfire; generating more than roughly 420 samples distorts the original dataset’s shape and degrades overall model accuracy. \\
+\\ \textbf{PTGAN:} Blending samples introduces slight approximation errors, meaning the model can lose sharp details if the balance between smoothed data and real data is not tuned carefully
 
 
 \subsection{Theme / Area 2: [Insert Theme]}
