@@ -1331,59 +1331,68 @@ Analysis of recent literature reveals the following emerging trajectories in adv
     \item \textbf{Research Directions:} A clear evolution toward \textit{Trustworthy and Pragmatic AI}, prioritizing algorithmic fairness (e.g., demographic parity via latent space interpolation), differential privacy guarantees in tabular medical synthesis, and task-specific downstream utility rather than purely aesthetic sample generation \parencite{sohn2026parallelly,bietsch2023electronic}.
 \end{itemize}
 
-
 % =========================================
 % 6. RESEARCH GAPS
 % =========================================
 
 \section{Research Gaps}
 
-Identify gaps that remain in the existing literature.
+While the reviewed studies show significant progress in generative adversarial networks (GANs), several critical research gaps remain unaddressed across all papers.
 
-Possible research gaps include:
+\begin{enumerate}
+    \item \textbf{Small Sample Sizes and Limited Real-World Data Coverage:}
+    A persistent issue across practical applications is the heavy reliance on very small datasets collected from narrow, single-facility environments. For example, \textcite{zhu2025novel} validated their industrial soft-sensing method using only 174 total real-world manufacturing records from a single purified terephthalic acid plant. Similarly, \textcite{li2023eid} trained their surface defect inspection models on limited samples: 100 fabric images and 70 piston defect images. Consequently, current models have not been tested across diverse production batches or varied industrial plants.
 
-\begin{itemize}
-    \item Lack of suitable datasets
-    \item Small sample sizes
-    \item Limited geographical coverage
-    \item Poor generalisation
-    \item Limited experimental validation
-    \item Lack of comparison between methods
-    \item High computational requirements
-    \item Lack of real-world testing
-    \item Security/privacy concerns
-    \item Lack of explainability
-    \item Outdated technologies
-    \item Limited integration with other technologies
-\end{itemize}
+    \item \textbf{Poor Generalisation to Extreme and Rare Cases:}
+    Existing architectures struggle to capture rare, tail-end events or highly imbalanced categories. In clinical prediction, \textcite{bietsch2023electronic} observed that tabular GANs performed poorly when predicting the minority class of long-stay hospital patients because the models biased their learning toward standard, short-stay admissions. Furthermore, \textcite{zhang2023inaccurate} identified that label-disambiguation models degrade rapidly when the true target label is entirely omitted from noisy candidate label sets.
 
-For each identified gap, provide evidence from the reviewed literature.
+    \item \textbf{Risk of Performance Degradation from Over-Generation:}
+    Current methods lack automated guidelines for deciding how many synthetic samples to generate. \textcite{zhu2025novel} demonstrated that beyond a specific threshold (approximately 420 virtual instances), additional synthetic samples distorted the original data distribution and caused model accuracy to decline. Developing adaptive stopping criteria for synthetic sample volume remains an open challenge.
 
+    \item \textbf{High Computational Overhead and Manual Tuning Demands:}
+    Advanced GAN variations frequently cause significant training times and demand extensive trial-and-error hyperparameter tuning. \textcite{bietsch2023electronic} reported that conducting a baseline hyperparameter search for tabular health records required over an entire week of continuous computing. Similarly, \textcite{li2024improving} noted that multi-discriminator topological frameworks require manual exploration to identify optimal grid sizes and layout dimensions for each dataset.
+
+    \item \textbf{Lack of Real-World Testing and Manual Annotation Dependency:}
+    Most models have only been assessed within controlled, offline laboratory environments rather than active production lines. In industrial defect synthesis, the framework designed by \textcite{li2023eid} relies strictly on precise, manual pixel-level boundary masks around tiny defect areas. This makes the system difficult to deploy in practical industrial pipelines where manual flaw labelling is costly or unavailable.
+
+    \item \textbf{Privacy Preservation vs. Data Quality Trade-Offs:}
+    Protecting user confidentiality without losing fine-grained utility remains difficult. \textcite{bietsch2023electronic} revealed that while non-adversarial models reproduced realistic medical tables, they compromised patient privacy by creating hundreds of direct duplicate records. In contrast, while conditional GANs protected privacy better by generating fewer duplicates, they sacrificed predictive accuracy on rare medical diagnoses.
+
+    \item \textbf{Lack of Architectural Explainability and Fixed Cost Assumptions:}
+    How synthetic samples alter decision boundaries in downstream applications remains poorly understood. In biometric security, \textcite{chen2021generative} introduced cost-sensitive decision-making but relied on fixed, manually designated penalty matrices. The literature currently lacks self-adjusting mechanisms that explain or update these penalty costs dynamically in response to shifting operational security risks.
+\end{enumerate}
 
 % =========================================
 % 7. FUTURE RESEARCH DIRECTIONS
 % =========================================
 
 \section{Future Research Directions}
+\label{sec:future-research-directions}
 
-Based on the identified research gaps, propose potential directions for future research.
-
-For example:
+Following directly from the research gaps identified in Section~\ref{sec:research-gaps}, future research should prioritise several concrete solutions to improve the reliability, scalability, and practical utility of Generative Adversarial Networks:
 
 \begin{enumerate}
-    \item Development of improved algorithms
-    \item Use of larger datasets
-    \item Integration of emerging technologies
-    \item Development of real-time systems
-    \item Improved accuracy/performance
-    \item Cross-domain applications
-    \item Improved security and privacy
-    \item Explainable AI approaches
-    \item Real-world deployment and validation
+    \item \textbf{Dynamic Volume Optimisation and Adaptive Stopping Criteria:}
+    To prevent performance degradation caused by generating too many synthetic samples, future studies must develop automated stopping mechanisms. Rather than relying on static trial-and-error sample counts, researchers should design adaptive loss metrics that monitor distribution shifts or sample space coverage in real time, automatically halting sample creation once the training benefit reaches its optimal point.
+
+    \item \textbf{Automated and Self-Configuring Architectures:}
+    To resolve the high computing costs and manual guesswork required to tune multi-agent networks, future research should explore automated neural architecture search (NAS) and self-adjusting topologies. Designing algorithms that automatically discover the optimal discriminator layout or dynamically allocate network parameters will significantly reduce the days or weeks currently needed for manual tuning.
+
+    \item \textbf{Tail-Focused Generation and Open-World Weak Supervision:}
+    Future studies must address model failure on rare and missing categories. Generative objectives can be combined with focused weighting to encourage models to learn from minority classes, such as uncommon clinical diagnoses or extended patient stays. For inaccurate supervision tasks, frameworks should be extended to open-world settings where candidate lists may lack the true target label entirely, enabling networks to discover novel classes rather than failing when labels are incomplete.
+
+    \item \textbf{Weakly Supervised and Mask-Free Defect Synthesis:}
+    To overcome the practical bottlenecks of requiring manual pixel-by-pixel defect outlines, future efforts should focus on weakly supervised, unsupervised, and zero-shot anomaly generation. Developing methods that can localise and synthesise micro-scale flaws using only image-level tags or normal reference samples will drastically lower deployment costs in manufacturing quality control.
+ 
+    \item \textbf{Expansion to Diverse, Multi-Site Real-World Datasets:}
+    To ensure generalizability, future research should transition beyond narrow single-plant logs or restricted image sets. Testing generative pipelines across multi-centre clinical trials, diverse production factories, and unconstrained environments will establish whether models remain resilient against variations in sensor hardware, regional differences, and shifting operating conditions.
+
+    \item \textbf{Rigorous Privacy Guarantees with High Tabular Fidelity:}
+    Future studies in sensitive domains like healthcare must integrate formal privacy mechanisms, such as differential privacy, directly into tabular adversarial objectives. The goal is to establish mathematical guarantees against patient re-identification while maintaining the statistical relationships needed for reliable downstream decision-making.
+
+    \item \textbf{Adaptive Cost Learning and Explainable Decision Models:}
+    Cost-sensitive models require automated mechanisms that adjust error penalties dynamically as operational risks change. Additionally, coupling adversarial generation with explainable artificial intelligence (XAI) will help practitioners inspect how synthetic samples reshape classification boundaries, providing transparency and auditing capabilities in high-stakes biometric, medical, and defence deployments.
 \end{enumerate}
-
-The proposed directions should logically follow from the research gaps identified in Section~\ref{sec:research-gaps}.
-
 
 % =========================================
 % 8. DISCUSSION
