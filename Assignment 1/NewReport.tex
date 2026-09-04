@@ -1370,21 +1370,9 @@ Following directly from the research gaps identified in Section~\ref{sec:researc
 
 \section{Discussion}
 
-Provide an overall critical discussion of the literature.
+The reviewed literature demonstrates significant progress in improving GANs for real-world synthetic data generation. Advanced architectures such as DCRGAN, PTGAN, SOMGAN, EID-GAN, CTGAN, and ISL-GAN have addressed specific challenges including data scarcity, mode collapse, training instability, class imbalance, and inaccurate supervision. Overall, the research has evolved from improving basic GAN generation quality towards developing specialised and application-specific architectures.
 
-The discussion should answer:
-
-\begin{itemize}
-    \item What has the research community achieved so far?
-    \item Which approaches are most promising?
-    \item What are the major challenges?
-    \item Are the current approaches sufficient?
-    \item What limitations remain?
-    \item How has the research area evolved?
-    \item What important issues remain unresolved?
-\end{itemize}
-
-This section should demonstrate \textbf{critical thinking}, not merely summarisation.
+Among the reviewed approaches, mechanisms that directly target the limitations of conventional GANs appear particularly promising. For example, PTGAN and SOMGAN improve training stability and mode coverage, while DCRGAN and EID-GAN demonstrate the value of generating targeted samples for small or minority datasets. However, these approaches are not yet sufficient as general solutions. Most models are designed for specific datasets or problems and often require substantial computational resources, manual parameter selection, or detailed data annotations. In addition, rare events, noisy data, and domain-specific constraints remain difficult to model reliably. Therefore, an important unresolved issue is how to combine the strengths of different GAN mechanisms into robust and adaptive architectures that can generalise across diverse real-world environments.
 
 
 % =========================================
@@ -1393,19 +1381,11 @@ This section should demonstrate \textbf{critical thinking}, not merely summarisa
 
 \section{Conclusion}
 
-Summarise the major findings of the review.
+This review critically examined advanced GAN architectures and their effectiveness in addressing major challenges in real-world synthetic data generation. The findings show that advanced GANs can improve data diversity, training stability, minority-class generation, and learning under limited or inaccurate data. However, no single architecture can effectively address all challenges simultaneously.
 
-The conclusion should:
+Important research gaps remain in model generalisability, computational efficiency, automated architecture configuration, rare-event generation, and the reduction of manual data requirements. Overall, the literature indicates that future GAN research should move towards more adaptive, robust, and application-independent architectures. Further research should also focus on validating these approaches using larger and more diverse real-world datasets to improve their practical reliability and deployment.
 
-\begin{itemize}
-    \item Restate the purpose of the review
-    \item Summarise the major findings
-    \item Highlight important research gaps
-    \item State the overall conclusion
-    \item Briefly indicate future research opportunities
-\end{itemize}
 
-Do not introduce completely new information or references in the conclusion.
 
 
 
