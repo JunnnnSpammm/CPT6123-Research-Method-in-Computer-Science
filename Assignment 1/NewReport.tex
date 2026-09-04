@@ -410,17 +410,17 @@ Explain how the final articles were selected for the review.
 
 \section{Literature Review}
 
-% This is the \textbf{main section of the review article}.
+This is the \textbf{main section of the review article}.
 
-% Do \textbf{NOT} simply write:
+Do \textbf{NOT} simply write:
 
-% \begin{itemize}
-%     \item Article 1 says \ldots
-%     \item Article 2 says \ldots
-%     \item Article 3 says \ldots
-% \end{itemize}
+\begin{itemize}
+    \item Article 1 says \ldots
+    \item Article 2 says \ldots
+    \item Article 3 says \ldots
+\end{itemize}
 
-% Instead, organise the literature according to \textbf{themes, methods, technologies, problems, findings, or research approaches}.
+Instead, organise the literature according to \textbf{themes, methods, technologies, problems, findings, or research approaches}.
 
 
 \subsection{Theme 1: High Quality Synthetic Data Generation}
@@ -449,51 +449,8 @@ Below are the proposed advanced GAN architectures that are aimed to produce bett
 \end{itemize}
 
 \subsubsection{Research Objectives}
-\textbf{DCRGAN:} To address the small-sample problem in industrial soft sensing by generating additional virtual samples. The authors aim to improve conventional GAN-based sample generation by preserving the relationship between process variables and quality variables, while also selecting generated samples that fill sparse regions of the original dataset. The overall goal is to create a more representative and balanced training dataset and thereby improve soft-sensor prediction accuracy. \\
-\\ \textbf{PTGAN:} To address the training instability of GANs, particularly when learning highly multimodal data distributions where problems such as mode collapse can occur. The authors propose a parallel tempering framework that uses multiple tempered distributions to reduce gradient variance and stabilize GAN training. The overall goal is to enable GANs to learn complex target distributions more reliably and generate higher-quality synthetic data.
-
-\subsubsection{Summarized Comparison}
-\begin{table}[H]
-\caption{Summarized Comparison of DCRGAN vs PTGAN}
-\label{tab:inclusion-exclusion}
-
-\fontsize{10pt}{12pt}\selectfont
-
-\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
-\hline
-\centering\textbf{Aspect} &
-\centering\textbf{DCRGAN} &
-\centering\textbf{PTGAN}
-\tabularnewline
-\hline
-
-\centering Research Objective &
-Addresses the small-sample problem in industrial soft sensing. &
-Address GAN training instability and mode collapse especially in multimodal datasets.
-\tabularnewline 
-\hline
-
-\centering Methodology &
-Uses WGAN and CGAN to generate corresponding quality variables, further assisted by MSE and Pielou Index. &
-Uses parallel tempering to create smoother intermediate distributions and trains the generator across multiple temperature levels.
-\tabularnewline
-\hline
-
-\centering Experimental Setup &
-Tested on a \textbf{3D benchmark dataset} and a real PTA industrial dataset. &
-Tested on \textbf{image datasets} such as CIFAR-10, BloodMNIST, and CelebA-HQ, as well as \textbf{tabular datasets}.
-\tabularnewline
-\hline
-
-\centering Main Focus &
-Quality and usefulness of generated samples for a specific application. &
-Quality, diversity, and stability of the generation process itself.
-\tabularnewline
-\hline
-
-\end{tabular}
-
-\end{table}
+\textbf{DCRGAN:} To address the small-sample problem in industrial soft sensing by generating additional virtual samples. The authors aim to improve conventional GAN-based sample generation by preserving the relationship between process variables and quality variables, while also selecting generated samples that fill sparse regions of the original dataset. \textbf{The overall goal is to create a more representative and balanced training dataset and thereby improve soft-sensor prediction accuracy.} \\
+\\ \textbf{PTGAN:} To address the training instability of GANs, particularly when learning highly multimodal data distributions where problems such as mode collapse can occur. The authors propose a parallel tempering framework that uses multiple tempered distributions to reduce gradient variance and stabilize GAN training. \textbf{The overall goal is to enable GANs to learn complex target distributions more reliably and generate higher-quality synthetic data.}
 
 \subsubsection{Methodology}
 \textbf{DCRGAN}
@@ -571,234 +528,29 @@ Quality, diversity, and stability of the generation process itself.
 \\ \textbf{PTGAN:} Blending samples introduces slight approximation errors, meaning the model can lose sharp details if the balance between smoothed data and real data is not tuned carefully
 
 
-\subsection{Theme 2: }
+\subsection{Theme / Area 2: [Insert Theme]}
 
-% Discuss the second major theme.
+Discuss the second major theme.
 
-% Compare and synthesise findings from different researchers.
+Compare and synthesise findings from different researchers.
 
-% Identify:
+Identify:
 
-% \begin{itemize}
-%     \item Similarities
-%     \item Differences
-%     \item Strengths
-%     \item Weaknesses
-%     \item Contradictory findings
-%     \item Trends
-% \end{itemize}
-
-
-\subsection{Theme 3: GANs for Data Imbalances and Imperfections}
-Below are the proposed advanced GAN architectures that are aimed to overcome limitations such as imbalances and imperfections in data.
 \begin{itemize}
-    \item Extremely Imbalanced Data Augmentation Generative Adversarial Nets (EID-GAN)
-    \item Conditional Tabular GAN (CTGAN)
-    \item Two-channel Cost-sensitive GAN (CSGAN)
-    \item Inaccurate-Supervised Learning GAN (ISL-GAN)
+    \item Similarities
+    \item Differences
+    \item Strengths
+    \item Weaknesses
+    \item Contradictory findings
+    \item Trends
 \end{itemize}
 
-\subsubsection{Research objectives}
-\textbf{EID-GAN:} To address the problem of extremely imbalanced datasets, particularly when the minority class contains very small outliers that conventional data-augmentation methods struggle to generate. The overall goal is to develop a GAN that can generate realistic minority-class samples, improve the representation of rare cases, and reduce the bias caused by class imbalance in deep-learning models. \\
-\\ \textbf{CTGAN:} To investigate whether GAN-generated synthetic electronic health records can serve as a useful substitute for scarce real-world healthcare data in predicting patient length of stay (LOS). The overall goal is to determine whether synthetic tabular data generated by CTGAN and Copula GAN can support a multi-class LOS prediction task while addressing the challenges of limited and privacy-restricted healthcare data. \\
-\\ \textbf{CSGAN:} To improve face-recognition performance under cost-sensitive conditions, where different types of recognition errors do not have the same consequences. The overall goal of proposing to use the GANs to generate additional face samples that help address weaknesses in the training data and make the recognition model more effective when misclassification costs are unequal. \\
-\\ \textbf{ISL-GAN:} To introduce a unified framework, named ISL-GAN, that uses solves inaccurate-supervised learning (ISL) tasks—specifically partial label learning (PLL), partial multilabel learning (PML), and multiview PML (MVPML). ISL-GAN combines conditional and semi-supervised GANs to handle noisy candidate labels by generating realistic samples and accurately predicting true class labels.
 
-\subsubsection{Summarized Comparison}
-\begin{table}[H]
-\caption{Summarized Comparison of EID-GAN vs CTGAN vs CSGAN vs ISL-GAN}
-\label{tab:inclusion-exclusion}
+\subsection{Theme / Area 3: [Insert Theme]}
 
-\fontsize{10pt}{12pt}\selectfont
+Discuss the third major theme.
 
-\begin{tabular}{|p{2cm}|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
-\hline
-\centering\textbf{Aspect} &
-\centering\textbf{EID-GAN} &
-\centering\textbf{CTGAN} &
-\centering\textbf{CSGAN} &
-\centering\textbf{ISL-GAN}
-\tabularnewline
-\hline
-
-\centering Research Objective &
-Address extreme class imbalance by generating tiny defect samples. &
-DCGAN + outlier penalty to learn small defect features. &
-Tested on Piston, Fabric \& DAGM; compared with existing augmentation methods. &
-Rare / tiny defects
-\tabularnewline 
-\hline
-
-\centering Methodology &
-Generate synthetic EHR to supplement scarce healthcare data for LOS prediction. &
-CTGAN generates synthetic tabular patient records, and it is compared with Copular GAN. &
-Tested on 3 hospital datasets; synthetic data evaluated through LOS prediction. &
-Data scarcity \& privacy
-\tabularnewline
-\hline
-
-\centering Experimental Setup &
-Improve face recognition when different errors have different costs. &
-GAN-based profile-to-frontal face synthesis with global/local features and multi-loss training. &
-Tested generated frontal faces for face-recognition performance under cost-sensitive conditions. &
-Unequal misclassification costs
-\tabularnewline
-\hline
-
-\centering Main Focus &
-Handle inaccurate or ambiguous labels in supervised learning. &
-GAN generates realistic samples to help the discriminator identify true labels from noisy candidate labels. &
-Evaluated on PLL, PML \& MVPML tasks against existing methods. &
-Imprecise / noisy supervision
-\tabularnewline
-\hline
-
-\end{tabular}
-
-\end{table}
-
-\subsubsection{Methodology}
-\textbf{EID-GAN}
-\begin{enumerate}
-    \item \textbf{Outlier Isolation:} Defect regions are extracted from real samples and separated from the background using pixel-level masks.
-    \item \textbf{Base Image Generation:} A DCGAN-based generator creates synthetic images from random noise.
-    \item \textbf{Defect Feature Matching:} Real defect regions are randomly selected and compared with the corresponding cropped regions of the generated images.
-    \item \textbf{Combined Training:} A defect-matching penalty is added to the adversarial loss, forcing the generator to reproduce fine defect details while maintaining realistic overall images.
-    \item \textbf{Discriminator Training:} The discriminator distinguishes between real and generated images during joint optimization.
-\end{enumerate}
-\textbf{CTGAN}
-\begin{enumerate}
-    \item \textbf{Data Preparation}: Categorical and continuous variables are encoded and normalized for training.
-    \item \textbf{Conditional Sampling:} CTGAN selects specific categories, including rare classes, to guide sample generation.
-    \item \textbf{Synthetic Data Generation:} The Generator creates patient records based on random noise and the selected condition.
-    \item \textbf{Adversarial Training:} The Discriminator distinguishes real from synthetic records while the Generator learns to produce realistic data.
-    \item \textbf{Imbalance \& Mode Collapse Handling:} Training-by-sampling focuses on underrepresented categories, while PacGAN helps maintain sample diversity.
-    \item \textbf{LOS Prediction:} The generated EHR data are used to train Length-of-Stay prediction models and compared with models trained on real data.
-\end{enumerate}
-\textbf{CSGAN}
-\begin{enumerate}
-    \item \textbf{Feature Extraction:} The input profile image is divided into global facial features and four local regions: the eyes, nose, and mouth.
-    \item \textbf{Feature Fusion:} The global and local features are combined, with random noise added to create variations in the generated face.
-    \item \textbf{Face Generation:} The generator produces a frontal face image from the combined features.
-    \item \textbf{Adversarial Training:} A discriminator compares the generated face with a real frontal face, encouraging the generator to produce more realistic images.
-    \item \textbf{Multi-Loss Optimization:} The model uses pixel, symmetry, adversarial, perceptual, and total-variation losses to improve image quality, preserve identity, and reduce artifacts.
-\end{enumerate}
-\textbf{ISL-GAN}
-\begin{enumerate}
-    \item \textbf{Data Preparation:} Candidate labels are normalized (treated as probabilities rather than absolute truths) and paired with the input features.
-    \item \textbf{The Generator:} Uses random noise and the normalized candidate labels to generate realistic "fake" feature samples.
-    \item \textbf{The Discriminator:} Analyzes a sample and predicts two things: the class label distribution and whether the sample is real or fake.
-    \item \textbf{Adversarial Training:} The Generator and Discriminator take turns training. The Generator tries to create convincing fakes to fool the Discriminator, while the Discriminator learns to correctly identify fakes and match the candidate labels.
-    \item \textbf{Label Disambiguation (The Goal):} This tug-of-war forces the Discriminator to look past the noisy, inaccurate candidate labels and learn the true, underlying label structure.
-    \item \textbf{Final Prediction:} Once trained, the Generator and the "real/fake" outputs are thrown away. The Discriminator becomes the final classifier, outputting the highest-scoring label (for single-label tasks) or the top-scoring labels (for multi-label tasks).
-\end{enumerate}
-
-\subsubsection{Dataset/Sample used}
-\textbf{EID-GAN} \\
-EID-GAN was evaluated on three defect-detection datasets:
-\begin{itemize}
-    \item Piston Dataset – an industrial dataset containing piston defects, used to represent extremely imbalanced defect data.
-    \item Fabric Dataset – another industrial defect dataset involving fabric inspection, where defects occupy only a very small portion of the images.
-    \item DAGM Dataset – a public benchmark dataset for general industrial surface-defect detection, used to evaluate EID-GAN on a less extreme form of imbalanced data.
-\end{itemize}
-\textbf{CTGAN} \\
-The study uses the a publicly available “NY Hospital Inpatient Discharges in 2015” dataset.
-\begin{itemize}
-    \item 3 university hospitals: Nassau University Medical Center (NUMC), SUNY Health Science Center, and NYU Hospitals Center.
-    \item Each dataset contains patient discharge records with demographic and clinical information, including age group, gender, diagnoses, procedures, and Length of Stay (LOS).
-    \item After removing variables unavailable at admission or likely to cause information leakage, 13 features were retained for the study.
-    \item LOS was divided into 3 classes: short stay (less than 3 days), medium stay (3–7 days), and long stay (more than 7 days).
-    \item The datasets were selected to contain at least 15,000 patient records, providing enough data for training and hold-out testing.
-\end{itemize}
-\textbf{CSGAN} \\
-The paper uses the CMU MultiPIE Dataset, a face dataset containing 337 subjects, captured from 15 viewpoints, 19 illumination conditions, and up to 4 recording sessions; used to train and test the proposed cost-sensitive GAN for face recognition. \\
-\\ \textbf{ISL-GAN} \\
-ISL-GAN was evaluated on several synthetic and real-world benchmark datasets categorized by their learning framework:
-\begin{itemize}
-    \item Controlled UCI Datasets (Vehicle, Abalone, Usps, Letter) – Synthetic single-view partial label learning (PLL) datasets created by artificially injecting candidate label noise under controlled configuration parameters.
-    \item Real-World PLL Datasets (FG-NET, Lost, MSRCv2, BirdSong, Soccer Player, Yahoo! News) – Real-world image, text, and music datasets containing candidate labels with a single ground-truth label per instance.
-    \item PML Datasets (Music\_Emotion, Music\_Style, Mirflickr, Image, Scene, Slashdot) – Synthetic and real-world partial multi-label learning datasets across music recognition, image annotation, and text categorization containing multiple valid and noisy candidate labels.
-    \item MVPML Datasets (Yeast, Corel5k, Pascal, Mirflickr) – Multi-view partial multi-label learning datasets where each sample is represented across multiple feature spaces/views alongside multiple candidate labels.
-    \item MNIST Dataset – Handwritten digit dataset used to visually verify the generator's capacity to synthesize fake samples that simulate real feature distributions conditioned on candidate labels.
-    \end{itemize}
-
-\subsubsection{Tools/Technologies used}
-\textbf{EID-GAN} \\
-EID-GAN combines GAN-based image generation with defect-specific feature learning to generate useful samples from extremely imbalanced datasets.
-\begin{itemize}
-    \item DCGAN – provides the basic generator and discriminator architecture for image synthesis.
-    \item Outlier Extraction \& Pixel-Level Masking – isolates tiny defect regions from normal image backgrounds.
-    \item Defect-Matching Norm Penalty – guides the generator to reproduce the features of small defects.
-    \item Faster R-CNN – used as an outlier detector to evaluate whether generated samples contain useful defects.
-    \item K-Fold Cross-Validation – used to assess the reliability and usefulness of generated samples.
-\end{itemize}
-\textbf{CTGAN} \\
-The study uses CTGAN and other synthetic-data technologies to generate and evaluate synthetic electronic health records.
-\begin{itemize}
-    \item Fully Connected Neural Networks – used for both the CTGAN generator and discriminator to learn relationships between patient-data columns.
-    \item Conditional Sampling – allows CTGAN to generate records targeting specific categorical groups.
-    \item Training-by-Sampling – gives greater attention to less frequent categories in the healthcare data.
-    \item PacGAN – helps reduce mode collapse and maintain diversity in generated records.
-    \item TVAE \& Copula GAN – used as comparison models to assess CTGAN's performance.
-\end{itemize}
-\textbf{CSGAN}
-\begin{itemize}
-    \item Cost-Sensitive Learning – used to account for the fact that different types of face-recognition errors have different costs, rather than treating all errors equally.
-    \item mckNN (Multi-class Cost-Sensitive k-Nearest Neighbour) – used to estimate posterior probabilities and make recognition decisions based on the cost matrix. It is compared with the traditional kNN classifier.
-    \item Convolutional Neural Networks (CNNs) – used within the generator and discriminator to learn facial features and generate realistic frontal face images.
-    \item TensorFlow – the deep-learning framework used to implement the proposed model.
-\end{itemize}
-
-\subsubsection{Experimental setup}
-\textbf{EID-GAN} \\
-The researchers evaluated EID-GAN on three image datasets: the industrial Fabric and Piston datasets, which contain extremely small defect regions, and the public DAGM dataset for general imbalanced data. EID-GAN was compared with several existing augmentation methods, including SMOTE, DCGAN, WGAN-GP, SN-GAN, BAGAN, VAE, and Mixup. The generated samples were then evaluated using two outlier-detection models with k-fold cross-validation, and their usefulness was assessed using error-escape rate, false-alarm rate, and F1-score. \\
-\\ \textbf{CTGAN} \\
-The experimental setup involved three hospital datasets (NUMC, SUNY, and NYU), with 5,000 records used for training and the remaining records reserved for testing. CTGAN, Copula GAN, and TVAE were compared using hyperparameter tuning and quantitative and visual evaluations. The synthetic data were then tested with Random Forest, SVM, and KNN models, with performance measured using the Macro F1-score. The study also compared GAN-based oversampling with SMOTE and random oversampling. \\
-\\ \textbf{CSGAN} \\
-The experimental setup utilizes head-up face images with normal expressions from the CMU MultiPIE dataset, cropped to 128×128×3 pixels. Subjects with IDs 001–200 were designated to train the TensorFlow-based two-channel GAN (using a batch size of 8 and a learning rate of 0.00001), while the remaining subjects were reserved for testing. Features were reduced to 300 dimensions via Principal Component Analysis (PCA), and performance was evaluated across varying counts of gallery subjects, samples, and impostors to compare the cost-sensitive mckNN classifier against a standard kNN baseline.
-
-\subsubsection{Results}
-\textbf{EID-GAN}
-\begin{itemize}
-    \item Error-Escape Rate: reduced from 8.33\% → 0.00\% on the Fabric dataset.
-    \item Achieved an F1-score of 98.9\%.
-    \item Successfully generated visible and realistic defect samples.
-    \item SMOTE, DCGAN, and BAGAN failed to generate clearly visible flaws in comparison.
-\end{itemize}
-\textbf{CTGAN}
-\begin{itemize}
-    \item 0.73 similarity score achieved while maintaining strict privacy.
-    \item 272 duplicate records generated, compared with 935 for TVAE, indicating better privacy.
-    \item Rare long-stay patients remained difficult to generate accurately.
-    \item Synthetic-data F1-score: 0.32–0.43, compared with 0.48–0.60 using real data.
-\end{itemize}
-\textbf{CSGAN}
-\begin{itemize}
-    \item Synthesizing frontal faces from profile images at a ±75° angle improved recognition accuracy from 35.16\% to 73.21\%.
-    \item Implementing the cost-sensitive mckNN classifier reduced total penalty costs from 672 (using a traditional kNN classifier) to 515 by successfully reducing high-cost false acceptance errors.
-\end{itemize}
-\textbf{ISL-GAN}
-\begin{itemize}
-    \item Achieved the best accuracy in 101 out of 112 noisy test cases.
-    \item Raised multi-label precision to 0.922.
-    \item Lowered ranking loss to 0.099.
-\end{itemize}
-
-\subsubsection{Advantages}
-\textbf{EID-GAN:} Successfully learns to generate tiny, localized flaws (as small as 0.05\% of an image) by forcing the creator to zoom in on defect regions, lowering industrial inspection misses down to 0\% \\
-\\ \textbf{CTGAN:} Tailored for spreadsheet-style tables with mixed numbers and text categories, creating realistic health records while protecting patient privacy by avoiding exact duplicate copies. \\
-\\ \textbf{CSGAN:} Generates clear front-facing face images from side-angle photos and prioritizes avoiding expensive mistakes, such as letting an unauthorized person pass through security. \\
-\\ \textbf{ISL-GAN:} Cleans up noisy and uncertain tags where an image has multiple possible candidate labels by generating clean, typical examples to figure out the true label.
-
-\subsubsection{Limitations}
-\textbf{EID-GAN:} Requires detailed manual outlines around every flaw during training, so it cannot be used if data lacks precise defect labels. \\
-\\ \textbf{CTGAN:} Takes a very long time to train on large datasets and struggles to accurately generate rare events, such as unusual diagnoses or long hospital stays. \\
-\\ \textbf{CSGAN:} Requires human experts to assign fixed cost values to every type of error ahead of time, making it hard to adapt if risk levels change dynamically. \\
-\\ \textbf{ISL-GAN:} Assumes the correct answer is always somewhere inside the provided candidate list; if the true label was completely missed during manual tagging, the model fails to learn it.
-
-% Discuss the third major theme.
-
-% Use evidence from multiple research articles.
+Use evidence from multiple research articles.
 
 
 \subsection{Theme / Area 4: [Insert Theme, if applicable]}
@@ -893,41 +645,64 @@ A table such as the following is recommended.
 
 \section{Synthesis of Findings}
 
-This section is particularly important.
-
-The group should answer:
-
+This section synthesises the collective observed and methodological findings from the reviewed advanced Generative Adversarial Network (GAN) architectures, drawing direct cross-comparisons across diverse data modalities, downstream evaluation settings, and structural paradigms.
 
 \subsection{What Do the Studies Agree On?}
 
-Identify findings or conclusions that are consistently reported across multiple studies.
+Across the reviewed literature, several core observations consistently emerge:
 
+\begin{itemize}
+    \item \textbf{Vulnerability of Standard GAN Formulations:} All studies uniformly agree that vanilla, unconstrained GAN architectures suffer from severe training instability, gradient variance collapse, and mode collapse when applied to complex or skewed target distributions \parencite{sohn2026parallelly,li2024improving}. Specifically, standalone objective functions optimise toward predominant modes, failing to capture sparse regions, tail-end minority classes, or fine-grained structural outliers \parencite{li2023eid}.
+    
+    \item \textbf{Insufficiency of Distribution Matching for Downstream Utility:} Simply matching global feature distributions is insufficient for task-specific performance. Studies in industrial soft-sensing \parencite{zhu2025novel}, defect inspection \parencite{li2023eid}, and clinical decision support \parencite{bietsch2023electronic} agree that naive adversarial training overlooks critical localised input--output mappings and intra-instance dependencies unless guided by explicit supervisory constraints or specialised loss regularisers.
+    
+    \item \textbf{Generative Sample Limits and Risk of Over-Generation:} Synthetic data only helps a model up to a certain point. After that, more is actually worse. For instance, feeding a sensor model too many fake readings (over roughly 420 samples for DCRGAN) blurs out the real physical boundaries it needs to measure accurately \parencite{zhu2025novel}. Similarly, simply generating more medical records doesn't help find rare, high-risk patients; it just clutters the dataset with useless, common details \parencite{bietsch2023electronic}.
+    
+    \item \textbf{Failure of Conventional Sample-Level Interpolation (SMOTE):} Multiple studies benchmark against traditional interpolation methods such as SMOTE, consistently observing that linear sample blending produces blurred textures, duplicates boundary noise, and lacks the capacity to capture high-dimensional non-linear distributions \parencite{li2023eid,zhu2025novel}.
+\end{itemize}
 
 \subsection{What Do the Studies Disagree On?}
 
-Identify conflicting findings, different results, or different conclusions.
+Despite consensus on foundational vulnerabilities, the studies demonstrate notable divergences in architectural philosophy, loss formulation, and validation standards:
+
+\begin{itemize}
+    \item \textbf{Multi-Network Complexity vs. Unified Parameterisation:} A prominent methodological divergence exists between multi-agent frameworks and unified parameterisation. Approaches such as SOMGAN \parencite{li2024improving} and DCRGAN \parencite{zhu2025novel} address mode coverage and dual correlations by deploying groups of discriminators or multi-generator pairs. Conversely, models like PTGAN \parencite{sohn2026parallelly} argue that training instability can be solved within a single generator-critic framework through parallel continuous distribution tempering, avoiding the parameter footprint and structural overhead of discrete discriminator banks.
+    
+    \item \textbf{Efficacy of Norm Penalties in Adversarial Objectives:} Studies diverge sharply on how regression or distance constraints should be formulated. In fine-scale defect synthesis, \textcite{li2023eid} demonstrate that global $L_1$ and $L_2$ norm penalties completely fail because normal image backgrounds dominate optimisation, necessitating localised bounding-box mask penalties. In contrast, for continuous physical variable generation, \textcite{zhu2025novel} successfully rely on global Mean Squared Error (MSE) constraints to regularise conditional outputs.
+    
+    \item \textbf{Applicability and Faithfulness of Standard Metrics:} Research focusing on natural image synthesis considers Fr\'echet Inception Distance (FID) and Inception Score (IS) the gold standards for distribution fidelity \parencite{li2024improving,sohn2026parallelly}. In sharp contrast, specialised visual inspection \parencite{li2023eid} and clinical healthcare studies \parencite{bietsch2023electronic} disagree with the utility of standard FID, noting that low FID scores frequently fail to reflect downstream detection efficacy or clinical validity in extremely imbalanced or tabular contexts.
+\end{itemize}
 
 
 \subsection{Which Approaches Appear to Be Most Effective?}
 
-Compare the approaches and explain why certain methods appear to perform better.
+The comparative evidence indicates that the most effective architectures are those that augment adversarial objectives with structural regularization tailored to the data modality:
 
+\begin{itemize}
+    \item \textbf{Topologically and Spatially Constrained Adversarial Networks:} For high-dimensional mode coverage, SOMGAN's self-organizing map topology outperforms independent multi-discriminator ensembles (such as Dropout-GAN and D2GAN) by preserving neighbor affinities and partitioning the discriminative feature space without redundant parameter overhead \parencite{li2024improving}.
+    
+    \item \textbf{Continuous Distribution Tempering for Gradient Variance Reduction:} PTGAN handles complex data across images and tables by pairing a parallel tempering objective with a coherency penalty, significantly cutting down variance and stabilising training. Rather than getting stuck in flat regions where learning stalls, it uses convex interpolation to bridge the gaps between data modes. This prevents vanishing gradients and allows the model to achieve a near-optimal minimax convergence rate \parencite{sohn2026parallelly}.
+    
+    \item \textbf{Dual-Supervised and Targeted Objective Regularization:} For physical and industrial applications, DCRGAN-VSG \parencite{zhu2025novel} and EID-GAN \parencite{li2023eid} demonstrate that injecting explicit geometric or domain-specific constraints (e.g., Pielou diversity filtering, auxiliary MSE loss, and cropped outlier penalties) significantly outperforms unconstrained GANs, reducing estimation errors in industrial soft-sensing by up to 70\% and achieving robust outlier retention.
+\end{itemize}
 
 \subsection{What Trends Can Be Observed?}
 
-Identify emerging trends in:
+Analysis of recent literature reveals the following emerging trajectories in advanced GAN research:
 
 \begin{itemize}
-    \item Technologies
-    \item Methodologies
-    \item Datasets
-    \item Algorithms
-    \item Applications
-    \item Research directions
+    \item \textbf{Technologies:} Integration of hybrid modeling techniques, notably coupling generative adversarial mechanisms with Vision Transformers (e.g., BEiT for evaluation), diffusion distillation, and modular generative--discriminative pipelines \parencite{sohn2026parallelly,li2024improving}.
+    
+    \item \textbf{Methodologies:} A pronounced transition from unguided adversarial generation toward constrained generation incorporating domain physics, topological graph structures, spatial masking, and temperature-controlled intermediate state sampling \parencite{sohn2026parallelly,zuo2023sketched}.
+    
+    \item \textbf{Datasets:} Expansion from standard benchmark image sets (e.g., MNIST, CIFAR-10) toward highly specialized industrial sensory logs (PTA plants), clinical Electronic Health Records (EHR), multi-view weakly annotated databases, and micro-scale defect images exhibiting extreme class imbalance \parencite{zhu2025novel,bietsch2023electronic,zhang2023inaccurate}.
+    
+    \item \textbf{Algorithms:} Replacement of standard Wasserstein weight clipping with advanced gradient stabilization frameworks, including coherency penalties, spectral normalization, and multi-agent competitive-cooperative loss functions \parencite{sohn2026parallelly,li2024improving}.
+    
+    \item \textbf{Applications:} Deployment in high-stakes operational environments, including industrial process soft-sensing \parencite{zhu2025novel}, automated manufacturing defect detection \parencite{li2023eid}, cost-sensitive facial biometric security \parencite{chen2021generative}, and military situation symbol standardization \parencite{zuo2023sketched}.
+    
+    \item \textbf{Research Directions:} A clear evolution toward \textit{Trustworthy and Pragmatic AI}, prioritizing algorithmic fairness (e.g., demographic parity via latent space interpolation), differential privacy guarantees in tabular medical synthesis, and task-specific downstream utility rather than purely aesthetic sample generation \parencite{sohn2026parallelly,bietsch2023electronic}.
 \end{itemize}
-
-The discussion should be based on evidence from the reviewed articles.
-
 
 % =========================================
 % 6. RESEARCH GAPS
@@ -1200,8 +975,5 @@ The group should combine all individual article reviews into one matrix.
 }
 
 \end{table}
-
-
-
 
 \end{document}
