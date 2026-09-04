@@ -86,7 +86,7 @@
 1. Student Name -- Student ID\\
 2. Student Name -- Student ID\\
 3. Student Name -- Student ID\\
-4. Student Name -- Student ID
+
 }
 
 \vspace{0.8cm}
@@ -114,32 +114,28 @@
 \vspace{0.2cm}
 
 \begin{justify}
+Generative Adversarial Networks (GANs) have become an important approach for
+synthetic data generation, particularly in applications where real-world data
+are limited, imbalanced, noisy, or difficult to obtain. However, conventional
+GANs continue to face challenges such as data scarcity, mode collapse, training
+instability, extreme class imbalance, and complex domain constraints. This
+review aims to examine how advanced GAN architectures address these
+challenges across different real-world applications. The review analyses
+selected research articles by comparing their target problems, architectural
+designs, learning mechanisms, evaluation methods, and reported performance.
+The findings indicate that different GAN architectures provide specialised
+solutions rather than a single universal approach. Diversity-oriented methods
+improve mode coverage, distribution-based approaches enhance training
+stability, while constraint-aware and application-specific models improve the
+generation of minority, tabular, or domain-dependent data. Nevertheless,
+research gaps remain in the integration of multiple GAN mechanisms, consistent
+evaluation across different datasets, and the development of robust methods
+that can simultaneously address data scarcity, diversity, imbalance, and
+domain-specific constraints. Overall, the reviewed literature demonstrates a
+clear shift towards application-specific and constraint-aware GAN architectures
+for reliable synthetic data generation in real-world environments.
 
-Write a concise summary of the entire review article. Write a concise summary of the entire review article. Write a concise summary of the entire review article. Write a concise summary of the entire review article.
-
-Write a concise summary of the entire review article.Write a concise summary of the entire review article.Write a concise summary of the entire review article.
-
-
-
-
-
-
-The abstract should include:
-
-\begin{itemize}
-    \item Background/context of the selected research topic
-    \item Purpose of the review
-    \item General approach used to select and analyse the research articles
-    \item Major findings from the reviewed literature
-    \item Key research gaps identified
-    \item Overall conclusion
-\end{itemize}
-
-\textbf{Recommended length: 150--250 words.}
-
-\vspace{0.3cm}
-
-\textbf{Keywords:} Keyword 1; Keyword 2; Keyword 3; Keyword 4; Keyword 5
+\vspace{1em}
 
 \end{justify}
 
@@ -170,82 +166,56 @@ The abstract should include:
 
 \subsection{Background}
 
-Introduce the selected research topic and explain why it is important.
+Generative Adversarial Networks (GANs) are widely used generative machine learning models that can learn data distributions and generate synthetic data. A conventional GAN consists of a Generator and a Discriminator that compete during training. The Generator produces synthetic samples, while the Discriminator evaluates whether the samples are real or generated. This adversarial process enables GANs to generate increasingly realistic data.
 
-This is how you add inline references in the document given that all your references have been copied in the references.bib.
-Recent studies have demonstrated the effectiveness of artificial
-intelligence techniques \parencite{smith2024}.
+GANs have been applied in areas such as image generation, healthcare, industrial applications, defect detection, and data augmentation. They are particularly useful when real-world data are limited, expensive, difficult to collect, or subject to privacy constraints. However, conventional GANs may perform poorly when dealing with challenging real-world datasets.
 
-Follow this example to include more than one references.Several studies have investigated these approaches
-\parencite{smith2024,lee2023,ahmad2022}.
+Several important challenges remain. \textbf{Data scarcity} can lead to overfitting and poor generalisation, while \textbf{mode collapse} may cause the Generator to produce limited and repetitive outputs. GAN training can also suffer from \textbf{instability}, making it difficult to achieve reliable convergence. In addition, \textbf{class imbalance}, noisy or inaccurate labels, and complex data structures can prevent conventional GANs from adequately representing important minority patterns and domain-specific information.
 
-\vspace{0.5cm}
-Discuss:
-
-\begin{itemize}
-    \item What is the research topic?
-    \item What problem does it address?
-    \item Why is the problem important?
-    \item Where is the topic currently being applied?
-    \item Why is there a need to study/review this topic?
-\end{itemize}
-
-Students should support important statements with appropriate research references.
+These challenges have led to the development of advanced GAN architectures with specialised mechanisms for different applications. Therefore, a comparative review is necessary to examine how these approaches address real-world limitations, evaluate their reported effectiveness, and identify remaining research gaps. This review focuses on the key architectural strategies, application contexts, evaluation methods, and contributions of selected advanced GAN models.
 
 
 \subsection{Problem Statement}
 
-Clearly describe the problem or issue that motivates this literature review.
+Although GANs have demonstrated strong capabilities in synthetic data generation, conventional GANs remain challenging to apply to real-world datasets. The main problems addressed in this review are: 
 
-\vspace{0.5cm}
-Explain:
+\begin{enumerate} 
+\item \textbf{Data Scarcity and Overfitting:} 
+Limited training data can cause GANs to overfit or memorise existing samples, reducing the diversity and reliability of generated data. 
+\item \textbf{Mode Collapse and Training Instability:} GANs may generate repetitive samples and fail to represent different modes of the real data distribution. Unstable adversarial training can further affect generation quality and convergence. 
+\item \textbf{Class Imbalance and Complex Data Constraints:} Extremely rare classes, mixed-type data, inaccurate labels, and application-specific requirements can make it difficult for conventional GANs to generate useful and representative samples. 
 
-\begin{itemize}
-    \item What is currently known?
-    \item What problems exist?
-    \item What limitations exist in current approaches?
-    \item Why is a review of existing research necessary?
-\end{itemize}
+\end{enumerate} Therefore, advanced GAN architectures are required to address these limitations through specialised generation mechanisms, improved training strategies, and application-specific constraints. This review compares selected approaches to determine how effectively they address these challenges in different real-world contexts.
 
 
 \subsection{Objectives of the Review}
 
-State the objectives of the review article.
+To critically review and compare selected advanced GAN architectures in terms of their mechanisms, applications, evaluation methods, and effectiveness in addressing major real-world challenges in synthetic data generation.
 
 \vspace{0.5cm}
-For example:
 
-\begin{enumerate}
-    \item To review existing research related to [topic].
-    \item To compare the approaches used by different researchers.
-    \item To analyse the findings and limitations of existing studies.
-    \item To identify research gaps and potential future research directions.
+
+\begin{enumerate} 
+\item \textbf{To evaluate approaches for data scarcity:} To examine how DCRGAN-VSG, PTGAN, and RSM-GAN address limited training data and improve the generation of useful synthetic samples. 
+\item \textbf{To examine approaches for mode collapse and training stability:} To analyse how SOMGAN, PTGAN, RSM-GAN, and DCGAN-based approaches improve diversity, mode coverage, and training stability. 
+\item \textbf{To investigate approaches for class imbalance and complex data:} To evaluate how EID-GAN and CTGAN/Copula GAN address rare data patterns, imbalanced datasets, and mixed-type tabular data. 
+\item \textbf{To analyse cost-sensitive and inaccurate supervision approaches:} To examine how Two-Channel CS-GAN and ISL-GAN address asymmetric classification costs, inaccurate labels, and ambiguous supervision. 
+\item \textbf{To identify research gaps and future directions:} To identify limitations in the existing approaches and determine opportunities for developing more robust and generalisable GAN architectures. 
 \end{enumerate}
 
 
 \subsection{Research Questions}
 
-Develop 2--4 research questions that guide the review.
+The review is guided by the following research questions, which are aligned with the research objectives: 
 
-\vspace{0.2cm}
+\begin{enumerate} 
+\item \textbf{RQ1:} How do advanced GAN architectures address data scarcity, mode collapse, and training instability in real-world applications? 
+\item \textbf{RQ2:} How do advanced GAN architectures address class imbalance, complex data structures, cost-sensitive learning, and inaccurate supervision? 
+\item \textbf{RQ3:} What are the major findings, performance outcomes, and limitations reported in the existing studies? 
+\item \textbf{RQ4:} What research gaps and future opportunities can be identified for improving advanced GAN architectures in real-world applications? 
+\end{enumerate}
 
-For Example:
-
-
-\textbf{RQ1:} What approaches have been used to address [research problem]?
-
-\vspace{0.2cm}
-
-\textbf{RQ2:} What are the major findings reported in existing studies?
-
-\vspace{0.2cm}
-
-\textbf{RQ3:} What are the limitations of the existing approaches?
-
-\vspace{0.2cm}
-
-\textbf{RQ4:} What research gaps and future opportunities can be identified?
-
+\clearpage
 
 % =========================================
 % 2. REVIEW METHODOLOGY
