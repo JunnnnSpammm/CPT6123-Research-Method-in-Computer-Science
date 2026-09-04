@@ -162,8 +162,6 @@ The abstract should include:
 % MAIN CONTENT
 % =========================================
 
-\begin{justify}
-
 % =========================================
 % 1. INTRODUCTION
 % =========================================
@@ -252,67 +250,25 @@ For Example:
 % =========================================
 % 2. REVIEW METHODOLOGY
 % =========================================
-
 \section{Review Methodology}
 
-Explain how the group conducted the literature review.
-
+This section outlines the systematic review methodology used to identify and analyze the 9 research articles evaluated in this report. The review focuses on advanced Generative Adversarial Network (GAN) architectures, examining structural enhancements, training stabilization techniques (e.g., parallel tempering, self-organizing maps), and real-world applications such as medical data synthesis to soft sensors.
 
 \subsection{Literature Search Strategy}
 
-Describe:
+To gather relevant literature on structural variations and specialized training paradigms of GANs, a targeted search was conducted across major academic databases.
 
 \begin{itemize}
-    \item Databases/search engines used
-    \item Search keywords
-    \item Search strings
-    \item Publication period
-    \item Type of publications considered\newline
+    \item \textbf{Databases / Search Engines:}
+    \item \textbf{Search Keywords:} Generative Adversarial Networks, GAN architectures, data augmentation, mode collapse, gradient stabilization, conditional GANs, cost-sensitive learning, soft sensing.
+    \item \textbf{Search Strings:} ("Generative Adversarial Networks" OR "GAN") AND ("architecture" OR "stabilization" OR "imbalanced data" OR "mode collapse" OR "synthetic data")
+    \item \textbf{Publication Period:} 2017--2026
+    \item \textbf{Type of Publications:} Peer-reviewed journal articles and international conference papers.
 \end{itemize}
-
-
-Example databases:
-
-\begin{itemize}
-    \item Scopus
-    \item Web of Science
-    \item IEEE Xplore
-    \item ScienceDirect
-    \item SpringerLink
-    \item ACM Digital Library
-    \item Google Scholar
-\end{itemize}
-
 
 \subsection{Inclusion and Exclusion Criteria}
 
-Describe the criteria used to determine which research articles were included in or excluded from the review.
-
-\textbf{Inclusion criteria may include:}
-
-\begin{itemize}
-    \item Articles directly related to the selected research topic
-    \item Peer-reviewed research articles
-    \item Articles published within the selected publication period
-    \item Articles indexed in the selected academic databases
-    \item Articles available in full text
-\end{itemize}
-
-\textbf{Exclusion criteria may include:}
-
-\begin{itemize}
-    \item Articles outside the scope of the research topic
-    \item Duplicate publications
-    \item Non-peer-reviewed publications
-    \item Articles outside the selected publication period
-    \item Articles without sufficient methodological or research information
-\end{itemize}
-
-\end{justify}
-
-% =========================================
-% SAMPLE TABLE
-% =========================================
+Specific inclusion and exclusion criteria were defined to ensure all 9 selected studies offer sufficient methodological insights into GAN architectural improvements or specialized applications.
 
 \begin{table}[H]
 \caption{Inclusion and exclusion criteria used for the literature review}
@@ -320,7 +276,7 @@ Describe the criteria used to determine which research articles were included in
 
 \fontsize{10pt}{12pt}\selectfont
 
-\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+\begin{tabular}{|p{3.5cm}|p{5.5cm}|p{5.5cm}|}
 \hline
 \centering\textbf{Criteria} &
 \centering\textbf{Inclusion} &
@@ -329,77 +285,220 @@ Describe the criteria used to determine which research articles were included in
 \hline
 
 \centering Publication type &
-\centering Peer-reviewed research articles &
-\centering Non-peer-reviewed articles
+\centering Peer-reviewed journal articles and conference proceedings &
+\centering Non-peer-reviewed articles, pre-prints, technical reports
 \tabularnewline
 \hline
 
 \centering Publication period &
-\centering [e.g., 2021--2026] &
-\centering Articles outside selected period
+\centering 2017--2026 &
+\centering Articles published prior to 2017
 \tabularnewline
 \hline
 
 \centering Language &
 \centering English &
-\centering Other languages
+\centering Non-English publications
 \tabularnewline
 \hline
 
-\centering Topic &
-\centering Directly related to selected topic &
-\centering Not directly related
+\centering Topic relevance &
+\centering Advanced GAN architectures, gradient stabilization, mode exploration, and domain applications &
+\centering Standard deep learning models without GAN architectural modifications
 \tabularnewline
 \hline
 
-\centering Full text &
-\centering Full-text available &
-\centering Full text unavailable
+\centering Contents &
+\centering Full-text available that contains problem statement, research
+methodology/algorithm used by the researcher, results and discussion, advantages, limitations along with the own critical comments and suggestions for future enhancements.
+ &
+\centering Full-text unavailable, or missing any of the required sections
 \tabularnewline
 \hline
 
 \end{tabular}
 
 \end{table}
+% \section{Review Methodology}
 
-This is a sample table. Tables should be placed in the main text near to the first time they are cited, with the caption on top and left aligned. The font of the table caption is size 9 and the content in the table is size 10.
-
-
-
-% =========================================
-% SAMPLE FIGURE
-% =========================================
-
-\begin{figure}[H]
-    \centering
-
-    \fbox{%
-        \includegraphics[width=0.80\textwidth]{figures/Prisma.jpg}%
-    }
-
-    \caption{PRISMA flow diagram of the study selection process.}
-    \label{fig:prisma}
-\end{figure}
+% Explain how the group conducted the literature review.
 
 
-This is a figure. All figures should be centred with figure caption following the sequence Figure 1, Figure 2, and so on. The caption should also be centred. The caption for figures should be size 9.
+% \subsection{Literature Search Strategy}
+
+% Describe:
+
+% \begin{itemize}
+%     \item Databases/search engines used
+%     \item Search keywords
+%     \item Search strings
+%     \item Publication period
+%     \item Type of publications considered\newline
+% \end{itemize}
+
+
+% Example databases:
+
+% \begin{itemize}
+%     \item Scopus
+%     \item Web of Science
+%     \item IEEE Xplore
+%     \item ScienceDirect
+%     \item SpringerLink
+%     \item ACM Digital Library
+%     \item Google Scholar
+% \end{itemize}
+
+
+% \subsection{Inclusion and Exclusion Criteria}
+
+% Describe the criteria used to determine which research articles were included in or excluded from the review.
+
+% \textbf{Inclusion criteria may include:}
+
+% \begin{itemize}
+%     \item Articles directly related to the selected research topic
+%     \item Peer-reviewed research articles
+%     \item Articles published within the selected publication period
+%     \item Articles indexed in the selected academic databases
+%     \item Articles available in full text
+% \end{itemize}
+
+% \textbf{Exclusion criteria may include:}
+
+% \begin{itemize}
+%     \item Articles outside the scope of the research topic
+%     \item Duplicate publications
+%     \item Non-peer-reviewed publications
+%     \item Articles outside the selected publication period
+%     \item Articles without sufficient methodological or research information
+% \end{itemize}
+
+% \end{justify}
+
+% % =========================================
+% % SAMPLE TABLE
+% % =========================================
+
+% \begin{table}[H]
+% \caption{Inclusion and exclusion criteria used for the literature review}
+% \label{tab:inclusion-exclusion}
+
+% \fontsize{10pt}{12pt}\selectfont
+
+% \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+% \hline
+% \centering\textbf{Criteria} &
+% \centering\textbf{Inclusion} &
+% \centering\textbf{Exclusion}
+% \tabularnewline
+% \hline
+
+% \centering Publication type &
+% \centering Peer-reviewed research articles &
+% \centering Non-peer-reviewed articles
+% \tabularnewline
+% \hline
+
+% \centering Publication period &
+% \centering [e.g., 2021--2026] &
+% \centering Articles outside selected period
+% \tabularnewline
+% \hline
+
+% \centering Language &
+% \centering English &
+% \centering Other languages
+% \tabularnewline
+% \hline
+
+% \centering Topic &
+% \centering Directly related to selected topic &
+% \centering Not directly related
+% \tabularnewline
+% \hline
+
+% \centering Full text &
+% \centering Full-text available &
+% \centering Full text unavailable
+% \tabularnewline
+% \hline
+
+% \end{tabular}
+
+% \end{table}
+
+% This is a sample table. Tables should be placed in the main text near to the first time they are cited, with the caption on top and left aligned. The font of the table caption is size 9 and the content in the table is size 10.
+
+
+
+% % =========================================
+% % SAMPLE FIGURE
+% % =========================================
+
+% \begin{figure}[H]
+%     \centering
+
+%     \fbox{%
+%         \includegraphics[width=0.80\textwidth]{figures/Prisma.jpg}%
+%         }
+
+%     \caption{PRISMA flow diagram of the study selection process.}
+%     \label{fig:prisma}
+% \end{figure}
+
+
+% This is a figure. All figures should be centred with figure caption following the sequence Figure 1, Figure 2, and so on. The caption should also be centred. The caption for figures should be size 9.
 
 
 
 \subsection{Article Selection}
-
-Each student must review \textbf{at least 3 research articles}.
-
-Therefore:
-
+To ensure that all the papers we found were aligned with our main idea for the topic, the three of us initially grouped together in person and searched for all 9 papers collectively. Only after finding the 9 papers did we split them into three papers each for individual review. \\
+\\ The titles of the 9 selected papers, which were divided among the students for individual review, are as follows: \\
+\\ \textbf{Student 1:} Choo Beng Hao
+\begin{enumerate}
+    \item A novel virtual sample generation method based on dual correlation generative adversarial nets for soft sensing application.
+    \item Parallelly Tempered Generative Adversarial Nets Toward Stabilized Gradients
+    \item The Comparison Between Conditional Generative Adversarial Nets and Deep Convolutional Generative Adversarial Network and its GUI-related application
+\end{enumerate}
+\textbf{Student 2:} Francis Tan Jing Xuan
+\begin{enumerate}
+    \item Improving Mode Exploring Capability of Generative Adversarial Nets by Self-organizing Map
+    \item Sketched Irregular Military Symbols Recognition via Generative Adversarial Nets
+    \item EID-GAN Generative Adversarial Nets for Extremely Imbalanced Data Augmentation
+\end{enumerate}
+\textbf{Student 3:} Henry Hong
+\begin{enumerate}
+    \item Electronic Health Data in the Context of Patient Length-of-Stay Prediction Using Generative Adversarial Nets for Synthetic Data Creation
+    \item Generative Adversarial Nets for Cost-Sensitive Face Recognition
+    \item Inaccurate-Supervised Learning With Generative Adversarial Nets
+\end{enumerate}
+The papers were also conveniently divided in this manner, as the three papers assigned to each student largely focus on similar themes, namely:
 \begin{itemize}
-    \item \textbf{Minimum articles per student = 3}
-    \item \textbf{Minimum articles per group = 12}
+    \item High-Quality Synthetic Data Generation
+    \item Topological \& Multi-Discriminator GANs
+    \item GANs for Data Imbalances and Imperfections
 \end{itemize}
 
-The group may use more than 12 articles if necessary.
+% Each student must review \textbf{at least 3 research articles}.
 
-Explain how the final articles were selected for the review.
+% Therefore:
+
+% \begin{itemize}
+%     \item \textbf{Minimum articles per student = 3}
+%     \item \textbf{Minimum articles per group = 12}
+% \end{itemize}
+
+% The group may use more than 12 articles if necessary.
+
+% Explain how the final articles were selected for the review.
+
+
+% =========================================
+% 2. REVIEW METHODOLOGY
+% =========================================
+
+
 
 
 
@@ -1504,8 +1603,5 @@ The group should combine all individual article reviews into one matrix.
 }
 
 \end{table}
-
-
-
 
 \end{document}
