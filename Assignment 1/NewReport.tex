@@ -83,20 +83,20 @@
 \vspace{0.3cm}
 
 {\fontsize{12}{14}\selectfont
-1. Student Name -- Student ID\\
-2. Student Name -- Student ID\\
-3. Student Name -- Student ID\\
+1. Choo Beng Hao -- 252UC2538L\\
+2. Francis Tan Jing Xuan -- 252UC241TM\\
+3. Henry Hong -- 252UC2424R\\
 
 }
 
 \vspace{0.8cm}
 
 {\fontsize{12}{14}\selectfont
-\textbf{Programme:} [Programme Name]\\
-\textbf{Course:} [Course Code and Course Name]\\
-\textbf{Lecturer:} [Lecturer Name]\\
-\textbf{Semester:} [Semester]\\
-\textbf{Submission Date:} [Date]
+\textbf{Programme:} BACHELOR OF COMPUTER SCIENCE (HONOURS) \\
+\textbf{Course:} CPT6123-RESEARCH METHOD IN COMPUTER SC\\
+\textbf{Lecturer:} Ts. Rohana Binti Mydin\\
+\textbf{Semester:} Trimester July/August 2025\\
+\textbf{Submission Date:} 6th September 2026
 }
 
 \end{center}
@@ -1141,7 +1141,7 @@ The study uses CTGAN and other synthetic-data technologies to generate and evalu
 \hline
 
 1 &
- &
+\parencite{zhu2025novel} &
 Improve synthetic sample generation for small industrial datasets. &
 WGAN-GP + Conditional GAN; MSE loss; Pielou-based sample selection. &
 3D benchmark data and industrial PTA dataset. &
@@ -1151,7 +1151,7 @@ Too many generated samples can distort the data distribution and reduce accuracy
 \hline
 
 2 &
- &
+\parencite{sohn2026parallelly} &
 Improve GAN stability and reduce mode collapse for complex distributions. &
 Parallel tempering with temperature-aware generation and coherency penalty. &
 CIFAR-10, BloodMNIST, CelebA-HQ; Adult, Credit Card, Law School datasets. &
@@ -1161,7 +1161,7 @@ Smoothing may introduce approximation errors and reduce fine details.
 \hline
 
 3 &
- &
+\parencite{li2021comparison} &
 Compare CGAN and DCGAN for image generation and practical application. &
 Class-conditioned generation (CGAN) and convolutional architecture (DCGAN). &
 MNIST handwritten digits. &
@@ -1171,7 +1171,7 @@ Basic DCGAN lacks class control; CGAN may experience unstable training.
 \hline
 
 4 &
- &
+\parencite{li2024improving} &
 Reduce mode collapse and improve coverage of multimodal data. &
 SOM-based multiple discriminators with parameter sharing. &
 Synthetic 2D data; MNIST, CIFAR-10, STL-10, CelebA, ImageNet. &
@@ -1181,7 +1181,7 @@ Performance depends on selecting a suitable SOM layout and grid size.
 \hline
 
 5 &
- &
+\parencite{zuo2023sketched} &
 Improve recognition of irregular hand-drawn military symbols. &
 ResNet encoder, style-based generator, Markovian discriminator, multi-loss training. &
 MMS-Sketch: standard and hand-drawn military symbols. &
@@ -1191,7 +1191,7 @@ Generated images may contain noise and blurred edges, requiring post-processing.
 \hline
 
 6 &
- &
+\parencite{li2023eid} &
 Generate realistic minority samples for extremely imbalanced defect data. &
 DCGAN with defect-region extraction, masking, and defect-matching penalty. &
 Piston, Fabric, and DAGM defect datasets. &
@@ -1201,7 +1201,7 @@ Requires detailed defect annotations for training.
 \hline
 
 7 &
- &
+\parencite{bietsch2023electronic} &
 Assess whether synthetic EHR data can support hospital length-of-stay prediction. &
 CTGAN with conditional sampling and training-by-sampling; compared with TVAE and Copula GAN. &
 NY hospital discharge records from three university hospitals. &
@@ -1211,7 +1211,7 @@ Slow for large datasets and weak at generating rare cases such as long stays.
 \hline
 
 8 &
- &
+\parencite{chen2020generative} &
 Improve face recognition when recognition errors have different costs. &
 Two-channel cost-sensitive GAN with global/local facial features and multi-loss training. &
 CMU MultiPIE face dataset. &
@@ -1221,7 +1221,7 @@ Requires predefined error-cost values that may not adapt to changing conditions.
 \hline
 
 9 &
- &
+\parencite{zhang2023inaccurate} &
 Handle noisy or incomplete labels in inaccurate-supervision learning. &
 Conditional and semi-supervised GAN framework for PLL, PML, and MVPML. &
 UCI, image, text, music, MNIST, and other PLL/PML/MVPML datasets. &
@@ -1296,7 +1296,7 @@ Analysis of recent literature reveals the following emerging trajectories in adv
     
     \item \textbf{Algorithms:} Replacement of standard Wasserstein weight clipping with advanced gradient stabilization frameworks, including coherency penalties, spectral normalization, and multi-agent competitive-cooperative loss functions \parencite{sohn2026parallelly,li2024improving}.
     
-    \item \textbf{Applications:} Deployment in high-stakes operational environments, including industrial process soft-sensing \parencite{zhu2025novel}, automated manufacturing defect detection \parencite{li2023eid}, cost-sensitive facial biometric security \parencite{chen2021generative}, and military situation symbol standardization \parencite{zuo2023sketched}.
+    \item \textbf{Applications:} Deployment in high-stakes operational environments, including industrial process soft-sensing \parencite{zhu2025novel}, automated manufacturing defect detection \parencite{li2023eid}, cost-sensitive facial biometric security \parencite{chen2020generative}, and military situation symbol standardization \parencite{zuo2023sketched}.
     
     \item \textbf{Research Directions:} A clear evolution toward \textit{Trustworthy and Pragmatic AI}, prioritizing algorithmic fairness (e.g., demographic parity via latent space interpolation), differential privacy guarantees in tabular medical synthesis, and task-specific downstream utility rather than purely aesthetic sample generation \parencite{sohn2026parallelly,bietsch2023electronic}.
 \end{itemize}
@@ -1329,7 +1329,7 @@ While the reviewed studies show significant progress in generative adversarial n
     Protecting user confidentiality without losing fine-grained utility remains difficult. \textcite{bietsch2023electronic} revealed that while non-adversarial models reproduced realistic medical tables, they compromised patient privacy by creating hundreds of direct duplicate records. In contrast, while conditional GANs protected privacy better by generating fewer duplicates, they sacrificed predictive accuracy on rare medical diagnoses.
 
     \item \textbf{Lack of Architectural Explainability and Fixed Cost Assumptions:}
-    How synthetic samples alter decision boundaries in downstream applications remains poorly understood. In biometric security, \textcite{chen2021generative} introduced cost-sensitive decision-making but relied on fixed, manually designated penalty matrices. The literature currently lacks self-adjusting mechanisms that explain or update these penalty costs dynamically in response to shifting operational security risks.
+    How synthetic samples alter decision boundaries in downstream applications remains poorly understood. In biometric security, \textcite{chen2020generative} introduced cost-sensitive decision-making but relied on fixed, manually designated penalty matrices. The literature currently lacks self-adjusting mechanisms that explain or update these penalty costs dynamically in response to shifting operational security risks.
 \end{enumerate}
 
 % =========================================
@@ -1440,7 +1440,7 @@ Important research gaps remain in model generalisability, computational efficien
     \item \textbf{ISL-GAN:} Inaccurate-Supervised Learning With Generative Adversarial Nets
 \end{enumerate}
 \newpage
-\noindent \textbf{Student:} Choo Beng Hao (Student ID)
+\noindent \textbf{Student:} Choo Beng Hao (252UC2538L)
 
 
 \begin{table}[H]
@@ -1450,13 +1450,13 @@ Important research gaps remain in model generalisability, computational efficien
 
 \fontsize{10pt}{12pt}\selectfont
 
-\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{2.3cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{1.5cm}|}
+\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{1.8cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{2cm}|}
 \hline
 
 \centering\textbf{Article} &
 \centering\textbf{Research Problem} &
 \centering\textbf{Objective} &
-\centering\textbf{Methodology} &
+\centering\textbf{Method-ology} &
 \centering\textbf{Dataset \& Sample} &
 \centering\textbf{Key Findings} &
 \centering\textbf{Limitations} &
@@ -1470,8 +1470,7 @@ Improve synthetic sample generation for small industrial datasets.&
 WGAN-GP + Conditional GAN; MSE loss; Pielou-based sample selection.&
 3D benchmark data and industrial PTA dataset.&
 Reduced sensor error by 70.43\% on benchmark and 39.33\% on PTA; achieved $R^2=0.883$.&
-Too many generated samples can distort the data distribution and reduce accuracy.& 
-Lacks automated stopping rule to determine the optimal synthetic sample count before data distribution distort.
+Too many generated samples can distort the data distribution and reduce accuracy.& Lacks automated stopping rule to determine the optimal synthetic sample count before data distribution distort.
 \tabularnewline
 \hline
 
@@ -1481,8 +1480,7 @@ Improve GAN stability and reduce mode collapse for complex distributions.&
 Parallel tempering with temperature-aware generation and coherency penalty.&
 CIFAR-10, BloodMNIST, CelebA-HQ; Adult, Credit Card, Law School datasets.&
 Improved diversity and training stability; BloodMNIST FID of 41.99; reduced gradient variance.&
-Smoothing may introduce approximation errors and reduce fine details.&
-Lacks adaptive temperature scheduling to mitigate fine-detail loss and approximation errors.
+Smoothing may introduce approximation errors and reduce fine details.& Lacks adaptive temperature scheduling to mitigate fine-detail loss and approximation errors.
 \tabularnewline
 \hline
 
@@ -1492,8 +1490,7 @@ Compare CGAN and DCGAN for image generation and practical application. &
 Class-conditioned generation (CGAN) and convolutional architecture (DCGAN).&
 MNIST handwritten digits.&
 DCGAN showed more stable training and more coherent images; stable generation within 200 iterations.& 
-Basic DCGAN lacks class control; CGAN may experience unstable training.&
-Lacks unified mechanism to combine class-conditional guidance with stabilized convolutions, causing early loss oscillation and structural failure.
+Basic DCGAN lacks class control; CGAN may experience unstable training.& Lacks unified mechanism to combine class-conditional guidance with stabilized convolutions, causing early loss oscillation and structural failure.
 \tabularnewline
 \hline
 
@@ -1502,7 +1499,8 @@ Lacks unified mechanism to combine class-conditional guidance with stabilized co
 \end{table}
 
 \newpage
-\noindent \textbf{Student:} Francis Tan Jing Xuan (Student ID)
+\noindent \textbf{Student:} Francis Tan Jing Xuan (252UC2424R)
+
 
 \begin{table}[H]
 
@@ -1511,13 +1509,13 @@ Lacks unified mechanism to combine class-conditional guidance with stabilized co
 
 \fontsize{10pt}{12pt}\selectfont
 
-\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{2.3cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{1.5cm}|}
+\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{1.8cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{2cm}|}
 \hline
 
 \centering\textbf{Article} &
 \centering\textbf{Research Problem} &
 \centering\textbf{Objective} &
-\centering\textbf{Methodology} &
+\centering\textbf{Method-ology} &
 \centering\textbf{Dataset \& Sample} &
 \centering\textbf{Key Findings} &
 \centering\textbf{Limitations} &
@@ -1531,8 +1529,7 @@ Reduce mode collapse and improve coverage of multimodal data. &
 SOM-based multiple discriminators with parameter sharing. &
 Synthetic 2D data; MNIST, CIFAR-10, STL-10, CelebA, ImageNet. &
 Achieved 99.7\% ImageNet class coverage and CIFAR-10 FID of 3.05; fewer parameters through sharing. &
-Performance depends on selecting a suitable SOM layout and grid size.&
-Lacks automated self-configuration of the topological grid layout and node count according to unknown data modalities.
+Performance depends on selecting a suitable SOM layout and grid size.& Lacks automated self-configuration of the topological grid layout and node count according to unknown data modalities.
 \tabularnewline
 \hline
 
@@ -1542,8 +1539,7 @@ Improve recognition of irregular hand-drawn military symbols. &
 ResNet encoder, style-based generator, Markovian discriminator, multi-loss training. &
 MMS-Sketch: standard and hand-drawn military symbols. &
 Out-performed CycleGAN in small-sample settings; generated standardized symbols from sketches. &
-Generated images may contain noise and blurred edges, requiring post-processing.& 
-Lacks integrated end-to-end edge refinement and artifact-suppression loss to eliminate the requirement of external post-processing.
+Generated images may contain noise and blurred edges, requiring post-processing.& Lacks integrated end-to-end edge refinement and artifact-suppression loss to eliminate the requirement of external post-processing.
 \tabularnewline
 \hline
 
@@ -1553,8 +1549,7 @@ Generate realistic minority samples for extremely imbalanced defect data. &
 DCGAN with defect-region extraction, masking, and defect-matching penalty. &
 Piston, Fabric, and DAGM defect datasets. &
 Fabric error-escape rate fell to 0\%; achieved 98.9\% F1 and clearer defect samples. &
-Requires detailed defect annotations for training.&
-Relies strictly on labor-intensive, pixel-level defect masks, lacking weakly supervised mask generation.
+Requires detailed defect annotations for training.& Relies strictly on labor-intensive, pixel-level defect masks, lacking weakly supervised mask generation.
 \tabularnewline
 \hline
 
@@ -1573,13 +1568,13 @@ Relies strictly on labor-intensive, pixel-level defect masks, lacking weakly sup
 
 \fontsize{10pt}{12pt}\selectfont
 
-\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{2.3cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{1.5cm}|}
+\begin{tabular}{|c|p{1.7cm}|p{2cm}|p{1.8cm}|p{1.5cm}|p{1.5cm}|p{2cm}|p{2cm}|}
 \hline
 
 \centering\textbf{Article} &
 \centering\textbf{Research Problem} &
 \centering\textbf{Objective} &
-\centering\textbf{Methodology} &
+\centering\textbf{Method-ology} &
 \centering\textbf{Dataset \& Sample} &
 \centering\textbf{Key Findings} &
 \centering\textbf{Limitations} &
@@ -1593,8 +1588,7 @@ Assess whether synthetic EHR data can support hospital length-of-stay prediction
 CTGAN with conditional sampling and training-by-sampling; compared with TVAE and Copula GAN. &
 NY hospital discharge records from three university hospitals. &
 Similarity score of 0.73; fewer duplicate records than TVAE; useful but below real-data performance. &
-Slow for large datasets and weak at generating rare cases such as long stays.& 
-Lacks specialized mechanisms to scale efficiently and model high-cardinality tail distributions.
+Slow for large datasets and weak at generating rare cases such as long stays.& Lacks specialized mechanisms to scale efficiently and model high-cardinality tail distributions.
 \tabularnewline
 \hline
 
@@ -1604,8 +1598,7 @@ Improve face recognition when recognition errors have different costs. &
 Two-channel cost-sensitive GAN with global/local facial features and multi-loss training. &
 CMU MultiPIE face dataset. &
 Recognition accuracy increased from 35.16\% to 73.21\%; cost-sensitive classification reduced penalty cost. &
-Requires predefined error-cost values that may not adapt to changing conditions.& 
-Relies on fixed, pre-assigned error-cost matrices, lacking self-adaptive cost adjustment for shifting real-world risk environments.
+Requires predefined error-cost values that may not adapt to changing conditions.& Relies on fixed, pre-assigned error-cost matrices, lacking self-adaptive cost adjustment for shifting real-world risk environments.
 \tabularnewline
 \hline
 
@@ -1613,10 +1606,9 @@ Relies on fixed, pre-assigned error-cost matrices, lacking self-adaptive cost ad
 ML models struggle when training labels are inaccurate or ambiguous, making it hard to learn the correct classes. &
 Handle noisy or incomplete labels in inaccurate-supervision learning. &
 Conditional and semi-supervised GAN framework for PLL, PML, and MVPML. &
-UCI, image, text, music, MNIST, and other PLL/PML/MVPML datasets. &
-Best accuracy in 101 of 112 noisy cases; multi-label precision reached 0.922. &
-Fails when the true label is absent from the candidate label set.&
-Fails to handle open-world scenarios where the true ground-truth label is entirely missing from candidate tags.
+UCI, image, text, music, MNIST, and other datasets. &
+Best accuracy in 101 of 112 noisy cases; multi-label precision reached 0.922. & 
+Fails when the true label is absent from the candidate label set.& Fails to handle open-world scenarios where the true ground-truth label is entirely missing from candidate tags.
 \tabularnewline
 \hline
 
@@ -1624,7 +1616,10 @@ Fails to handle open-world scenarios where the true ground-truth label is entire
 
 \end{table}
 
+
 \noindent This appendix provides evidence of each student's individual contribution to the group review.
+
+
 
 % =========================================
 % APPENDIX B - ARTICLE MATRIX
@@ -1718,7 +1713,7 @@ The group should combine all individual article reviews into one matrix.
 \fontsize{10pt}{12pt}\selectfont
 
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|c|p{2.5cm}|p{3cm}|p{3.5cm}|p{2.5cm}|p{3.5cm}|p{3cm}|p{3cm}|c|}
+\begin{tabular}{|c|p{2.5cm}|p{3cm}|p{3.5cm}|p{2.5cm}|p{3.5cm}|p{3cm}|p{3cm}|p{3cm}|}
 \hline
 
 \textbf{Article} &
@@ -1733,39 +1728,39 @@ The group should combine all individual article reviews into one matrix.
 \\
 \hline
 
-1 & Choo Beng Hao & & WGAN-GP + Conditional GAN; MSE loss; Pielou-based sample selection. & 3D benchmark data and industrial PTA dataset. & Reduced sensor error by 70.43\% on benchmark and 39.33\% on PTA; achieved $R^2=0.883$. & Improves synthetic sample generation for small industrial datasets. & Too many generated samples can distort the data distribution and reduce accuracy. &  
+1 & Choo Beng Hao & \parencite{zhu2025novel} & WGAN-GP + Conditional GAN; MSE loss; Pielou-based sample selection. & 3D benchmark data and industrial PTA dataset. & Reduced sensor error by 70.43\% on benchmark and 39.33\% on PTA; achieved $R^2=0.883$. & Improves synthetic sample generation for small industrial datasets. & Too many generated samples can distort the data distribution and reduce accuracy. & Lacks automated stopping rule to determine the optimal synthetic sample count before data distribution distort.
 \\
 \hline
 
-2 & Choo Beng Hao & & Parallel tempering with temperature-aware generation and coherency penalty. & CIFAR-10, BloodMNIST, CelebA-HQ; Adult, Credit Card, Law School datasets. & Improved diversity and training stability; BloodMNIST FID of 41.99; reduced gradient variance. & Improves GAN stability and reduces mode collapse for complex distributions. & Smoothing may introduce approximation errors and reduce fine details. &  
+2 & Choo Beng Hao & \parencite{sohn2026parallelly} & Parallel tempering with temperature-aware generation and coherency penalty. & CIFAR-10, BloodMNIST, CelebA-HQ; Adult, Credit Card, Law School datasets. & Improved diversity and training stability; BloodMNIST FID of 41.99; reduced gradient variance. & Improves GAN stability and reduces mode collapse for complex distributions. & Smoothing may introduce approximation errors and reduce fine details. & Lacks adaptive temperature scheduling to mitigate fine-detail loss and approximation errors.
 \\
 \hline
 
-3 & Choo Beng Hao & & Class-conditioned generation (CGAN) and convolutional architecture (DCGAN). & MNIST handwritten digits. & DCGAN showed more stable training and more coherent images; stable generation within 200 iterations. & Identifies suitable models for image generation and GUI applications. & Basic DCGAN lacks class control; CGAN may experience unstable training. &  
+3 & Choo Beng Hao & \parencite{li2021comparison} & Class-conditioned generation (CGAN) and convolutional architecture (DCGAN). & MNIST handwritten digits. & DCGAN showed more stable training and more coherent images; stable generation within 200 iterations. & Identifies suitable models for image generation and GUI applications. & Basic DCGAN lacks class control; CGAN may experience unstable training. & Lacks unified mechanism to combine class-conditional guidance with stabilized convolutions, causing early loss oscillation and structural failure.
 \\
 \hline
 
-4 & Francis Tan Jing Xuan & & SOM-based multiple discriminators with parameter sharing. & Synthetic 2D data; MNIST, CIFAR-10, STL-10, CelebA, ImageNet. & Achieved 99.7\% ImageNet class coverage and CIFAR-10 FID of 3.05; fewer parameters through sharing. & Reduces mode collapse and improves coverage of multimodal data. & Performance depends on selecting a suitable SOM layout and grid size. &  
+4 & Francis Tan Jing Xuan & \parencite{li2024improving} & SOM-based multiple discriminators with parameter sharing. & Synthetic 2D data; MNIST, CIFAR-10, STL-10, CelebA, ImageNet. & Achieved 99.7\% ImageNet class coverage and CIFAR-10 FID of 3.05; fewer parameters through sharing. & Reduces mode collapse and improves coverage of multimodal data. & Performance depends on selecting a suitable SOM layout and grid size. & Lacks automated self-configuration of the topological grid layout and node count according to unknown data modalities. 
 \\
 \hline
 
-5 & Francis Tan Jing Xuan & & ResNet encoder, style-based generator, Markovian discriminator, multi-loss training. & MMS-Sketch: standard and hand-drawn military symbols. & Out-performed CycleGAN in small-sample settings; generated standardized symbols from sketches. & Improves recognition of irregular hand-drawn military symbols. & Generated images may contain noise and blurred edges, requiring post-processing. &  
+5 & Francis Tan Jing Xuan & \parencite{zuo2023sketched} & ResNet encoder, style-based generator, Markovian discriminator, multi-loss training. & MMS-Sketch: standard and hand-drawn military symbols. & Out-performed CycleGAN in small-sample settings; generated standardized symbols from sketches. & Improves recognition of irregular hand-drawn military symbols. & Generated images may contain noise and blurred edges, requiring post-processing. & Lacks integrated end-to-end edge refinement and artifact-suppression loss to eliminate the requirement of external post-processing. 
 \\
 \hline
 
-6 & Francis Tan Jing Xuan & & DCGAN with defect-region extraction, masking, and defect-matching penalty. & Piston, Fabric, and DAGM defect datasets. & Fabric error-escape rate fell to 0\%; achieved 98.9\% F1 and clearer defect samples. & Generates realistic minority samples for extremely imbalanced defect data. & Requires detailed defect annotations for training. &  
+6 & Francis Tan Jing Xuan & \parencite{li2023eid} & DCGAN with defect-region extraction, masking, and defect-matching penalty. & Piston, Fabric, and DAGM defect datasets. & Fabric error-escape rate fell to 0\%; achieved 98.9\% F1 and clearer defect samples. & Generates realistic minority samples for extremely imbalanced defect data. & Requires detailed defect annotations for training. & Relies strictly on labor-intensive, pixel-level defect masks, lacking weakly supervised mask generation. 
 \\
 \hline
 
-7 & Henry Hong & & CTGAN with conditional sampling and training-by-sampling; compared with TVAE and Copula GAN. & NY hospital discharge records from three university hospitals. & Similarity score of 0.73; fewer duplicate records than TVAE; useful but below real-data performance. & Supports hospital length-of-stay predictions by generating synthetic EHR data. & Slow for large datasets and weak at generating rare cases such as long stays. &  
+7 & Henry Hong & \parencite{bietsch2023electronic} & CTGAN with conditional sampling and training-by-sampling; compared with TVAE and Copula GAN. & NY hospital discharge records from three university hospitals. & Similarity score of 0.73; fewer duplicate records than TVAE; useful but below real-data performance. & Supports hospital length-of-stay predictions by generating synthetic EHR data. & Slow for large datasets and weak at generating rare cases such as long stays. & Lacks specialized mechanisms to scale efficiently and model high-cardinality tail distributions. 
 \\
 \hline
 
-8 & Henry Hong & & Two-channel cost-sensitive GAN with global/local facial features and multi-loss training. & CMU MultiPIE face dataset. & Recognition accuracy increased from 35.16\% to 73.21\%; cost-sensitive classification reduced penalty cost. & Improves face recognition when recognition errors have different costs. & Requires predefined error-cost values that may not adapt to changing conditions. &  
+8 & Henry Hong & \parencite{chen2020generative} & Two-channel cost-sensitive GAN with global/local facial features and multi-loss training. & CMU MultiPIE face dataset. & Recognition accuracy increased from 35.16\% to 73.21\%; cost-sensitive classification reduced penalty cost. & Improves face recognition when recognition errors have different costs. & Requires predefined error-cost values that may not adapt to changing conditions. & Relies on fixed, pre-assigned error-cost matrices, lacking self-adaptive cost adjustment for shifting real-world risk environments.  
 \\
 \hline
 
-9 & Henry Hong & & Conditional and semi-supervised GAN framework for PLL, PML, and MVPML. & UCI, image, text, music, MNIST, and other PLL/PML/MVPML datasets. & Best accuracy in 101 of 112 noisy cases; multi-label precision reached 0.922. & Handles noisy or incomplete labels in inaccurate-supervision learning. & Fails when the true label is absent from the candidate label set. &  
+9 & Henry Hong & \parencite{zhang2023inaccurate} & Conditional and semi-supervised GAN framework for PLL, PML, and MVPML. & UCI, image, text, music, MNIST, and other datasets. & Best accuracy in 101 of 112 noisy cases; multi-label precision reached 0.922. & Handles noisy or incomplete labels in inaccurate-supervision learning. & Fails when the true label is absent from the candidate label set. & Fails to handle open-world scenarios where the true ground-truth label is entirely missing from candidate tags. 
 \\
 \hline
 
