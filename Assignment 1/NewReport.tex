@@ -1471,6 +1471,7 @@ WGAN-GP + Conditional GAN; MSE loss; Pielou-based sample selection.&
 3D benchmark data and industrial PTA dataset.&
 Reduced sensor error by 70.43\% on benchmark and 39.33\% on PTA; achieved $R^2=0.883$.&
 Too many generated samples can distort the data distribution and reduce accuracy.& 
+Lacks automated stopping rule to determine the optimal synthetic sample count before data distribution distort.
 \tabularnewline
 \hline
 
@@ -1480,7 +1481,8 @@ Improve GAN stability and reduce mode collapse for complex distributions.&
 Parallel tempering with temperature-aware generation and coherency penalty.&
 CIFAR-10, BloodMNIST, CelebA-HQ; Adult, Credit Card, Law School datasets.&
 Improved diversity and training stability; BloodMNIST FID of 41.99; reduced gradient variance.&
-Smoothing may introduce approximation errors and reduce fine details.& 
+Smoothing may introduce approximation errors and reduce fine details.&
+Lacks adaptive temperature scheduling to mitigate fine-detail loss and approximation errors.
 \tabularnewline
 \hline
 
@@ -1491,6 +1493,7 @@ Class-conditioned generation (CGAN) and convolutional architecture (DCGAN).&
 MNIST handwritten digits.&
 DCGAN showed more stable training and more coherent images; stable generation within 200 iterations.& 
 Basic DCGAN lacks class control; CGAN may experience unstable training.&
+Lacks unified mechanism to combine class-conditional guidance with stabilized convolutions, causing early loss oscillation and structural failure.
 \tabularnewline
 \hline
 
@@ -1500,7 +1503,6 @@ Basic DCGAN lacks class control; CGAN may experience unstable training.&
 
 \newpage
 \noindent \textbf{Student:} Francis Tan Jing Xuan (Student ID)
-
 
 \begin{table}[H]
 
@@ -1529,7 +1531,8 @@ Reduce mode collapse and improve coverage of multimodal data. &
 SOM-based multiple discriminators with parameter sharing. &
 Synthetic 2D data; MNIST, CIFAR-10, STL-10, CelebA, ImageNet. &
 Achieved 99.7\% ImageNet class coverage and CIFAR-10 FID of 3.05; fewer parameters through sharing. &
-Performance depends on selecting a suitable SOM layout and grid size.& 
+Performance depends on selecting a suitable SOM layout and grid size.&
+Lacks automated self-configuration of the topological grid layout and node count according to unknown data modalities.
 \tabularnewline
 \hline
 
@@ -1540,6 +1543,7 @@ ResNet encoder, style-based generator, Markovian discriminator, multi-loss train
 MMS-Sketch: standard and hand-drawn military symbols. &
 Out-performed CycleGAN in small-sample settings; generated standardized symbols from sketches. &
 Generated images may contain noise and blurred edges, requiring post-processing.& 
+Lacks integrated end-to-end edge refinement and artifact-suppression loss to eliminate the requirement of external post-processing.
 \tabularnewline
 \hline
 
@@ -1550,6 +1554,7 @@ DCGAN with defect-region extraction, masking, and defect-matching penalty. &
 Piston, Fabric, and DAGM defect datasets. &
 Fabric error-escape rate fell to 0\%; achieved 98.9\% F1 and clearer defect samples. &
 Requires detailed defect annotations for training.&
+Relies strictly on labor-intensive, pixel-level defect masks, lacking weakly supervised mask generation.
 \tabularnewline
 \hline
 
@@ -1589,6 +1594,7 @@ CTGAN with conditional sampling and training-by-sampling; compared with TVAE and
 NY hospital discharge records from three university hospitals. &
 Similarity score of 0.73; fewer duplicate records than TVAE; useful but below real-data performance. &
 Slow for large datasets and weak at generating rare cases such as long stays.& 
+Lacks specialized mechanisms to scale efficiently and model high-cardinality tail distributions.
 \tabularnewline
 \hline
 
@@ -1599,6 +1605,7 @@ Two-channel cost-sensitive GAN with global/local facial features and multi-loss 
 CMU MultiPIE face dataset. &
 Recognition accuracy increased from 35.16\% to 73.21\%; cost-sensitive classification reduced penalty cost. &
 Requires predefined error-cost values that may not adapt to changing conditions.& 
+Relies on fixed, pre-assigned error-cost matrices, lacking self-adaptive cost adjustment for shifting real-world risk environments.
 \tabularnewline
 \hline
 
@@ -1609,6 +1616,7 @@ Conditional and semi-supervised GAN framework for PLL, PML, and MVPML. &
 UCI, image, text, music, MNIST, and other PLL/PML/MVPML datasets. &
 Best accuracy in 101 of 112 noisy cases; multi-label precision reached 0.922. &
 Fails when the true label is absent from the candidate label set.&
+Fails to handle open-world scenarios where the true ground-truth label is entirely missing from candidate tags.
 \tabularnewline
 \hline
 
@@ -1616,10 +1624,7 @@ Fails when the true label is absent from the candidate label set.&
 
 \end{table}
 
-
-This appendix provides evidence of each student's individual contribution to the group review.
-
-
+\noindent This appendix provides evidence of each student's individual contribution to the group review.
 
 % =========================================
 % APPENDIX B - ARTICLE MATRIX
