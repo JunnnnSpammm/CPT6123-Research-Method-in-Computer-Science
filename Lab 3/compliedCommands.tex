@@ -1,0 +1,658 @@
+\documentclass[a4paper,10pt]{article}
+
+% =========================================================
+% PACKAGES
+% =========================================================
+
+% Lab 3 packages
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+% General formatting
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% If your images are inside a folder called Images,
+% you can uncomment the following line:
+% \graphicspath{{Images/}}
+
+\title{\textbf{TPT1201 Research Methodology}\\
+LaTeX Command Cheat Sheet\\
+\large Lab 3}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =========================================================
+% INTRODUCTION
+% =========================================================
+
+\section{Introduction}
+
+This document summarizes the important LaTeX commands and examples
+covered in Lab 3.
+
+\begin{itemize}
+    \item \textbf{Lab 3:} Mathematical formulae, equations, arrays,
+    matrices, piecewise functions, fractions, sums, products,
+    mathematical fonts, and algorithms.
+\end{itemize}
+
+\textbf{Tip:} In Overleaf, create a new project, open \texttt{main.tex},
+delete the existing contents, and paste this entire document.
+
+\newpage
+
+% =========================================================
+% LAB 3
+% =========================================================
+
+\section{Lab 3 -- Mathematics and Algorithms}
+
+\subsection{Learning Objectives}
+
+Lab 3 focuses on creating mathematical formulae, simple mathematical
+equations, and algorithms.
+
+% ---------------------------------------------------------
+% LAB 3 CHEAT SHEET
+% ---------------------------------------------------------
+
+\subsection{Lab 3 Command Cheat Sheet}
+
+\renewcommand{\arraystretch}{1.4}
+
+\begin{longtable}{p{0.25\textwidth} p{0.32\textwidth} p{0.35\textwidth}}
+\caption{Lab 3 -- LaTeX Command Cheat Sheet}
+\\
+\toprule
+\textbf{Command / Code} &
+\textbf{Purpose} &
+\textbf{Example / Meaning}
+\\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Command / Code} &
+\textbf{Purpose} &
+\textbf{Example / Meaning}
+\\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\texttt{\textbackslash usepackage\{amsmath\}} &
+Loads the AMS mathematics package. &
+Needed for many mathematical environments and commands.
+\\
+
+\texttt{\$ ... \$} &
+Creates inline mathematics. &
+\texttt{\$a+b=c\$} produces $a+b=c$.
+\\
+
+\texttt{\textbackslash begin\{equation\}} &
+Starts a numbered equation. &
+Used when the equation should automatically receive a number.
+\\
+
+\texttt{\textbackslash end\{equation\}} &
+Ends the numbered equation environment. &
+Works together with \texttt{\textbackslash begin\{equation\}}.
+\\
+
+\texttt{\textbackslash begin\{equation*\}} &
+Starts an unnumbered equation. &
+Useful when an equation number is not required.
+\\
+
+\texttt{\textasciicircum} &
+Creates a superscript. &
+\texttt{a\textasciicircum2} $\rightarrow a^2$.
+\\
+
+\texttt{\_} &
+Creates a subscript. &
+\texttt{x\_1} $\rightarrow x_1$.
+\\
+
+\texttt{\textbackslash nonumber} &
+Prevents an equation line from being numbered. &
+Useful inside multi-line equation environments.
+\\
+
+\texttt{\textbackslash begin\{IEEEeqnarray\}\{rCl\}} &
+Creates an aligned mathematical equation using
+IEEEeqnarray. &
+Useful for equations spread over multiple lines.
+\\
+
+\texttt{\&} &
+Defines alignment positions. &
+Used in IEEEeqnarray to align the equals sign.
+\\
+
+\texttt{\textbackslash\textbackslash} &
+Starts a new line. &
+Used to continue an equation on the next line.
+\\
+
+\texttt{\textbackslash :} &
+Adds mathematical spacing. &
+Example: \texttt{+\:l} gives additional spacing.
+\\
+
+\texttt{\textbackslash left( ... \textbackslash right)} &
+Creates automatically sized parentheses. &
+Useful for matrices and large expressions.
+\\
+
+\texttt{\textbackslash begin\{array\}\{ccc\}} &
+Creates an array with three centered columns. &
+Used to construct matrices or tabular mathematical structures.
+\\
+
+\texttt{\textbackslash vdots} &
+Creates vertical dots. &
+Used when showing continuation of rows.
+\\
+
+\texttt{\textbackslash ddots} &
+Creates diagonal dots. &
+Commonly used in matrices.
+\\
+
+\texttt{\textbackslashmathbf\{X\}} &
+Creates bold mathematical symbols. &
+Example: $\mathbf{X}$.
+\\
+
+\texttt{\textbackslash begin\{cases\}} &
+Common way to create piecewise functions. &
+Each row represents a condition.
+\\
+
+\texttt{\textbackslash text\{...\}} &
+Places normal text inside mathematics. &
+Example: \texttt{\textbackslash text\{if \} }.
+\\
+
+\texttt{\textbackslash frac\{a\}\{b\}} &
+Creates a fraction. &
+\texttt{\textbackslash frac\{1\}\{3\}} $\rightarrow \frac{1}{3}$.
+\\
+
+\texttt{\textbackslash sum\_\{i=1\}\^n} &
+Creates a summation symbol with limits. &
+$\displaystyle\sum_{i=1}^{n}$.
+\\
+
+\texttt{\textbackslash prod\_\{i=1\}\^n} &
+Creates a product symbol with limits. &
+$\displaystyle\prod_{i=1}^{n}$.
+\\
+
+\texttt{\textbackslash mathrm\{...\}} &
+Uses upright/roman mathematical font. &
+$\mathrm{ABCDE}$.
+\\
+
+\texttt{\textbackslash mathit\{...\}} &
+Uses italic mathematical font. &
+$\mathit{ABCDE}$.
+\\
+
+\texttt{\textbackslash mathnormal\{...\}} &
+Uses normal mathematical font. &
+$\mathnormal{ABCDE}$.
+\\
+
+\texttt{\textbackslash mathcal\{...\}} &
+Uses calligraphic mathematical font. &
+$\mathcal{ABC}$.
+\\
+
+\texttt{\textbackslash usepackage\{algorithm\}} &
+Loads the algorithm floating environment. &
+Required for the \texttt{algorithm} environment.
+\\
+
+\texttt{\textbackslash usepackage\{algpseudocode\}} &
+Loads commands for writing pseudocode. &
+Provides commands such as \texttt{\textbackslash If},
+\texttt{\textbackslash While}, and \texttt{\textbackslash State}.
+\\
+
+\texttt{\textbackslash begin\{algorithm\}} &
+Starts an algorithm. &
+Creates a numbered algorithm block.
+\\
+
+\texttt{\textbackslash caption\{...\}} &
+Gives an algorithm a title. &
+Example: \texttt{\textbackslash caption\{MyTestingProcedure\}}.
+\\
+
+\texttt{\textbackslash begin\{algorithmic\}[1]} &
+Starts the pseudocode section with line numbering. &
+The \texttt{[1]} enables line numbers.
+\\
+
+\texttt{\textbackslash Procedure\{...\}\{...\}} &
+Defines a procedure. &
+Example: \texttt{\textbackslash Procedure\{FindPathBK\}\{v,u,p\}}.
+\\
+
+\texttt{\textbackslash If\{...\}} &
+Starts an IF condition. &
+Used for conditional logic.
+\\
+
+\texttt{\textbackslash Else} &
+Defines the alternative branch of an IF statement. &
+Executed when the IF condition is false.
+\\
+
+\texttt{\textbackslash EndIf} &
+Ends an IF block. &
+Marks the end of the condition.
+\\
+
+\texttt{\textbackslash State} &
+Creates a pseudocode statement. &
+Example: \texttt{\textbackslash State \$p\textbackslash gets G\$}.
+\\
+
+\texttt{\textbackslash gets} &
+Represents assignment in pseudocode. &
+$p\gets G$ means assign $G$ to $p$.
+\\
+
+\texttt{\textbackslash While\{...\}} &
+Starts a WHILE loop. &
+Repeats statements while the condition is true.
+\\
+
+\texttt{\textbackslash EndWhile} &
+Ends a WHILE loop. &
+Marks the end of the loop.
+\\
+
+\texttt{\textbackslash EndProcedure} &
+Ends a procedure. &
+Marks the end of the algorithm procedure.
+\\
+
+\end{longtable}
+
+
+% ---------------------------------------------------------
+% LAB 3 EXAMPLES
+% ---------------------------------------------------------
+
+\subsection{Lab 3 Examples}
+
+\subsubsection{1. Simple Mathematical Expression}
+
+Use dollar signs for inline mathematics:
+
+\begin{verbatim}
+$c$ equals $a$ plus $b$.
+
+Mathematically:
+$c = a + b$.
+\end{verbatim}
+
+Result:
+
+$c = a+b$.
+
+% ---------------------------------------------------------
+
+\subsubsection{2. Numbered Equation}
+
+\begin{verbatim}
+\begin{equation}
+a^2+b^2=c^2
+\end{equation}
+\end{verbatim}
+
+Result:
+
+\begin{equation}
+a^2+b^2=c^2
+\end{equation}
+
+A second equation is automatically numbered:
+
+\begin{verbatim}
+\begin{equation}
+x^3+y^3=z^3
+\end{equation}
+\end{verbatim}
+
+\begin{equation}
+x^3+y^3=z^3
+\end{equation}
+
+% ---------------------------------------------------------
+
+\subsubsection{3. IEEEeqnarray}
+
+The Lab 3 material uses the \texttt{IEEEeqnarray} environment
+for aligned equations.
+
+\begin{verbatim}
+\begin{IEEEeqnarray}{rCl}
+a & = & b+c \\
+  & = & d+e+f+g+h+i+j+k \nonumber \\
+  && +\:l+m+n \\
+  & = & p+q+r+s
+\end{IEEEeqnarray}
+\end{verbatim}
+
+Result:
+
+\begin{IEEEeqnarray}{rCl}
+a & = & b+c \\
+  & = & d+e+f+g+h+i+j+k \nonumber \\
+  && +\:l+m+n \\
+  & = & p+q+r+s
+\end{IEEEeqnarray}
+
+\textbf{Important:} Lab 3 specifies that
+\texttt{IEEEtrantools} must be included and mentions that
+\texttt{IEEEtranstools.sty} may need to be placed in the same folder
+as the TEX file.
+
+% ---------------------------------------------------------
+
+\subsubsection{4. Array / Matrix}
+
+\begin{verbatim}
+\begin{equation*}
+\mathbf{X}= \left(
+\begin{array}{ccc}
+x_1 & x_2 & \ldots \\
+x_3 & x_4 & \ldots \\
+\vdots & \vdots & \ddots
+\end{array}
+\right)
+\end{equation*}
+\end{verbatim}
+
+Result:
+
+\begin{equation*}
+\mathbf{X}= \left(
+\begin{array}{ccc}
+x_1 & x_2 & \ldots \\
+x_3 & x_4 & \ldots \\
+\vdots & \vdots & \ddots
+\end{array}
+\right)
+\end{equation*}
+
+\textbf{Remember:}
+
+\begin{itemize}
+    \item \texttt{c} = center alignment
+    \item \texttt{l} = left alignment
+    \item \texttt{r} = right alignment
+    \item \texttt{\&} = separates columns
+    \item \texttt{\textbackslash\textbackslash} = new row
+\end{itemize}
+
+% ---------------------------------------------------------
+
+\subsubsection{5. Piecewise Function}
+
+\begin{verbatim}
+\begin{equation*}
+x = \left\{
+\begin{array}{rl}
+-x & \text{if } x<0,\\
+0  & \text{if } x=0,\\
+x  & \text{if } x>0.
+\end{array}
+\right.
+\end{equation*}
+\end{verbatim}
+
+Result:
+
+\begin{equation*}
+x = \left\{
+\begin{array}{rl}
+-x & \text{if } x<0,\\
+0  & \text{if } x=0,\\
+x  & \text{if } x>0.
+\end{array}
+\right.
+\end{equation*}
+
+% ---------------------------------------------------------
+
+\subsubsection{6. Fractions}
+
+\begin{verbatim}
+\begin{equation*}
+P = \frac{1}{3} \times \frac{x}{y^2}
+\end{equation*}
+\end{verbatim}
+
+Result:
+
+\begin{equation*}
+P = \frac{1}{3} \times \frac{x}{y^2}
+\end{equation*}
+
+% ---------------------------------------------------------
+
+\subsubsection{7. Sum and Product}
+
+Sum:
+
+\begin{verbatim}
+\begin{equation*}
+X = \sum_{i=1}^n (x^2-x)
+\end{equation*}
+\end{verbatim}
+
+\begin{equation*}
+X = \sum_{i=1}^n (x^2-x)
+\end{equation*}
+
+Product:
+
+\begin{verbatim}
+\begin{equation*}
+Y =
+\left[
+\prod_{i=1}^n (X|x_n)
+\right]^{\frac{1}{2}}
+\end{equation*}
+\end{verbatim}
+
+\begin{equation*}
+Y =
+\left[
+\prod_{i=1}^n (X|x_n)
+\right]^{\frac{1}{2}}
+\end{equation*}
+
+% ---------------------------------------------------------
+
+\subsubsection{8. Mathematical Fonts}
+
+\begin{verbatim}
+$\mathrm{ABCDE \qquad abcde \qquad 12345}$
+
+$\mathit{ABCDE \qquad abcde \qquad 12345}$
+
+$\mathnormal{ABCDE \qquad abcde \qquad 12345}$
+
+$\mathcal{ABCDE}$
+\end{verbatim}
+
+Examples:
+
+\[
+\mathrm{ABCDE \qquad abcde \qquad 12345}
+\]
+
+\[
+\mathit{ABCDE \qquad abcde \qquad 12345}
+\]
+
+\[
+\mathnormal{ABCDE \qquad abcde \qquad 12345}
+\]
+
+\[
+\mathcal{ABCDE}
+\]
+
+% ---------------------------------------------------------
+% ALGORITHMS
+% ---------------------------------------------------------
+
+\subsection{Writing Algorithms}
+
+Lab 3 uses:
+
+\begin{verbatim}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\end{verbatim}
+
+\subsubsection{Algorithm Example 1}
+
+\begin{verbatim}
+\begin{algorithm}
+\caption{MyTestingProcedure}
+\begin{algorithmic}[1]
+
+\Procedure{MyTestingProcedure}{$G$,$p$}
+
+\If{$p\geq G$}
+    \State $p\gets G$
+\Else
+    \If{$p+k\leq G$}
+        \State $G\gets p+k$
+    \EndIf
+\EndIf
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+Actual result:
+
+\begin{algorithm}
+\caption{MyTestingProcedure}
+\begin{algorithmic}[1]
+
+\Procedure{MyTestingProcedure}{$G$,$p$}
+
+\If{$p\geq G$}
+    \State $p\gets G$
+\Else
+    \If{$p+k\leq G$}
+        \State $G\gets p+k$
+    \EndIf
+\EndIf
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+% ---------------------------------------------------------
+
+\subsubsection{Algorithm Example 2}
+
+\begin{verbatim}
+\begin{algorithm}
+\caption{FindPathBK}
+\begin{algorithmic}[1]
+
+\Procedure{FindPathBK}{$v$, $u$, $p$}
+
+\If{$v=u$}
+    \State \textbf{Write} $v$
+\Else
+    \State $w\leftarrow v$
+    \While{$w\not=u$}
+        \State \textbf{Write} $w$
+        \State $w\leftarrow p(w)$
+    \EndWhile
+\EndIf
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+Actual result:
+
+\begin{algorithm}
+\caption{FindPathBK}
+\begin{algorithmic}[1]
+
+\Procedure{FindPathBK}{$v$, $u$, $p$}
+
+\If{$v=u$}
+    \State \textbf{Write} $v$
+\Else
+    \State $w\leftarrow v$
+    \While{$w\not=u$}
+        \State \textbf{Write} $w$
+        \State $w\leftarrow p(w)$
+    \EndWhile
+\EndIf
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+% =========================================================
+
+\section{Final Reminder}
+
+\begin{itemize}
+    \item \textbf{Lab 3 = Mathematics + Algorithms}
+    \item Always check that required packages are included in the
+    preamble.
+    \item In tables, \texttt{\&} separates columns and
+    \texttt{\textbackslash\textbackslash} creates a new row.
+    \item \texttt{\textbackslash hline} creates a full horizontal line,
+    while \texttt{\textbackslash cline\{i-j\}} creates a partial line.
+    \item \texttt{\textbackslash multicolumn} merges columns.
+    \item \texttt{\textbackslash multirow} merges rows.
+    \item \texttt{\textbackslash frac} creates fractions.
+    \item \texttt{\textasciicircum} creates superscripts and
+    \texttt{\_} creates subscripts.
+    \item \texttt{algorithm} and \texttt{algpseudocode} are used for
+    algorithms.
+    \item \texttt{graphicx} is required for inserting images.
+\end{itemize}
+
+\end{document}

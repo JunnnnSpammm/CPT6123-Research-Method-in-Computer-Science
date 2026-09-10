@@ -1,0 +1,737 @@
+\documentclass[a4paper,10pt]{article}
+
+% =========================================================
+% PACKAGES
+% =========================================================
+
+% Lab 4 packages
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{array}
+
+% General formatting
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+% If your images are inside a folder called Images,
+% you can uncomment the following line:
+% \graphicspath{{Images/}}
+
+\title{\textbf{TPT1201 Research Methodology}\\
+LaTeX Command Cheat Sheet\\
+\large Lab 4}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% =========================================================
+% INTRODUCTION
+% =========================================================
+
+\section{Introduction}
+
+This document summarizes the important LaTeX commands and examples
+covered in Lab 4.
+
+\begin{itemize}
+    \item \textbf{Lab 4:} Tables, column alignment, horizontal lines,
+    partial horizontal lines, merged columns, merged rows, and images.
+\end{itemize}
+
+\textbf{Tip:} In Overleaf, create a new project, open \texttt{main.tex},
+delete the existing contents, and paste this entire document.
+
+\newpage
+
+% =========================================================
+% LAB 4
+% =========================================================
+
+\section{Lab 4 -- Tables and Images}
+
+\subsection{Learning Objectives}
+
+Lab 4 focuses on creating tables and inserting images into a
+LaTeX document. :contentReference[oaicite:2]{index=2}
+
+% ---------------------------------------------------------
+% LAB 4 CHEAT SHEET
+% ---------------------------------------------------------
+
+\subsection{Lab 4 Command Cheat Sheet}
+
+\renewcommand{\arraystretch}{1.4}
+
+\begin{longtable}{p{0.27\textwidth} p{0.32\textwidth} p{0.33\textwidth}}
+\caption{Lab 4 -- LaTeX Command Cheat Sheet}
+\\
+\toprule
+\textbf{Command / Code} &
+\textbf{Purpose} &
+\textbf{Example / Meaning}
+\\
+\midrule
+\endfirsthead
+
+\toprule
+\textbf{Command / Code} &
+\textbf{Purpose} &
+\textbf{Example / Meaning}
+\\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+\texttt{\textbackslash begin\{tabular\}\{...\}} &
+Starts a table. &
+The column specification is written inside braces.
+\\
+
+\texttt{\textbackslash end\{tabular\}} &
+Ends the table. &
+Marks the end of the tabular environment.
+\\
+
+\texttt{c} &
+Centers text in a column. &
+\texttt{\{c\}} creates one centered column.
+\\
+
+\texttt{l} &
+Aligns text to the left. &
+\texttt{\{l\}} creates one left-aligned column.
+\\
+
+\texttt{r} &
+Aligns text to the right. &
+\texttt{\{r\}} creates one right-aligned column.
+\\
+
+\texttt{|} &
+Creates a vertical line between columns or at the table boundary. &
+\texttt{\{|c|c|\}} creates vertical lines.
+\\
+
+\texttt{\&} &
+Separates columns in a table row. &
+\texttt{Item 1 \& Item 2}.
+\\
+
+\texttt{\textbackslash\textbackslash} &
+Ends a table row. &
+Used after the final cell in a row.
+\\
+
+\texttt{\textbackslash hline} &
+Creates a horizontal line across the table. &
+Useful for separating rows.
+\\
+
+\texttt{\textbackslash cline\{i-j\}} &
+Creates a partial horizontal line. &
+\texttt{\textbackslash cline\{2-3\}} draws a line from column 2 to 3.
+\\
+
+\texttt{\textbackslash multicolumn\{n\}\{align\}\{text\}} &
+Merges multiple columns into one cell. &
+\texttt{\textbackslash multicolumn\{2\}\{|c|\}\{Testing\}}.
+\\
+
+\texttt{\textbackslash usepackage\{multirow\}} &
+Loads support for merging rows. &
+Required before using \texttt{\textbackslash multirow}.
+\\
+
+\texttt{\textbackslash multirow\{n\}\{width\}\{text\}} &
+Merges multiple rows into one cell. &
+\texttt{\textbackslash multirow\{2\}\{*\}\{Already Merged\}}.
+\\
+
+\texttt{\textbackslash usepackage\{graphicx\}} &
+Loads image insertion commands. &
+Required for \texttt{\textbackslash includegraphics}.
+\\
+
+\texttt{\textbackslash includegraphics\{file\}} &
+Inserts an image. &
+\texttt{\textbackslash includegraphics\{mmulogo.png\}}.
+\\
+
+\texttt{\textbackslash includegraphics[scale=2.0]\{file\}} &
+Inserts an image and scales it. &
+Scale 2.0 makes the image twice the default size.
+\\
+
+\texttt{\textbackslash graphicspath\{\{Images/\}\}} &
+Specifies an image folder. &
+Allows images to be stored inside an \texttt{Images} folder.
+\\
+
+\texttt{\textbackslash begin\{center\}} &
+Centers content. &
+Useful for centering an image.
+\\
+
+\texttt{\textbackslash end\{center\}} &
+Ends the centered section. &
+Marks the end of the center environment.
+\\
+
+\end{longtable}
+
+
+% ---------------------------------------------------------
+% LAB 4 TABLE EXAMPLES
+% ---------------------------------------------------------
+
+\subsection{Lab 4 Table Examples}
+
+\subsubsection{1. One-Column Table}
+
+\begin{verbatim}
+\begin{tabular}{|c|}
+\hline
+row 1 \\
+\hline
+This is row 2 \\
+\hline
+Hi, this is another row, row 3 \\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{|c|}
+\hline
+row 1 \\
+\hline
+This is row 2 \\
+\hline
+Hi, this is another row, row 3 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Remember:}
+
+\begin{itemize}
+    \item \texttt{c} = one centered column.
+    \item \texttt{|} = vertical border.
+    \item \texttt{\textbackslash hline} = horizontal border.
+\end{itemize}
+
+% ---------------------------------------------------------
+
+\subsubsection{2. Two-Column Table}
+
+\begin{verbatim}
+\begin{tabular}{|l|l|}
+\hline
+left item & right side of row 1, name it item 2\\
+\hline
+row 2 and this is for item 1 & row 2.item2\\
+\hline
+row 3.item1 & row 3.item2\\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+left item & right side of row 1, name it item 2\\
+\hline
+row 2 and this is for item 1 & row 2.item2\\
+\hline
+row 3.item1 & row 3.item2\\
+\hline
+\end{tabular}
+\end{center}
+
+% ---------------------------------------------------------
+
+\subsubsection{3. Three Columns with Different Alignment}
+
+\begin{verbatim}
+\begin{tabular}{l c r}
+\hline
+left aligned & align text in center & make it on right side\\
+\hline
+row 2 and left for item 1 & center & something\\
+\hline
+row 3.item1 & center & yet another-right\\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{l c r}
+\hline
+left aligned & align text in center & make it on right side\\
+\hline
+row 2 and left for item 1 & center & something\\
+\hline
+row 3.item1 & center & yet another-right\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Column alignment:}
+
+\begin{itemize}
+    \item \texttt{l} = left
+    \item \texttt{c} = center
+    \item \texttt{r} = right
+\end{itemize}
+
+% ---------------------------------------------------------
+
+\subsubsection{4. Partial Horizontal Lines}
+
+The command \texttt{\textbackslash cline\{i-j\}} creates a horizontal
+line only across selected columns.
+
+\begin{verbatim}
+\begin{tabular}{|l|c|r|}
+\hline
+left aligned & align text in center & make it on right side\\
+\cline{1-1}
+row 2 and left for item 1 & center & something\\
+\cline{2-3}
+row 3.item1 & center & yet another-right\\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{|l|c|r|}
+\hline
+left aligned & align text in center & make it on right side\\
+\cline{1-1}
+row 2 and left for item 1 & center & something\\
+\cline{2-3}
+row 3.item1 & center & yet another-right\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Key idea:}
+
+\begin{verbatim}
+\cline{1-1}
+\end{verbatim}
+
+draws a line only under column 1.
+
+\begin{verbatim}
+\cline{2-3}
+\end{verbatim}
+
+draws a line under columns 2 through 3.
+
+% ---------------------------------------------------------
+
+\subsubsection{5. Merging Columns with \texttt{\textbackslash multicolumn}}
+
+\begin{verbatim}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{Testing}\\
+\hline
+data 1(left column) & data 2 on the second column\\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{Testing}\\
+\hline
+data 1(left column) & data 2 on the second column\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Syntax:}
+
+\begin{verbatim}
+\multicolumn{number of columns}{alignment}{content}
+\end{verbatim}
+
+For example:
+
+\begin{verbatim}
+\multicolumn{2}{|c|}{Testing}
+\end{verbatim}
+
+means that \texttt{Testing} spans across 2 columns and is centered.
+
+% ---------------------------------------------------------
+
+\subsubsection{6. Merging Rows with \texttt{\textbackslash multirow}}
+
+First include:
+
+\begin{verbatim}
+\usepackage{multirow}
+\end{verbatim}
+
+Then:
+
+\begin{verbatim}
+\begin{tabular}{|l|c|c|}
+\hline
+\multirow{2}{*}{Already Merged} &
+\multicolumn{2}{|l|}{Two columns} \\
+\cline{2-3}
+& 2 & 3 \\
+\hline
+\end{tabular}
+\end{verbatim}
+
+Result:
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+\multirow{2}{*}{Already Merged} &
+\multicolumn{2}{|l|}{Two columns} \\
+\cline{2-3}
+& 2 & 3 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{Syntax:}
+
+\begin{verbatim}
+\multirow{number of rows}{width}{content}
+\end{verbatim}
+
+% ---------------------------------------------------------
+
+\subsubsection{7. Inserting Images}
+
+First include:
+
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+
+Then use:
+
+\begin{verbatim}
+\begin{center}
+\includegraphics[scale=2.0]{mmulogo.png}\\
+\end{center}
+\end{verbatim}
+
+The image file must be uploaded to your Overleaf project.
+
+For example:
+
+\begin{verbatim}
+mmulogo.png
+\end{verbatim}
+
+% ---------------------------------------------------------
+
+\subsubsection{8. Images in a Folder}
+
+If your image is stored in a folder named \texttt{Images}, put this
+command in the preamble:
+
+\begin{verbatim}
+\graphicspath{{Images/}}
+\end{verbatim}
+
+Then:
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage{graphicx}
+\graphicspath{{Images/}}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[scale=2.0]{mmulogo.png}\\
+\end{center}
+
+\end{document}
+\end{verbatim}
+
+You do not need to write \texttt{Images/} every time when using
+\texttt{\textbackslash includegraphics}.
+
+% =========================================================
+% QUICK REVISION
+% =========================================================
+
+\newpage
+
+\section{Quick Revision -- What Should I Remember?}
+
+\subsection{Lab 3 Quick Memory Guide}
+
+\begin{center}
+\begin{tabular}{p{0.28\textwidth} p{0.62\textwidth}}
+\toprule
+\textbf{If you want to...} & \textbf{Remember...} \\
+\midrule
+Write math in a sentence &
+Use \texttt{\$...\$} \\
+
+Create a numbered equation &
+Use \texttt{equation} \\
+
+Create an unnumbered equation &
+Use \texttt{equation*} \\
+
+Make a power &
+Use \texttt{\textasciicircum} \\
+
+Make a subscript &
+Use \texttt{\_} \\
+
+Make a fraction &
+Use \texttt{\textbackslash frac\{top\}\{bottom\}} \\
+
+Make a sum &
+Use \texttt{\textbackslash sum} \\
+
+Make a product &
+Use \texttt{\textbackslash prod} \\
+
+Create a matrix/array &
+Use \texttt{array} \\
+
+Create a piecewise function &
+Use \texttt{array} with \texttt{\textbackslash left\{} \\
+
+Create aligned equations &
+Use \texttt{IEEEeqnarray} \\
+
+Write an algorithm &
+Use \texttt{algorithm} + \texttt{algpseudocode} \\
+
+Create a condition &
+Use \texttt{\textbackslash If} \\
+
+Create a loop &
+Use \texttt{\textbackslash While} \\
+
+Assign a value &
+Use \texttt{\textbackslash gets} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Lab 4 Quick Memory Guide}
+
+\begin{center}
+\begin{tabular}{p{0.28\textwidth} p{0.62\textwidth}}
+\toprule
+\textbf{If you want to...} & \textbf{Remember...} \\
+\midrule
+Create a table &
+Use \texttt{tabular} \\
+
+Left-align a column &
+Use \texttt{l} \\
+
+Center a column &
+Use \texttt{c} \\
+
+Right-align a column &
+Use \texttt{r} \\
+
+Separate columns &
+Use \texttt{\&} \\
+
+Start a new row &
+Use \texttt{\textbackslash\textbackslash} \\
+
+Draw a full horizontal line &
+Use \texttt{\textbackslash hline} \\
+
+Draw a partial line &
+Use \texttt{\textbackslash cline\{i-j\}} \\
+
+Merge columns &
+Use \texttt{\textbackslash multicolumn} \\
+
+Merge rows &
+Use \texttt{\textbackslash multirow} \\
+
+Insert an image &
+Use \texttt{\textbackslash includegraphics} \\
+
+Use images from a folder &
+Use \texttt{\textbackslash graphicspath} \\
+
+Center an image &
+Use \texttt{center} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% =========================================================
+% MINI EXAM CHEAT SHEET
+% =========================================================
+
+\newpage
+
+\section{Mini Exam Cheat Sheet}
+
+\subsection{Mathematics}
+
+\begin{verbatim}
+% Inline math
+$a+b=c$
+
+% Numbered equation
+\begin{equation}
+a^2+b^2=c^2
+\end{equation}
+
+% Fraction
+\frac{a}{b}
+
+% Power
+x^2
+
+% Subscript
+x_1
+
+% Sum
+\sum_{i=1}^{n}
+
+% Product
+\prod_{i=1}^{n}
+
+% Array / Matrix
+\begin{array}{ccc}
+a & b & c\\
+d & e & f
+\end{array}
+\end{verbatim}
+
+\subsection{Algorithm}
+
+\begin{verbatim}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{algorithm}
+\caption{MyAlgorithm}
+\begin{algorithmic}[1]
+
+\Procedure{MyProcedure}{$x$}
+
+\If{$x>0$}
+    \State $x\gets x+1$
+\Else
+    \State $x\gets 0$
+\EndIf
+
+\While{$x<10$}
+    \State $x\gets x+1$
+\EndWhile
+
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+\end{verbatim}
+
+\subsection{Table}
+
+\begin{verbatim}
+\begin{tabular}{|c|c|}
+\hline
+Column 1 & Column 2\\
+\hline
+Data 1 & Data 2\\
+\hline
+\end{tabular}
+\end{verbatim}
+
+\subsection{Merge Columns}
+
+\begin{verbatim}
+\multicolumn{2}{|c|}{Title}
+\end{verbatim}
+
+\subsection{Merge Rows}
+
+Remember to add:
+
+\begin{verbatim}
+\usepackage{multirow}
+\end{verbatim}
+
+Then:
+
+\begin{verbatim}
+\multirow{2}{*}{Merged}
+\end{verbatim}
+
+\subsection{Image}
+
+Remember to add:
+
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+
+Then:
+
+\begin{verbatim}
+\includegraphics[scale=2.0]{image.png}
+\end{verbatim}
+
+% =========================================================
+
+\section{Final Reminder}
+
+\begin{itemize}
+    \item \textbf{Lab 4 = Tables + Images}
+    \item Always check that required packages are included in the
+    preamble.
+    \item In tables, \texttt{\&} separates columns and
+    \texttt{\textbackslash\textbackslash} creates a new row.
+    \item \texttt{\textbackslash hline} creates a full horizontal line,
+    while \texttt{\textbackslash cline\{i-j\}} creates a partial line.
+    \item \texttt{\textbackslash multicolumn} merges columns.
+    \item \texttt{\textbackslash multirow} merges rows.
+    \item \texttt{\textbackslash frac} creates fractions.
+    \item \texttt{\textasciicircum} creates superscripts and
+    \texttt{\_} creates subscripts.
+    \item \texttt{algorithm} and \texttt{algpseudocode} are used for
+    algorithms.
+    \item \texttt{graphicx} is required for inserting images.
+\end{itemize}
+
+\end{document}
