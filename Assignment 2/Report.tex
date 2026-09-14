@@ -1,0 +1,272 @@
+\documentclass[12pt,a4paper]{article}
+
+% =========================================
+% PAGE SETUP
+% =========================================
+\usepackage[
+    a4paper,
+    margin=25.4mm
+]{geometry}
+
+% =========================================
+% BASIC PACKAGES
+% =========================================
+\usepackage{graphicx}       % Images
+\usepackage{amsmath}        % Mathematics
+\usepackage{amssymb}        % Mathematical symbols
+\usepackage{booktabs}       % Professional tables
+\usepackage{float}          % [H] figure/table positioning
+\usepackage{caption}        % Caption customization
+\usepackage{ragged2e}       % Text alignment
+\usepackage{setspace}       % Line spacing
+\usepackage{algorithm}      % Algorithms environment
+\usepackage{algpseudocode}  % Pseudocode styling
+\usepackage{hyperref}       % Clickable links and references
+
+% =========================================
+% APA REFERENCING
+% =========================================
+\usepackage[
+    style=apa,
+    backend=biber
+]{biblatex}
+
+\addbibresource{references.bib}
+
+% =========================================
+% HYPERLINK SETTINGS
+% =========================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black,
+    pdftitle={Research Proposal - Assignment 2}
+}
+
+% Table and figure caption formatting
+\DeclareCaptionFont{captionnine}{\fontsize{9pt}{11pt}\selectfont}
+
+\captionsetup[table]{
+    font=captionnine,
+    justification=raggedright,
+    singlelinecheck=false,
+    labelsep=colon
+}
+
+\captionsetup[figure]{
+    font=captionnine,
+    justification=centering,
+    singlelinecheck=false,
+    labelsep=colon
+}
+
+% =========================================
+% DOCUMENT
+% =========================================
+\begin{document}
+
+\begin{center}
+
+{\fontsize{18}{22}\selectfont\textbf{RESEARCH PROPOSAL}}
+
+\vspace{0.5cm}
+
+{\fontsize{16}{20}\selectfont\textbf{[INSERT PROPOSAL TITLE (10--15 WORDS)]}}
+
+\vspace{1cm}
+
+{\fontsize{12}{14}\selectfont\textbf{Group Members}}
+
+\vspace{0.3cm}
+
+{\fontsize{12}{14}\selectfont
+1. [REDACTED] -- [REDACTED] - 33\% contribution \\
+2. [REDACTED] -- [REDACTED] - 33\% contribution\\
+3. [REDACTED] -- [REDACTED] - 33\% contribution\\
+}
+
+\vspace{0.8cm}
+
+{\fontsize{12}{14}\selectfont
+\textbf{Programme:} BACHELOR OF COMPUTER SCIENCE (HONOURS) \\
+\textbf{Course:} CPT6123-RESEARCH METHOD IN COMPUTER SC\\
+\textbf{Lecturer:} Ts. [REDACTED]\\
+\textbf{Semester:} Trimester July/August 2025\\
+\textbf{Submission Date:} 27th September 2026
+}
+
+\end{center}
+
+% =========================================
+% ABSTRACT
+% =========================================
+\vspace{0.5cm}
+
+\noindent
+\textbf{Abstract}
+
+\vspace{0.2cm}
+
+\begin{justify}
+[Provide a concise overview of the proposed project (150--250 words). Summarize the technical problem, research objectives, proposed methodology/technical approach, and anticipated outcomes.]
+
+\vspace{0.3cm}
+
+\textbf{Keywords:} 4--6 technical keywords related to your project.
+\end{justify}
+
+% =========================================
+% TABLE OF CONTENTS
+% =========================================
+\newpage
+\tableofcontents
+\newpage
+
+% =========================================
+% MAIN CONTENT
+% =========================================
+\begin{justify}
+
+% =========================================
+% 1. INTRODUCTION
+% =========================================
+\section{Introduction}
+
+\subsection{Background and Context}
+Introduce the broader Computer Science domain and context. Discuss the importance and relevance of the topic in recent years. Provide citations to support key claims.
+
+\subsection{Motivation and Significance}
+Explain why this research problem is critical to solve now, dvetailing its practical relevance, real-world utility, or industry significance.
+
+
+% =========================================
+% 2. LITERATURE REVIEW RECAP
+% =========================================
+\section{Literature Review Summary}
+Briefly synthesize the findings from Assignment 1 to ground the proposal in existing research.
+
+\begin{itemize}
+    \item \textbf{Current State of Knowledge:} Overview of the primary techniques and frameworks currently used.
+    \item \textbf{Identified Gaps from Assignment 1:} Explicitly outline the limitations and shortcomings in existing work that motivate this proposed solution.
+\end{itemize}
+
+
+% =========================================
+% 3. PROBLEM STATEMENT
+% =========================================
+\section{Problem Statement}
+Define the technical challenge using the \textbf{Context--Gap--Solution} format:
+\begin{itemize}
+    \item \textbf{Context:} The technical setting and current practices.
+    \item \textbf{Gap:} The documented technical shortcoming or unresolved challenge.
+    \item \textbf{Proposed Solution:} The high-level proposal designed to address this shortcoming.
+\end{itemize}
+
+
+% =========================================
+% 4. RESEARCH QUESTIONS AND OBJECTIVES
+% =========================================
+\section{Research Questions and Research Objectives}
+
+\subsection{Research Questions}
+Formulate 2 to 4 interrelated research questions:
+\begin{itemize}
+    \item \textbf{RQ1:} [e.g., How can algorithm X be optimized to reduce latency in context Y?]
+    \item \textbf{RQ2:} [e.g., What is the performance impact of mechanism A compared to baseline B?]
+    \item \textbf{RQ3:} [Optional: Further inquiry]
+    \item \textbf{RQ4:} [Optional: Further inquiry]
+\end{itemize}
+
+\subsection{Research Objectives}
+Formulate matching SMART (Specific, Measurable, Achievable, Relevant, Time-bound) objectives:
+\begin{itemize}
+    \item \textbf{RO1:} [To design and formulate...]
+    \item \textbf{RO2:} [To evaluate and benchmark...]
+    \item \textbf{RO3:} [Optional: Matching RO to RQ3]
+    \item \textbf{RO4:} [Optional: Matching RO to RQ4]
+\end{itemize}
+
+
+% =========================================
+% 5. RESEARCH METHODOLOGY
+% =========================================
+\section{Research Methodology}
+
+\subsection{Research Design}
+Specify and justify the research design approach (e.g., \textit{Experimental, Empirical, Quasi-experimental, or Comparative}). Provide an architectural flow overview describing how data flows through the proposed pipeline.
+
+\subsection{Technical Approach}
+Detail the proposed algorithms, network architectures, framework adaptations, or mathematical formulations. Distinguish clearly between existing frameworks repurposed and the novel components introduced.
+
+\subsection{Data and Tools}
+\begin{itemize}
+    \item \textbf{Datasets:} Specify public benchmarks or data sources (e.g., ImageNet, COCO, Kaggle, IEEE DataPort). Justify the data choice (size, noise, features) and state any ethical or privacy considerations.
+    \item \textbf{Tools and Hardware:} List the development frameworks, libraries (e.g., PyTorch, TensorFlow, Wireshark), and experimental environments (GPUs, OS, compute resources).
+\end{itemize}
+
+\subsection{Evaluation Criteria}
+Define quantifiable performance metrics and evaluation criteria:
+\begin{itemize}
+    \item \textbf{Quantitative Metrics:} (e.g., F1-score, accuracy, throughput, latency in ms, energy consumption in Joules).
+    \item \textbf{Baselines and Ablation Study:} Describe benchmark comparison models and planned ablation studies to evaluate individual components.
+\end{itemize}
+
+
+% =========================================
+% 6. EXPECTED OUTCOMES
+% =========================================
+\section{Expected Outcomes}
+Detail the anticipated results, potential deliverables (e.g., source code, modular toolkit, trained model weights), and the potential scientific or practical contributions of this project.
+
+
+% =========================================
+% 7. RESEARCH ACTIVITIES AND MILESTONES
+% =========================================
+\section{Project Timeline}
+Outline the phased roadmap, deliverables, and critical milestones across the execution period.
+
+\begin{table}[H]
+\caption{Proposed project execution timeline and milestones}
+\label{tab:timeline}
+\fontsize{10pt}{12pt}\selectfont
+\begin{tabular}{|p{2.5cm}|p{6.5cm}|p{5cm}|}
+\hline
+\textbf{Phase / Week} & \textbf{Key Activities} & \textbf{Deliverables / Milestones} \\
+\hline
+Phase 1 (Weeks 1--2) & Literature refinement \& dataset acquisition & Cleaned dataset \& pre-processing scripts \\
+\hline
+Phase 2 (Weeks 3--5) & Model architecture design \& pipeline setup & Base system architecture established \\
+\hline
+Phase 3 (Weeks 6--8) & Model implementation \& parameter tuning & Algorithm implementation \\
+\hline
+Phase 4 (Weeks 9--11) & Comparative benchmarking \& ablation tests & Empirical results \& evaluation tables \\
+\hline
+Phase 5 (Weeks 12--14) & Documentation, analysis, \& final thesis drafting & Complete project report \\
+\hline
+\end{tabular}
+\end{table}
+
+
+% =========================================
+% 8. CONCLUSION
+% =========================================
+\section{Conclusion}
+
+\subsection{Summary of Contributions}
+Summarize the problem, proposed solution, and intended methodology.
+
+\subsection{Final Remarks}
+Present final remarks highlighting the long-term impact and relevance of the proposed project.
+
+\end{justify}
+
+% =========================================
+% REFERENCES
+% =========================================
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\printbibliography[title={References}]
+
+\end{document}
