@@ -72,7 +72,7 @@
 
 \vspace{0.5cm}
 
-{\fontsize{16}{20}\selectfont\textbf{[INSERT PROPOSAL TITLE (10--15 WORDS)]}}
+{\fontsize{16}{20}\selectfont\textbf{Dynamic Volume Optimisation And Adaptive Stopping Criteria}}
 
 \vspace{1cm}
 
@@ -170,21 +170,21 @@ Define the technical challenge using the \textbf{Context--Gap--Solution} format:
 \section{Research Questions and Research Objectives}
 
 \subsection{Research Questions}
-Formulate 2 to 4 interrelated research questions:
+
 \begin{itemize}
-    \item \textbf{RQ1:} [e.g., How can algorithm X be optimized to reduce latency in context Y?]
-    \item \textbf{RQ2:} [e.g., What is the performance impact of mechanism A compared to baseline B?]
-    \item \textbf{RQ3:} [Optional: Further inquiry]
-    \item \textbf{RQ4:} [Optional: Further inquiry]
+    \item \textbf{RQ1:} How can an adaptive stopping criterion be developed to monitor real-time distribution shift and coverage saturation during synthetic sample generation for industrial soft sensors?
+    \item \textbf{RQ2:} What is the performance impact of sensor accuracy when we automatically control the amount of generated data to prevent the data quality from getting worse when exceeding optimal sample thresholds (e.g., $\sim 420$ samples)?
+    \item \textbf{RQ3:} How effectively does the proposed adaptive stopping framework balance computational speed and prediction accuracy compared to traditional, fixed-limit methods across different datasets?
+    \item \textbf{RQ4:} To what extent does automated generation control help reduce unnecessary repeated data and signal noise in systems with limited computing power?
 \end{itemize}
 
 \subsection{Research Objectives}
-Formulate matching SMART (Specific, Measurable, Achievable, Relevant, Time-bound) objectives:
+
 \begin{itemize}
-    \item \textbf{RO1:} [To design and formulate...]
-    \item \textbf{RO2:} [To evaluate and benchmark...]
-    \item \textbf{RO3:} [Optional: Matching RO to RQ3]
-    \item \textbf{RO4:} [Optional: Matching RO to RQ4]
+    \item \textbf{RO1:} To design an adaptive stopping criterion and a real-time monitor to track data pattern changes and coverage levels within the first 6 weeks of the project timeline.
+    \item \textbf{RO2:} To evaluate and compare how controlling data volume helps prevent data distortion and keeps sensor accuracy high compared to fixed limits (beyond $\sim 420$ samples) over a 4-week testing phase.
+    \item \textbf{RO3:} To check the reliability, speed, and prediction accuracy of the new framework against standard baseline methods using both standard test functions and industrial datasets within the final 4 weeks.
+    \item \textbf{RO4:} To measure how much unnecessary data and noise are reduced when the automated generation control is used in simulated working environments.
 \end{itemize}
 
 
