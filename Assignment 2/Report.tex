@@ -22,6 +22,9 @@
 \usepackage{algorithm}      % Algorithms environment
 \usepackage{algpseudocode}  % Pseudocode styling
 \usepackage{hyperref}       % Clickable links and references
+\usepackage{tikz}
+
+\usetikzlibrary{shapes.geometric, arrows}
 
 % =========================================
 % APA REFERENCING
@@ -227,15 +230,41 @@ Generate $\rightarrow$ Measure $\rightarrow$ Decide $\rightarrow$ Continue or St
     \item Distribution drift: additional samples are causing the synthetic distribution to move further away from the real distribution.
 \end{itemize}
 
-\noindent The overall system architecture is described below:
+\noindent The overall system architecture is described below: \\ \\
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\textwidth]{overallSystemArch.png}
-    \caption{Overall Architecture of the Proposed ``Adaptive Comparing and Stopping'' Framework}
-    \label{fig:overallSystemArch}
-\end{figure}
+\tikzstyle{process} = [rectangle, minimum width=3cm,
+minimum height=1cm, text centered, draw=black, fill=orange!30]
 
+\tikzstyle{decision} = [diamond, minimum width=3cm,
+minimum height=1cm, text centered, draw=black, fill=green!30]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{tikzpicture}[node distance=1.6cm]
+\node (realdata) [process] {Real Data};
+\node (preprocess) [process, right of=realdata, xshift=2cm] {Preprocess};
+\node (trainGAN) [process, right of=preprocess, xshift=2.5cm] {Train GAN};
+\node (genSynt) [process, below of=trainGAN] {Generate Synthetic Batch};
+\node (compare) [process, left of=genSynt, xshift=-5cm] {Compare with Real Data};
+\node (check) [decision, below of=compare, yshift=-2cm, text width=3cm] {Data Saturated\\OR\\Drifted?};
+\node (stop) [process, right of=check, xshift=5cm] {Stop: Final Synthetic Data};
+\node (continue) [process, below of=check, yshift=-2cm] {Continue: Generate Next Batch};
+\node (final) [process, right of=continue, xshift=5cm] {Final Classification};
+\node (evaluate) [process, right of=final, xshift=3cm] {Evaluation};
+
+\draw [arrow] (realdata) -- (preprocess);
+\draw [arrow] (preprocess) -- (trainGAN);
+\draw [arrow] (trainGAN) -- (genSynt);
+\draw [arrow] (genSynt) -- (compare);
+\draw [arrow] (compare) -- (check);
+\draw [arrow] (check) -- node[above] {Yes} (stop);
+\draw [arrow] (check) -- node[left] {No} (continue);
+\draw [arrow] (stop) -- (final);
+\draw [arrow] (continue) -- (final);
+\draw [arrow] (final) -- (evaluate);
+\end{tikzpicture}
+
+\newpage
 \subsubsection{Saturation Detection}
 The saturation detection works by monitoring how much the measured difference between the real and synthetic data changes as more batches are generated. When the change becomes very small, generating additional samples may provide little further benefit.
 For example:
