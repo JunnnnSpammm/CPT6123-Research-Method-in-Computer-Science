@@ -75,7 +75,7 @@
 
 \vspace{0.5cm}
 
-{\fontsize{16}{20}\selectfont\textbf{Dynamic Volume Optimisation And Adaptive Stopping Criteria}}
+{\fontsize{16}{20}\selectfont\textbf{Dynamic Volume Optimisation and Adaptive Stopping Criteria for GAN-Based Synthetic Data Generation}}
 
 \vspace{1cm}
 
@@ -159,12 +159,12 @@ Briefly synthesize the findings from Assignment 1 to ground the proposal in exis
 % 3. PROBLEM STATEMENT
 % =========================================
 \section{Problem Statement}
-Define the technical challenge using the \textbf{Context--Gap--Solution} format:
-\begin{itemize}
-    \item \textbf{Context:} The technical setting and current practices.
-    \item \textbf{Gap:} The documented technical shortcoming or unresolved challenge.
-    \item \textbf{Proposed Solution:} The high-level proposal designed to address this shortcoming.
-\end{itemize}
+
+Generative Adversarial Networks (GANs) are widely utilised in machine learning to address class imbalance and data scarcity by synthesising artificial samples to augment training datasets \parencite{zhu2025novel, li2024improving}. In standard data augmentation workflows, practitioners typically rely on static, predetermined heuristics or fixed generation thresholds to expand training sets before model training. \\
+
+Despite the widespread use of fixed-limit synthetic data generation, arbitrarily setting generation thresholds leads to two significant failure modes: \textit{coverage saturation} and \textit{distribution drift}. Generating too few samples fails to capture the true underlying distribution, while generating excessive samples causes the synthetic data distribution to diverge from the real dataset. Preliminary studies show performance degrades beyond approximately $420$ synthetic samples \parencite{zhu2025novel}, reducing downstream classification accuracy (F1-score) and wasting computational resources (GPU/CPU hours) on redundant or harmful data batches. Currently, there is a lack of dynamic, automated monitoring mechanisms capable of evaluating synthetic sample quality in real time during the generation loop to determine the optimal stopping point. \\
+
+To address this limitation, this research proposes an \textbf{``Adaptive Comparing and Stopping''} framework integrated directly into the GAN generation loop. Operating on an iterative \textit{Generate $\rightarrow$ Measure $\rightarrow$ Decide $\rightarrow$ Continue/Stop} workflow, the framework continuously extracts features and monitors real-time batch metrics to detect both coverage saturation (diminishing returns) and distribution drift (data distortion) \parencite{li2024improving}. By dynamically halting sample generation at the optimal threshold and discarding drift-inducing batches, the proposed solution aims to preserve downstream classifier accuracy (within $\pm 2\%$), eliminate redundant sample generation, and reduce overall computational execution time by at least $15\%$ compared to standard fixed-limit generation methods.
 
 
 % =========================================
@@ -175,19 +175,19 @@ Define the technical challenge using the \textbf{Context--Gap--Solution} format:
 \subsection{Research Questions}
 
 \begin{itemize}
-    \item \textbf{RQ1:} How can an adaptive stopping criterion be developed to monitor real-time distribution shift and coverage saturation during synthetic sample generation for industrial soft sensors?
-    \item \textbf{RQ2:} What is the performance impact of sensor accuracy when we automatically control the amount of generated data to prevent the data quality from getting worse when exceeding optimal sample thresholds (e.g., $\sim 420$ samples)?
-    \item \textbf{RQ3:} How effectively does the proposed adaptive stopping framework balance computational speed and prediction accuracy compared to traditional, fixed-limit methods across different datasets?
-    \item \textbf{RQ4:} To what extent does automated generation control help reduce unnecessary repeated data and signal noise in systems with limited computing power?
+    \item \textbf{RQ1:} How can an adaptive stopping criterion be designed to monitor real-time distribution shift and coverage saturation during synthetic sample generation using Generative Adversarial Networks (GANs)?
+    \item \textbf{RQ2:} What is the impact on downstream classifier accuracy when automatically controlling synthetic sample volume compared to fixed generation thresholds (e.g., $\sim 420$ samples)?
+    \item \textbf{RQ3:} How effectively does the proposed adaptive stopping framework balance computational speed and distribution accuracy compared to traditional, fixed-limit generation methods?
+    \item \textbf{RQ4:} To what extent does automated generation control reduce redundant sample creation and computational cost in environments with limited computing power?
 \end{itemize}
 
 \subsection{Research Objectives}
 
 \begin{itemize}
-    \item \textbf{RO1:} To design an adaptive stopping criterion and a real-time monitor to track data pattern changes and coverage levels within the first 6 weeks of the project timeline.
-    \item \textbf{RO2:} To evaluate and compare how controlling data volume helps prevent data distortion and keeps sensor accuracy high compared to fixed limits (beyond $\sim 420$ samples) over a 4-week testing phase.
-    \item \textbf{RO3:} To check the reliability, speed, and prediction accuracy of the new framework against standard baseline methods using both standard test functions and industrial datasets within the final 4 weeks.
-    \item \textbf{RO4:} To measure how much unnecessary data and noise are reduced when the automated generation control is used in simulated working environments.
+    \item \textbf{RO1:} To design and implement an adaptive comparing and stopping framework that tracks coverage saturation and distribution drift during GAN-based synthetic sample generation within the first 8 weeks of the project timeline. 
+    \item \textbf{RO2:} To achieve equivalent or superior downstream classification performance (maintaining F1-score and accuracy within $\pm 2\%$) using adaptively halted synthetic datasets compared to fixed-limit (beyond $\sim 420$ samples) generation methods during the evaluation phase (Weeks 9--11).
+    \item \textbf{RO3:} To benchmark and reduce total computational execution time (GPU/CPU hours) during synthetic sample generation by at least $15\%$ compared to standard fixed-limit generation runs across test datasets during the evaluation phase (Weeks 9--11).
+    \item \textbf{RO4:} To quantify and eliminate redundant sample creation by dynamically capping generation upon reaching saturation, reducing average synthetic sample volume while preventing distribution drift by Week 11.
 \end{itemize}
 
 
