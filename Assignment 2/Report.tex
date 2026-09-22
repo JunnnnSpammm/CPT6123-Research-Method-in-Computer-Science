@@ -306,20 +306,99 @@ END WHILE \\
 RETURN synthetic\_dataset \\
 
 \subsection{Justification for the Proposed Approach}
-Unlike conventional augmentation methods that rely on fixed rules or fixed sample limits, our proposed ``Adaptive Comparing and Stopping'' framework uses a feedback-based stopping mechanism that monitors generated data directly to decide when to stop. Previous work showed performance degraded after 420 synthetic samples, proving that more data isn't always better. This framework tests whether the optimal stopping point can be detected automatically from data behavior.
+Unlike conventional augmentation methods that rely on fixed rules or fixed sample limits, our proposed ``Adaptive Comparing and Stopping'' framework uses a feedback-based stopping mechanism that monitors generated data directly to decide when to stop. Previous work showed performance degraded after 420 synthetic samples \parencite{zhu2025novel}, proving that more data isn't always better. This framework tests whether the optimal stopping point can be detected automatically from data behavior.
 
 \section{Data and Tools}
-\begin{itemize}
-    \item \textbf{Datasets:} Specify public benchmarks or data sources (e.g., ImageNet, COCO, Kaggle, IEEE DataPort). Justify the data choice (size, noise, features) and state any ethical or privacy considerations.
-    \item \textbf{Tools and Hardware:} List the development frameworks, libraries (e.g., PyTorch, TensorFlow, Wireshark), and experimental environments (GPUs, OS, compute resources).
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Datasets:} Specify public benchmarks or data sources (e.g., ImageNet, COCO, Kaggle, IEEE DataPort). Justify the data choice (size, noise, features) and state any ethical or privacy considerations.
+%     \item \textbf{Tools and Hardware:} List the development frameworks, libraries (e.g., PyTorch, TensorFlow, Wireshark), and experimental environments (GPUs, OS, compute resources).
+% \end{itemize}
+
+\subsection{Dataset Selection: BloodMNIST (MedMNIST v2 Collection}
+BloodMNIST is a publicly available biomedical image dataset consisting of images of individual blood cells. It contains 17,092 images organized into eight blood-cell classes. The dataset is divided into training, validation, and test sets containing 11,959, 1,712, and 3,421 images, respectively. The images are provided as standardized RGB images with a resolution of $28 \times 28$ pixels \parencite{yang2023medmnist}. \\
+
+\noindent BloodMNIST is selected because it is a good example that shows the necessity of synthesizing the samples using GANs as acquiring additional real biomedical images can involve specialized imaging equipment and expert annotation which is difficult. \\
+
+\noindent Additionally, the BloodMNIST dataset is also used in one of our reviewed research paper in Assignment 1: Parallelly Tempered Generative Adversarial Nets Toward Stabilized Gradients, which is about tackling instability associated with multimodal distributions and mode collapse in GANs \parencite{sohn2026parallelly}, hence becoming one of our main reasons why we have reselected this dataset for our proposed ``Adaptive Comparing and Stopping'' framework.
+
+\subsection{Data Preparation}
+Before training the GAN, the BloodMNIST images will be preprocessed into a suitable format for the model. The pixel values will be normalized, and the class labels will be kept for use during the experiments. \\
+
+\noindent The GAN will be trained using only the real training images. After training, the GAN will generate synthetic images in batches instead of generating all the images at once. After each batch, the synthetic images will be compared with the real training data using the selected similarity measures. The results will be recorded to help the proposed ``Adaptive Comparing and Stopping'' framework decide whether to continue generating or stop.
+
+\subsection{Software and Hardware}
+
+The proposed system should be implemented using \textbf{Python}.  \textbf{PyTorch} will be used to develop and train the GAN and the downstream classification model. The \textbf{MedMNIST} library will 
+be used to load the BloodMNIST dataset. \textbf{NumPy} will be used for numerical processing, while \textbf{Scikit-learn} will be used to calculate classification metrics such as accuracy, precision, recall, and F1-score. \textbf{Matplotlib} will be used to visualize the real and synthetic images and to plot the experimental results. \\
+
+\noindent The experiments should also be conducted using a computer with a suitable CPU and GPU especially for synthetic image generation.
 
 \section{Evaluation Criteria}
-Define quantifiable performance metrics and evaluation criteria:
+% Define quantifiable performance metrics and evaluation criteria:
+% \begin{itemize}
+%     \item \textbf{Quantitative Metrics:} (e.g., F1-score, accuracy, throughput, latency in ms, energy consumption in Joules).
+%     \item \textbf{Baselines and Ablation Study:} Describe benchmark comparison models and planned ablation studies to evaluate individual components.
+% \end{itemize}
+
+The proposed ``Adaptive Comparing and Stopping'' framework will be evaluated based on classification performance, synthetic-data similarity, and comparison with the baseline methods.
+
+\subsection{Classification Performance}
+
+The main performance metric used in this study is the \textbf{F1-score}. In machine learning, the F1 score measures how well a classification model performs \parencite{geeksforgeeksF1}. In this case, it measures how well the classifier correctly identifies the different BloodMNIST classes. A higher F1-score indicates better classification performance. \\
+
+\noindent A classifier will first be trained using only the real training data. Different amounts of synthetic data will then be added to the training data. The resulting models will be tested using the same real test set. The F1-scores will be compared to determine whether the additional synthetic data improves classification performance.
+
+\subsection{Synthetic Data Similarity}
+
+The generated images will be compared with the real BloodMNIST images to measure how similar they are. A suitable distribution-similarity metric will be used for this comparison. \\
+
+\noindent The similarity result will be recorded after each generated batch. This allows the proposed framework to monitor how the synthetic data changes as more samples are generated.
+
+\subsection{Stopping Mechanism}
+
+The proposed framework will generate synthetic images in batches and compare each batch with the real training data. \\
+
+\noindent As mentioned in the methodology, the generation will stop when:
+
 \begin{itemize}
-    \item \textbf{Quantitative Metrics:} (e.g., F1-score, accuracy, throughput, latency in ms, energy consumption in Joules).
-    \item \textbf{Baselines and Ablation Study:} Describe benchmark comparison models and planned ablation studies to evaluate individual components.
+\item the change between batches becomes smaller than the saturation threshold; or
+\item the generated data moves too far from the real data distribution.
 \end{itemize}
+
+\noindent The final number of synthetic samples and the batch at which the framework stops will be recorded.
+
+\subsection{Experimental Setup}
+
+As mentioned in the tools used, the experiments will be implemented using Python and PyTorch. The BloodMNIST dataset will be used to train the GAN and evaluate the effect of synthetic data on classification performance. The experiments will be run on a computer with a suitable CPU and GPU where available. \\
+
+\noindent The same GAN, classifier, dataset split, and main training settings will be used for all experiments to ensure a fair comparison.
+
+\subsection{Baselines}
+
+The proposed framework will be compared with fixed synthetic-data generation. \\
+
+\noindent The following approaches will be tested:
+
+\begin{enumerate}
+\item \textbf{Real Data Only}: the classifier uses only real training data.
+\item \textbf{Fixed Generation}: a fixed number of synthetic images is added to the training data.
+\item \textbf{Adaptive Comparing and Stopping}: synthetic images are generated until the proposed stopping condition is reached.
+\end{enumerate}
+
+\noindent The F1-score and final number of synthetic samples will be compared between the approaches.
+
+\subsection{Ablation Study}
+
+An ablation study will be used to test the two stopping conditions separately.
+
+\begin{enumerate}
+\item \textbf{Saturation-only}: uses only the saturation condition.
+\item \textbf{Drift-only}: uses only the distribution-drift condition.
+\item \textbf{Combined}: uses both conditions.
+\end{enumerate}
+
+\noindent The F1-score and stopping point of each version will be compared to determine the effect of each component.
+
 
 
 % =========================================
