@@ -5,7 +5,7 @@
 % =========================================
 \usepackage[
     a4paper,
-    margin=25.4mm
+    margin=20.4mm
 ]{geometry}
 
 % =========================================
@@ -136,23 +136,37 @@
 \chapter{Introduction}
 
 \section{Background and Context}
-Introduce the broader Computer Science domain and context. Discuss the importance and relevance of the topic in recent years. Provide citations to support key claims.
+
+Generative Adversarial Networks (GANs) are widely used for synthetic data generation, particularly when real-world data are limited or imbalanced. GANs generate artificial samples through adversarial training between a generator and a discriminator. Recent research has introduced specialised architectures and constraints to improve generation quality, diversity, training stability, and data coverage. For example, Zhu et al.~\parencite{zhu2025novel} proposed a dual-correlation GAN framework for virtual sample generation, while Sohn and Song~\parencite{sohn2026parallelly} introduced PTGAN to improve GAN training stability and reduce mode collapse. Their study also evaluated GAN generation on datasets including BloodMNIST.
+
+However, improving synthetic data quality does not mean that generating more samples will always improve downstream performance. Zhu et al.~\parencite{zhu2025novel} found that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy. This highlights the importance of determining an appropriate synthetic sample volume rather than continuously generating samples using a fixed threshold.
+
+This research therefore proposes \textit{Dynamic Volume Optimisation and Adaptive Stopping Criteria for GAN-Based Synthetic Data Generation}. The proposed framework will dynamically evaluate generated samples and determine whether generation should continue or stop based on distribution drift and sample-space coverage. BloodMNIST will be used as the primary experimental dataset to evaluate the proposed approach.
 
 \section{Motivation and Significance}
-Explain why this research problem is critical to solve now, dvetailing its practical relevance, real-world utility, or industry significance.
+
+The main motivation of this research is the lack of automated mechanisms for determining when GAN-based synthetic data generation should stop. Fixed generation thresholds may produce too few samples or unnecessary synthetic samples, potentially affecting data distribution, model performance, and computational efficiency.
+
+The proposed adaptive stopping mechanism aims to address this issue through a \textit{Generate--Measure--Decide--Continue/Stop} process. By monitoring the generated data during synthesis, the framework aims to reduce redundant sample generation while maintaining downstream classifier performance. This research is significant because it shifts the focus from simply generating more synthetic data towards determining the appropriate point at which further generation is no longer beneficial.
 
 
 % =========================================
 % 2. LITERATURE REVIEW RECAP
 % =========================================
 \chapter{Literature Review Summary}
-Briefly synthesize the findings from Assignment 1 to ground the proposal in existing research.
+\section{Literature Review Summary}
 
-\begin{itemize}
-    \item \textbf{Current State of Knowledge:} Overview of the primary techniques and frameworks currently used.
-    \item \textbf{Identified Gaps from Assignment 1:} Explicitly outline the limitations and shortcomings in existing work that motivate this proposed solution.
-\end{itemize}
+\subsection{Current State of Knowledge}
 
+The literature reviewed in Assignment 1 demonstrates that GAN research has progressed beyond conventional adversarial architectures towards more specialised and constraint-aware approaches. Recent studies have focused on improving training stability, reducing mode collapse, increasing data coverage, and improving the quality of synthetic samples. For example, Zhu et al.~\parencite{zhu2025novel} combined WGAN-GP, Conditional GAN, MSE loss, and Pielou-based sample selection to improve virtual sample generation for industrial soft-sensing. Similarly, Sohn and Song~\parencite{sohn2026parallelly} proposed PTGAN using parallel tempering and a coherency penalty to improve training stability and diversity.
+
+Although these approaches improve the quality and usefulness of generated data, the literature also indicates that synthetic data generation has a practical limit. Generating additional samples does not necessarily continue to improve downstream performance. The reviewed studies therefore suggest that GAN research should consider not only how synthetic samples are generated, but also how the generated sample volume should be controlled. This provides the basis for investigating adaptive control of synthetic data generation.
+
+\subsection{Identified Gap from Assignment 1}
+
+One important research gap identified in Assignment 1 is the \textit{risk of performance degradation from over-generation}. Existing approaches generally lack an automated mechanism for determining the appropriate number of synthetic samples. Zhu et al.~\parencite{zhu2025novel} reported that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy. This indicates that excessive synthetic data may become counterproductive after a certain generation volume.
+
+Assignment 1 therefore identified \textit{Dynamic Volume Optimisation and Adaptive Stopping Criteria} as a potential future research direction. Instead of using a fixed sample count, an adaptive mechanism could monitor distribution changes and sample-space coverage during generation and automatically stop when further generation provides limited benefit. This research proposal addresses this gap by developing and evaluating an adaptive stopping framework for GAN-based synthetic data generation using BloodMNIST as the primary experimental dataset.
 
 % =========================================
 % 3. PROBLEM STATEMENT
@@ -405,7 +419,47 @@ An ablation study will be used to test the two stopping conditions separately.
 % 6. EXPECTED OUTCOMES
 % =========================================
 \chapter{Expected Outcomes}
-Detail the anticipated results, potential deliverables (e.g., source code, modular toolkit, trained model weights), and the potential scientific or practical contributions of this project.
+\section{Expected Outcomes}
+
+This research is expected to demonstrate that an adaptive stopping mechanism can control the volume of GAN-generated synthetic data more effectively than a fixed generation threshold. The expected outcomes are as follows.
+
+\subsection{Adaptive Stopping Capability}
+
+The proposed framework is expected to dynamically determine when synthetic data generation should stop by monitoring the characteristics of newly generated samples. The framework will follow a \textit{Generate--Measure--Decide--Continue/Stop} process.
+
+The expected outcomes include:
+\begin{itemize}
+    \item Identification of sample-space coverage saturation during synthetic data generation.
+    \item Detection of undesirable distribution drift as additional samples are generated.
+    \item Automatic stopping of the generation process when further samples provide limited benefit.
+    \item Reduction of reliance on manually selected or fixed generation thresholds.
+\end{itemize}
+
+\subsection{Preservation of Downstream Performance}
+
+The adaptive approach is expected to maintain downstream classification performance while avoiding unnecessary synthetic samples. The target is to keep classifier performance within approximately $\pm2\%$ of the selected fixed-volume baseline.
+
+The evaluation will consider:
+\begin{itemize}
+    \item Classification accuracy and F1-score.
+    \item Comparison between adaptive and fixed-volume generation strategies.
+    \item The effect of different synthetic sample volumes on downstream performance.
+\end{itemize}
+
+\subsection{Reduction in Redundant Generation and Computational Cost}
+
+The proposed approach is expected to reduce unnecessary synthetic sample generation once the useful generation point has been reached. By stopping the process earlier when appropriate, the framework is expected to improve computational efficiency.
+
+The expected outcomes include:
+\begin{itemize}
+    \item A reduction in the number of redundant synthetic samples generated.
+    \item At least a 15\% reduction in computational execution time compared with the selected fixed-generation baseline.
+    \item More efficient use of computational resources during synthetic data generation.
+\end{itemize}
+
+\subsection{Overall Research Contribution}
+
+Overall, the research is expected to provide an adaptive framework for controlling synthetic data volume in GAN-based generation. Rather than focusing only on improving the quality of generated samples, the proposed approach aims to determine when additional synthetic data are no longer beneficial. The findings are expected to provide a basis for further research into dynamic synthetic data generation and adaptive stopping strategies across different datasets and application domains.
 
 
 % =========================================
@@ -443,10 +497,22 @@ The research is structured into five sequential phases conducted across a 14-wee
 \chapter{Conclusion}
 
 \section{Summary of Contributions}
-Summarize the problem, proposed solution, and intended methodology.
+
+This research proposal addresses the problem of excessive synthetic data generation in GAN-based data augmentation. The literature reviewed in Assignment 1 indicates that while recent GAN approaches have improved sample quality, diversity, stability, and data coverage, limited attention has been given to determining the appropriate volume of synthetic data. In particular, Zhu et al.~\parencite{zhu2025novel} reported that generating more than approximately 420 virtual instances could distort the original data distribution and reduce downstream model accuracy.
+
+To address this research gap, this study proposes a Dynamic Volume Optimisation and Adaptive Stopping framework. The proposed approach will use a \textit{Generate--Measure--Decide--Continue/Stop} process to monitor sample-space coverage and distribution drift during synthetic data generation. BloodMNIST will be used as the primary experimental dataset, and the adaptive approach will be evaluated against fixed-volume generation strategies.
+
+The expected contribution of this research is to provide:
+\begin{itemize}
+    \item An adaptive mechanism for determining when GAN-based synthetic data generation should stop.
+    \item A method for reducing redundant synthetic sample generation.
+    \item An evaluation of the relationship between synthetic data volume and downstream classifier performance.
+    \item A more computationally efficient approach to controlling synthetic data generation.
+\end{itemize}
 
 \section{Final Remarks}
-Present final remarks highlighting the long-term impact and relevance of the proposed project.
+
+Overall, this research aims to extend GAN-based synthetic data generation from focusing primarily on \textit{how to generate better samples} towards also considering \textit{when to stop generating samples}. By dynamically monitoring generated data, the proposed framework aims to avoid unnecessary generation while maintaining downstream model performance. The findings from this study are expected to provide a foundation for future research into adaptive synthetic data generation and dynamic volume optimisation across different datasets and application domains.
 
 \end{justify}
 
