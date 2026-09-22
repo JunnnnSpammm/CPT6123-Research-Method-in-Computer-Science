@@ -330,29 +330,30 @@ Detail the anticipated results, potential deliverables (e.g., source code, modul
 
 
 % =========================================
-% 7. RESEARCH ACTIVITIES AND MILESTONES
+% 7. PROJECT TIMELINE
 % =========================================
 \chapter{Project Timeline}
-Outline the phased roadmap, deliverables, and critical milestones across the execution period.
+The research is structured into five sequential phases conducted across a 14-week timeline. The project schedule is aligned directly with the research objectives outlined in Chapter 4, starting with dataset preparation and GAN architecture design, then proceeding to the implementation of the adaptive stopping framework, followed by comprehensive evaluation against fixed-limit baselines.
 
 \begin{table}[H]
-\caption{Proposed project execution timeline and milestones}
+\centering
+\caption{Proposed project execution timeline, work packages, and milestone deliverables}
 \label{tab:timeline}
-\fontsize{10pt}{12pt}\selectfont
-\begin{tabular}{|p{2.5cm}|p{6.5cm}|p{5cm}|}
-\hline
-\textbf{Phase / Week} & \textbf{Key Activities} & \textbf{Deliverables / Milestones} \\
-\hline
-Phase 1 (Weeks 1--2) & Literature refinement \& dataset acquisition & Cleaned dataset \& pre-processing scripts \\
-\hline
-Phase 2 (Weeks 3--5) & Model architecture design \& pipeline setup & Base system architecture established \\
-\hline
-Phase 3 (Weeks 6--8) & Model implementation \& parameter tuning & Algorithm implementation \\
-\hline
-Phase 4 (Weeks 9--11) & Comparative benchmarking \& ablation tests & Empirical results \& evaluation tables \\
-\hline
-Phase 5 (Weeks 12--14) & Documentation, analysis, \& final thesis drafting & Complete project report \\
-\hline
+\fontsize{9.5pt}{12pt}\selectfont
+\begin{tabular}{@{} l p{7.2cm} p{5.3cm} @{}}
+\toprule
+\textbf{Phase / Timeline} & \textbf{Key Research Activities} & \textbf{Key Deliverables / Milestones} \\
+\midrule
+\textbf{Phase 1 (Weeks 1--2)} & Literature refinement, selection of benchmark datasets, exploratory data analysis, and validation split design. & Cleaned dataset partitions and pre-processing pipeline scripts. \\ \\
+\addlinespace
+\textbf{Phase 2 (Weeks 3--5)} & Setup of baseline GAN architecture; implementation of fixed-threshold sample generation modules. & Operational GAN baseline generating standard benchmark batches. \\ \\
+\addlinespace
+\textbf{Phase 3 (Weeks 6--8)} & Design and implementation of the real-time ``Adaptive Comparing and Stopping'' framework (saturation detection \& distribution drift detection). & Complete adaptive generation pipeline codebase. \\ \\
+\addlinespace
+\textbf{Phase 4 (Weeks 9--11)} & Benchmarking against fixed baselines; downstream classifier evaluation (F1/accuracy); GPU/CPU execution profiling. & Empirical performance matrices, computational runtime logs, and redundancy audit. \\ \\
+\addlinespace
+\textbf{Phase 5 (Weeks 12--14)} & Comprehensive performance analysis, validation against baseline metrics, final thesis drafting, and presentation preparation. & Fully documented source repository and completed thesis manuscript. \\
+\bottomrule
 \end{tabular}
 \end{table}
 
