@@ -133,15 +133,72 @@ Generative Adversarial Networks (GANs) are widely utilised for synthetic data au
 
 \section{Background and Context}
 
-Generative Adversarial Networks (GANs) are widely used for synthetic data generation, particularly when real-world data are limited or imbalanced. GANs generate artificial samples through adversarial training between a generator and a discriminator. Recent research has introduced specialised architectures and constraints to improve generation quality, diversity, training stability, and data coverage. For example, Zhu et al.~\parencite{zhu2025novel} proposed a dual-correlation GAN framework for virtual sample generation, while Sohn and Song~\parencite{sohn2026parallelly} introduced PTGAN to improve GAN training stability and reduce mode collapse. Their study also evaluated GAN generation on datasets including BloodMNIST.
+Generative Adversarial Networks (GANs) are widely used for synthetic data generation, particularly when real-world data are limited or imbalanced. GANs generate artificial samples through adversarial training between a generator and a discriminator. Recent research has introduced specialised architectures and constraints to improve generation quality, diversity, training stability, and data coverage. \\
 
-However, improving synthetic data quality does not mean that generating more samples will always improve downstream performance. Zhu et al.~\parencite{zhu2025novel} found that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy. This highlights the importance of determining an appropriate synthetic sample volume rather than continuously generating samples using a fixed threshold.
+Below is the list of the 9 previously reviewed research papers from Assignment 1 summarized in a sentence:
 
-This research therefore proposes \textit{Dynamic Volume Optimisation and Adaptive Stopping Criteria for GAN-Based Synthetic Data Generation}. The proposed framework will dynamically evaluate generated samples and determine whether generation should continue or stop based on distribution drift and sample-space coverage. BloodMNIST will be used as the primary experimental dataset to evaluate the proposed approach.
+\begin{enumerate}
+    \item \textbf{A novel virtual sample generation method based on dual correlation generative adversarial nets for soft sensing application:} \begin{itemize}
+        \item Proposes DCRGAN-VSG that combines WGAN-GP and CGAN to generate better virtual samples while keeping the relationship between process and quality data \parencite{zhu2025novel}.
+    \end{itemize}
+    
+    \item \textbf{EID-GAN: Generative Adversarial Nets for Extremely Imbalanced Data Augmentation:}
+    \begin{itemize}
+        \item Proposes EID-GAN that adds an outlier-focused penalty to generate more samples from very rare classes \parencite{li2023eid}.
+    \end{itemize}
+    
+    \item \textbf{Electronic Health Data in the Context of Patient Length-of-Stay Prediction: Using Generative Adversarial Nets for Synthetic Data Creation:}
+    \begin{itemize}
+        \item Uses CTGAN and Copula GAN to generate realistic synthetic tabular healthcare data while preserving variable correlations \parencite{bietsch2023electronic}.
+    \end{itemize}
+    
+    \item \textbf{Generative Adversarial Nets for Cost-Sensitive Face Recognition:}
+    \begin{itemize}
+        \item Proposes CSGAN that considers different costs of recognition errors in face recognition \parencite{chen2020generative}.
+    \end{itemize}
+
+    \item \textbf{Improving mode exploring capability of generative adversarial nets by self-organizing map:}
+    \begin{itemize}
+        \item Proposes SOMGAN that uses one generator and multiple discriminators arranged with a Self-Organizing Map to generate more diverse samples \parencite{li2024improving}.
+    \end{itemize}
+
+    \item \textbf{Inaccurate-Supervised Learning With Generative Adversarial Nets:}
+    \begin{itemize}
+        \item Proposes ISL-GAN that uses GANs to learn from inaccurate or noisy labels \parencite{zhang2023inaccurate}.
+    \end{itemize}
+
+    \item \textbf{Parallelly Tempered Generative Adversarial Nets: Toward Stabilized Gradients:}
+    \begin{itemize}
+        \item Proposes PTGAN that trains GANs at different temperature levels in parallel to make GAN training more stable \parencite{sohn2026parallelly}.
+    \end{itemize}
+
+    \item \textbf{Sketched Irregular Military Symbols Recognition via Generative Adversarial Nets:}
+    \begin{itemize}
+        \item Proposes RSM-GAN that combines a ResNet encoder, Style-based generator, and Markovian discriminator to generate and recognize irregular military symbols \parencite{zuo2023sketched}.
+    \end{itemize}
+
+    \item \textbf{The comparison between Conditional Generative Adversarial Nets and Deep Convolutional Generative Adversarial Network, and its GUI-related application:}
+    \begin{itemize}
+        \item Compares CGAN and DCGAN to study how their different architectures perform in image generation and GUI applications \parencite{li2021comparison}.
+    \end{itemize}
+\end{enumerate}
+
+However, improving synthetic data quality does not mean that generating more samples will always improve downstream performance. For example, in the research conducted by Zhu et al. about DCRGAN, it is shown in the paper that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy \parencite{zhu2025novel}. 
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{distortAfter420.png}
+    \caption{Prediction errors MAE and RMSE of the soft sensor, with a red rectangle highlighting the data distortion after synthesizing 420 samples. Adapted from ``A novel virtual sample generation method based on dual correlation generative adversarial nets for soft sensing application'' \parencite{zhu2025novel}}
+    \label{fig:my_image}
+\end{figure}
+
+This highlights the importance of determining an appropriate synthetic sample volume rather than continuously generating samples using a fixed threshold. \\
+
+This report therefore proposes ``Adaptive Comparing and Stopping'' Framework. The proposed framework will dynamically evaluate generated samples and determine whether generation should continue or stop based on distribution drift and sample-space coverage. BloodMNIST will be used as the primary experimental dataset to evaluate the proposed approach.
 
 \section{Motivation and Significance}
 
-The main motivation of this research is the lack of automated mechanisms for determining when GAN-based synthetic data generation should stop. Fixed generation thresholds may produce too few samples or unnecessary synthetic samples, potentially affecting data distribution, model performance, and computational efficiency.
+The main motivation of this research is the lack of automated mechanisms for determining when GAN-based synthetic data generation should stop. Fixed generation thresholds may produce too few samples or unnecessary synthetic samples, potentially affecting data distribution, model performance, and computational efficiency. \\
 
 The proposed adaptive stopping mechanism aims to address this issue through a \textit{Generate--Measure--Decide--Continue/Stop} process. By monitoring the generated data during synthesis, the framework aims to reduce redundant sample generation while maintaining downstream classifier performance. This research is significant because it shifts the focus from simply generating more synthetic data towards determining the appropriate point at which further generation is no longer beneficial.
 
@@ -154,13 +211,13 @@ The proposed adaptive stopping mechanism aims to address this issue through a \t
 
 \subsection{Current State of Knowledge}
 
-The literature reviewed in Assignment 1 demonstrates that GAN research has progressed beyond conventional adversarial architectures towards more specialised and constraint-aware approaches. Recent studies have focused on improving training stability, reducing mode collapse, increasing data coverage, and improving the quality of synthetic samples. For example, \textcite{zhu2025novel} combined WGAN-GP, Conditional GAN, MSE loss, and Pielou-based sample selection to improve virtual sample generation for industrial soft-sensing. Similarly, \textcite{sohn2026parallelly} proposed PTGAN using parallel tempering and a coherency penalty to improve training stability and diversity.
+The literature reviewed in Assignment 1 demonstrates that GAN research has progressed beyond conventional adversarial architectures towards more specialised and constraint-aware approaches. Recent studies have focused on improving training stability, reducing mode collapse, increasing data coverage, and improving the quality of synthetic samples. For example, \textcite{zhu2025novel} combined WGAN-GP, Conditional GAN, MSE loss, and Pielou-based sample selection to improve virtual sample generation for industrial soft-sensing. Similarly, \textcite{sohn2026parallelly} proposed PTGAN using parallel tempering and a coherency penalty to improve training stability and diversity. \\
 
 Although these approaches improve the quality and usefulness of generated data, the literature also indicates that synthetic data generation has a practical limit. Generating additional samples does not necessarily continue to improve downstream performance. The reviewed studies therefore suggest that GAN research should consider not only how synthetic samples are generated, but also how the generated sample volume should be controlled. This provides the basis for investigating adaptive control of synthetic data generation.
 
 \subsection{Identified Gap from Assignment 1}
 
-One important research gap identified in Assignment 1 is the \textit{risk of performance degradation from over-generation}. Existing approaches generally lack an automated mechanism for determining the appropriate number of synthetic samples. \textcite{zhu2025novel} reported that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy. This indicates that excessive synthetic data may become counterproductive after a certain generation volume.
+One important research gap identified in Assignment 1 is the \textit{risk of performance degradation from over-generation}. Existing approaches generally lack an automated mechanism for determining the appropriate number of synthetic samples. \textcite{zhu2025novel} reported that generating more than approximately 420 virtual instances could distort the original data distribution and reduce model accuracy. This indicates that excessive synthetic data may become counterproductive after a certain generation volume. \\
 
 Assignment 1 therefore identified \textit{Dynamic Volume Optimisation and Adaptive Stopping Criteria} as a potential future research direction. Instead of using a fixed sample count, an adaptive mechanism could monitor distribution changes and sample-space coverage during generation and automatically stop when further generation provides limited benefit. This research proposal addresses this gap by developing and evaluating an adaptive stopping framework for GAN-based synthetic data generation using BloodMNIST as the primary experimental dataset.
 
@@ -316,7 +373,7 @@ END WHILE \\
 RETURN synthetic\_dataset \\
 
 \subsection{Justification for the Proposed Approach}
-Unlike conventional augmentation methods that rely on fixed rules or fixed sample limits, our proposed ``Adaptive Comparing and Stopping'' framework uses a feedback-based stopping mechanism that monitors generated data directly to decide when to stop. Previous work showed performance degraded after 420 synthetic samples \parencite{zhu2025novel}, proving that more data isn't always better. This framework tests whether the optimal stopping point can be detected automatically from data behavior.
+Unlike conventional augmentation methods that rely on fixed rules or fixed sample limits, our proposed ``Adaptive Comparing and Stopping'' framework uses a feedback-based stopping mechanism that monitors generated data directly to decide when to stop. As mentioned, previous work showed performance degraded after 420 synthetic samples \parencite{zhu2025novel}, proving that more data isn't always better. This framework tests whether the optimal stopping point can be detected automatically from data behavior.
 
 \section{Data and Tools}
 % \begin{itemize}
@@ -324,8 +381,8 @@ Unlike conventional augmentation methods that rely on fixed rules or fixed sampl
 %     \item \textbf{Tools and Hardware:} List the development frameworks, libraries (e.g., PyTorch, TensorFlow, Wireshark), and experimental environments (GPUs, OS, compute resources).
 % \end{itemize}
 
-\subsection{Dataset Selection: BloodMNIST (MedMNIST v2 Collection}
-BloodMNIST is a publicly available biomedical image dataset consisting of images of individual blood cells. It contains 17,092 images organized into eight blood-cell classes. The dataset is divided into training, validation, and test sets containing 11,959, 1,712, and 3,421 images, respectively. The images are provided as standardized RGB images with a resolution of $28 \times 28$ pixels \parencite{yang2023medmnist}. \\
+\subsection{Dataset Selection: BloodMNIST (MedMNIST v2 Collection)}
+BloodMNIST is a publicly available biomedical image dataset consisting of images of individual blood cells. It contains 17,092 images organized into eight blood-cell classes. The dataset is divided into training, validation, and test sets containing 11,959, 1,712, and 3,421 images, respectively. The images are provided as standardized RGB images with a resolution of $28 \times 28$ pixels \parencite{medmnist}. \\
 
 \noindent BloodMNIST is selected because it is a good example that shows the necessity of synthesizing the samples using GANs as acquiring additional real biomedical images can involve specialized imaging equipment and expert annotation which is difficult. \\
 
@@ -354,7 +411,7 @@ The proposed ``Adaptive Comparing and Stopping'' framework will be evaluated bas
 
 \subsection{Classification Performance}
 
-The main performance metric used in this study is the \textbf{F1-score}. In machine learning, the F1 score measures how well a classification model performs \parencite{geeksforgeeksF1}. In this case, it measures how well the classifier correctly identifies the different BloodMNIST classes. A higher F1-score indicates better classification performance. \\
+The main performance metric used in this study is the \textbf{F1-score}. In machine learning, the F1 score measures how well a classification model performs \parencite{geeksforgeeks_f1}. In this case, it measures how well the classifier correctly identifies the different BloodMNIST classes. A higher F1-score indicates better classification performance. \\
 
 \noindent A classifier will first be trained using only the real training data. Different amounts of synthetic data will then be added to the training data. The resulting models will be tested using the same real test set. The F1-scores will be compared to determine whether the additional synthetic data improves classification performance.
 
