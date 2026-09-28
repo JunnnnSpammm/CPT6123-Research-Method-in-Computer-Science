@@ -351,26 +351,38 @@ Similarly, the proposed framework also includes a second stopping mechanism to d
     \item The remaining synthetic data is returned as the final augmented dataset.
 \end{enumerate}
 
+\newpage
 \subsection{Pseudocode of “Adaptive Comparing and Stopping” Framework}
-INPUT, real dataset, trained GAN, batch size, saturation threshold \\
-SET synthetic\_dataset = empty \\
-SET history = empty \\
-SET stop = FALSE \\
-EXTRACT features from real dataset \\
-WHILE stop = FALSE \\
-\indent GENERATE a batch of synthetic data \\
-\indent ADD batch to synthetic\_dataset \\
-\indent EXTRACT features from synthetic\_dataset \\
-\indent COMPARE synthetic data with real data \\
-\indent STORE the comparison result in history \\
-\indent IF the data has reached saturation THEN \\
-\indent \indent SET stop = TRUE \\
-\indent ELSE IF the data shows distribution drift THEN \\
-\indent \indent REMOVE the latest batch \\
-\indent \indent SET stop = TRUE \\
-\indent END IF \\
-END WHILE \\
-RETURN synthetic\_dataset \\
+\begin{algorithm}
+\caption{Synthetic Data Generation with Saturation and Distribution Drift Detection}
+\begin{algorithmic}[1]
+
+\State \textbf{INPUT:} real dataset, trained GAN, batch size, saturation threshold
+\State \textbf{SET} synthetic\_dataset = empty
+\State \textbf{SET} history = empty
+\State \textbf{SET} stop = FALSE
+\State \textbf{EXTRACT} features from real dataset
+
+\While{stop = FALSE}
+    \State \textbf{GENERATE} a batch of synthetic data
+    \State \textbf{ADD} batch to synthetic\_dataset
+    \State \textbf{EXTRACT} features from synthetic\_dataset
+    \State \textbf{COMPARE} synthetic data with real data
+    \State \textbf{STORE} the comparison result in history
+    
+    \If{the data has reached saturation}
+        \State \textbf{SET} stop = TRUE
+    \ElsIf{the data shows distribution drift}
+        \State \textbf{REMOVE} the latest batch
+        \State \textbf{SET} stop = TRUE
+    \EndIf
+
+\EndWhile
+
+\State \textbf{RETURN} synthetic\_dataset
+
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Justification for the Proposed Approach}
 Unlike conventional augmentation methods that rely on fixed rules or fixed sample limits, our proposed ``Adaptive Comparing and Stopping'' framework uses a feedback-based stopping mechanism that monitors generated data directly to decide when to stop. As mentioned, previous work showed performance degraded after 420 synthetic samples \parencite{zhu2025novel}, proving that more data isn't always better. This framework tests whether the optimal stopping point can be detected automatically from data behavior.
